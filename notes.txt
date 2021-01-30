@@ -1,0 +1,23 @@
+1. develop save file to save stats of the character when changing the rooms [DONE]
+
+2. if I want character to move 4 direction should it be 4 graphics that would change in condition to the direction
+(if he goes left, the char is seen from the left profile etc) [Yes, 4 graphis SOLVER]
+
+3. How do I make my programme moving from one level to another. Should I add a switch in Game.java with each level specified and then when my char
+moves out of LevelOne do a save file which will tell what level Game.java should load now
+or is it possible to move from LevelOne to LevelTwo??
+
+4. How to make the game view from above not from the side? How do I disable the gravity if I want the view to be like in HotlineMiami instead of Mario
+reduce gravity! [SOLVED]
+
+5. MAYBE USE SWITCH in KeyEvent controller
+
+6. If the bullets goes beyond the map boundary it gets destroyed[DONE]
+7. SET MAP BOUNDARIES[DONE] - just added 1 wall outside GameView
+
+8. how to access getOtherBody or getReportingBody's methods in CollisionListeners
+[SOLVED] - Cast it
+
+9. How to make pickup occur only once, what I mean is when my character picks up a gun
+the ammo should be initialized at 30 but because it's so fast it's not getting destroyed on time
+and my ammo is up to 120.
