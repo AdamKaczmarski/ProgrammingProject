@@ -1,7 +1,6 @@
 package Game.Levels.Walls;
 
 import Game.Collisons.BulletToWall;
-import Game.Levels.LevelOne;
 import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
 import city.cs.engine.StaticBody;
@@ -9,7 +8,6 @@ import city.cs.engine.World;
 import org.jbox2d.common.Vec2;
 
 import java.awt.*;
-//float boxWidth, float boxHeight, float x, float y
 
 public class Wall extends StaticBody {
         private static Shape wallShape;
@@ -22,13 +20,4 @@ public class Wall extends StaticBody {
         wall.setLineColor(new Color(1,1,1,0));
         wall.addCollisionListener(new BulletToWall());
     }
-    /*
-    public void setPosition(float x, float y){
-        wall.setPosition(new Vec2(0,-11.5f));
-    }
-    */
-
-
-
-
 }

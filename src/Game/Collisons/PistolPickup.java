@@ -13,7 +13,8 @@ public class PistolPickup implements CollisionListener {
      */
     @Override
     public void collide(CollisionEvent e) {
-        if (e.getOtherBody().getName().equals("MainCharacter") && e.getReportingBody().getName().equals("Pistol")){
+        //if (e.getOtherBody().getName().equals("MainCharacter") && e.getReportingBody().getName().equals("Pistol")){
+        if (e.getOtherBody() instanceof MainCharacter && e.getReportingBody() instanceof Pistol) {
             MainCharacter mainChar = (MainCharacter) e.getOtherBody();
             Pistol pistol = (Pistol) e.getReportingBody();
             if(mainChar.getPistol()==null){
@@ -25,9 +26,7 @@ public class PistolPickup implements CollisionListener {
             }
             mainChar.getPistol().setAmmo(30);
             mainChar.charShoot(); //JUST FOR TESTING
-            System.out.println(mainChar.getPistol().getAmmo());
-
-
+            //System.out.println(mainChar.getPistol().getAmmo());
         }
     }
 }

@@ -10,11 +10,11 @@ public class Enemy extends Walker {
     private int health = 20;
     public Enemy (World world){
         super(world,enemyShape);
-        addImage(enemyImage);
-        setAlwaysOutline(true);
-        setName("Enemy");
-        setClipped(true);
-        addCollisionListener(new BulletToCharacter());
+        this.addImage(enemyImage);
+        this.setAlwaysOutline(true);
+        this.setName("Enemy");
+        this.setClipped(true);
+        this.addCollisionListener(new BulletToCharacter());
     }
     /* ACCESSORS */
 

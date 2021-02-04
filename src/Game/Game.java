@@ -10,7 +10,7 @@ import javax.swing.*;
 
 public class Game {
     //private World world;
-    private LevelOne world;
+    private World world;
     private GameView view;
     public Game(){
         //World runs the UI.MainMenu
@@ -20,11 +20,13 @@ public class Game {
         world = new LevelOne();
         //UserView
         world.setGravity(0f);
-        System.out.println(world.getGravity());
         view = new GameView(world,900,800);
+        ((LevelOne)world).setGameView(view);
+        ((LevelOne)world).addControls(((LevelOne)world).getMC());
+
         // JFrame
         final Frame frame = new Frame(view);
-        JFrame debugView = new DebugViewer(world,500,500);
+       // JFrame debugView = new DebugViewer(world,500,500);
 
 
         world.start();

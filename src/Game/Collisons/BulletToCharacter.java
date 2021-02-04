@@ -17,7 +17,7 @@ public class BulletToCharacter implements CollisionListener {
                 Enemy enemy= (Enemy) e.getReportingBody();
                 enemy.setHealth(enemy.getHealth()-b.getDamage());
                 e.getOtherBody().destroy();
-                System.out.println("Enemy's health: "+enemy.getHealth());
+                //System.out.println("Enemy's health: "+enemy.getHealth());
                 enemy.setLinearVelocity(new Vec2(0,0));
                 if(enemy.getHealth()<=0){
                     enemy.destroy();

@@ -79,14 +79,13 @@ public class Pistol extends StaticBody {
      * Shooting method
      */
     public void shoot(World w, DynamicBody db, float charHeight){
-        System.out.println("before shoot: "+this.getAmmo());
+        //System.out.println("before shoot: "+this.getAmmo());
         if (this.getAmmo()>0){
             Bullet b = new Bullet(w);
-
             b.setPosition(new Vec2(db.getPosition().x+(charHeight),db.getPosition().y+(charHeight/2))); //MAKE IT DEPENDENT ON MOUSEPOSITION charHeight is for tests
-            b.setLinearVelocity(new Vec2(3f,0.5f)); //set angle of the shoot when mouse controller is applied
+            b.setLinearVelocity(new Vec2(5f,2f)); //set angle of the shoot when mouse controller is applied
             this.setAmmo(this.getAmmo()-1);
-            System.out.println("after shoot: "+this.getAmmo());
+            //System.out.println("after shoot: "+this.getAmmo());
         }
     }
 

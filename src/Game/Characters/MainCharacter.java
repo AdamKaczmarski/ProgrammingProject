@@ -7,10 +7,10 @@ import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
 public class MainCharacter extends Walker {
-    private static final float height = 3f;
-    private static final BodyImage image = new BodyImage("assets/images/mainCharacterPlaceholder.png", height);;
+    private BodyImage image;
     private static Shape charShape = new PolygonShape(0.149f,0.975f, 0.775f,0.193f, 0.772f,-0.099f, 0.401f,-0.928f,
             -0.36f,-0.922f, -0.719f,-0.025f, -0.725f,0.163f, -0.14f,0.972f);
+    private final float height;
     private int health = 100;
     private int points;
     private Pistol pistol; //add pistol on pickup
@@ -18,15 +18,18 @@ public class MainCharacter extends Walker {
 
     public MainCharacter(World world){
         super(world,charShape);
-        addImage(image);
-        setAlwaysOutline(true);
-        setClipped(true);
+        this.height=3f;
+        this.image = new BodyImage("assets/images/mainCharacterPlaceholderRight.png", height);
+        this.addImage(image);
+        this.setAlwaysOutline(true);
+        this.setClipped(true);
         this.health=100;
         this.points=0;
         this.pistol = null; //NULL FOR A WHILE BUT WILL BE INITIATED TO A PISTOLL OBJECT WHEN THE CHARACTER PICKS IT UP
         this.w=world;
-        setName("MainCharacter");
-        addCollisionListener(new BulletToCharacter());
+
+        this.setName("MainCharacter");
+        this.addCollisionListener(new BulletToCharacter());
     }
     /* ACCESSORS */
 
@@ -47,12 +50,38 @@ public class MainCharacter extends Walker {
      * @return
      */
     public int getPoints(){return this.points;}
+
+    /**
+     *
+     * @return
+     */
     public World getW() {
         return w;
     }
 
-    public static float getHeight() {
+    /**
+     *
+     * @return
+     */
+    public float getHeight() {
         return height;
+    }
+    /**
+     *
+     */
+    public BodyImage getImage(){
+        return this.image;
+    }
+    public Shape getCharShape(){
+        return charShape;
+    }
+    /**
+     *
+     */
+    public float getCharWidth(){
+        float width=0;
+        Shape test = this.getCharShape();
+        return 0;
     }
     /* MUTATORS */
 
@@ -75,6 +104,14 @@ public class MainCharacter extends Walker {
      *
      */
     public void setPoints(int addPoints) {this.points += this.getPoints()+addPoints;}
+    /**
+     * Set image of the character
+     * @param image a new BodyImage object
+     */
+    public void setImage(BodyImage image) {
+        this.image = image;
+    }
+
     /**
      * Shoot
      */

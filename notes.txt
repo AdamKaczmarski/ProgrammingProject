@@ -21,3 +21,5 @@ reduce gravity! [SOLVED]
 9. How to make pickup occur only once, what I mean is when my character picks up a gun
 the ammo should be initialized at 30 but because it's so fast it's not getting destroyed on time
 and my ammo is up to 120.
+
+10. How to make an image to cover whole background
