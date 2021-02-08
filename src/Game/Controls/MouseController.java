@@ -1,23 +1,22 @@
 package Game.Controls;
 
+import Game.Characters.MainCharacter;
 import Game.HOC.GameView;
-
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.lang.Math;
+import java.awt.geom.Point2D;
 
 public class MouseController implements MouseListener {
     private GameView view;
-    public MouseController(GameView v){
+    private MainCharacter mainChar;
+    public MouseController(GameView v, MainCharacter mc){
         this.view=v;
+        this.mainChar=mc;
     }
     @Override
     public void mouseClicked(MouseEvent e) {
         view.requestFocus();
-        float angle = (float) (Math.atan2(e.getXOnScreen(),e.getYOnScreen()));
-        angle= (float) Math.toDegrees(angle);
-        System.out.println(angle);
+        mainChar.charShoot(view.viewToWorld(new Point2D.Float(e.getX(),e.getY())));
     }
 
     @Override

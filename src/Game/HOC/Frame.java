@@ -5,7 +5,7 @@ import city.cs.engine.UserView;
 import javax.swing.*;
 
 public class Frame extends JFrame{
-    private JFrame frame;
+    private final JFrame frame;
     public Frame(UserView view){
         frame = new JFrame("The Game");
         // quit the application when the game window is closed

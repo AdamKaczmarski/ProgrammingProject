@@ -1,24 +1,22 @@
 package Game.Characters;
 
 import Game.Collisons.BulletToCharacter;
-import Game.Items.Bullet;
 import Game.Items.Pistol;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+
 public class MainCharacter extends Walker {
     private BodyImage image;
-    private static Shape charShape = new PolygonShape(0.149f,0.975f, 0.775f,0.193f, 0.772f,-0.099f, 0.401f,-0.928f,
-            -0.36f,-0.922f, -0.719f,-0.025f, -0.725f,0.163f, -0.14f,0.972f);
-    private final float height;
-    private int health = 100;
+    private static final Shape charShape = new PolygonShape(-0.71f,-1.85f, 0.44f,-1.85f, 1.57f,1.04f, 0.8f,1.66f, -0.15f,1.94f, -1.51f,1.28f, -0.89f,-1.18f);
+    private final float height=4f;
+    private int health;
     private int points;
     private Pistol pistol; //add pistol on pickup
     private World w;
 
     public MainCharacter(World world){
         super(world,charShape);
-        this.height=3f;
         this.image = new BodyImage("assets/images/mainCharacterPlaceholderRight.png", height);
         this.addImage(image);
         this.setAlwaysOutline(true);
@@ -41,48 +39,40 @@ public class MainCharacter extends Walker {
         return this.health;
     }
     /**
-     *
+     * Returns the reference to pistol object
+     * @return Pistol object
      */
     public Pistol getPistol () {return this.pistol;}
 
     /**
-     *
-     * @return
+     * Returns the amount of points
+     * @return int points
      */
     public int getPoints(){return this.points;}
 
     /**
-     *
-     * @return
+     * Returns the World that the character is created in
+     * @return World object
      */
     public World getW() {
         return w;
     }
 
     /**
-     *
-     * @return
+     * Returns the height of the character
+     * @return float height
      */
     public float getHeight() {
         return height;
     }
     /**
-     *
+     * Returns the image of the character
+     * @return  BodyImage object
      */
     public BodyImage getImage(){
         return this.image;
     }
-    public Shape getCharShape(){
-        return charShape;
-    }
-    /**
-     *
-     */
-    public float getCharWidth(){
-        float width=0;
-        Shape test = this.getCharShape();
-        return 0;
-    }
+
     /* MUTATORS */
 
     /**
@@ -92,7 +82,7 @@ public class MainCharacter extends Walker {
      * @param chHealth
      */
     public void setHealth(int chHealth) {
-        this.health += chHealth;
+        this.health = chHealth;
     }
     /**
      * Set Pistol
@@ -103,7 +93,7 @@ public class MainCharacter extends Walker {
     /**
      *
      */
-    public void setPoints(int addPoints) {this.points += this.getPoints()+addPoints;}
+    public void setPoints(int addPoints) {this.points = addPoints;}
     /**
      * Set image of the character
      * @param image a new BodyImage object
@@ -113,14 +103,14 @@ public class MainCharacter extends Walker {
     }
 
     /**
-     * Shoot
+     * This method calls for shoot method of the Pistol object.
+     * This method won't work when the pistol is not picked up or is not initialized.
+     * @param mouseDir clicked mouse position to send the bullet in right way
      */
-    public void charShoot(){
-        //System.out.println(this.getPistol().getPicked());
+    public void charShoot(Vec2 mouseDir){
         if (this.getPistol()!=null && this.getPistol().getPicked()){
-            this.pistol.shoot(getW(),this,getHeight());
+            this.pistol.shoot(getW(),this,getHeight(),mouseDir,"BulletMC");
         }
     }
-    /* METHODS */
 
 }

@@ -14,7 +14,14 @@ public class MainCharacterKeyboardController implements KeyListener {
     public MainCharacterKeyboardController(MainCharacter mC){
         this.mainChar=mC;
     }
-    public void movementHandler(int dir){
+
+    /**
+     * This method is used to be called within KeyListener to set the movement of the Main Character
+     * It is created to allow the player to move his character diagonally and without any "breaks" when switching the keys or releasing them
+     * It also checks for the direction on x-axis of the character to replace the Image with a proper graphic to keep the perception of moving.
+     * @param dir number <1;6> which sets the direction x(1 - go left, 2 - go right)/y(3 - go up, 4 - go down); (5 - stop x-axis movement, 6- stop y-axis movement)
+     */
+    private void movementHandler(int dir){
         switch (dir) {
             case 1:
                 mainChar.setLinearVelocity(new Vec2(-WALKING_SPEED_X, mainChar.getLinearVelocity().y));

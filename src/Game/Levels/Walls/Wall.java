@@ -19,5 +19,6 @@ public class Wall extends StaticBody {
         wall.setPosition(new Vec2(x,y));
         wall.setLineColor(new Color(1,1,1,0));
         wall.addCollisionListener(new BulletToWall());
+        wall.setName("Wall");
     }
 }

@@ -25,12 +25,12 @@ public class Pistol extends StaticBody {
     /**
      * Constructor created for creating new Pistol when new level is loaded. the ammo stat is going to be read from file.
      */
-    /*public Pistol(int ammo){ //add World world in the constructor and in super but when the pistol is going to be created on new level
-        super();
+    public Pistol(World world,int ammo){ //add World world in the constructor and in super but when the pistol is going to be created on new level
+        super(world);
         this.ammo=ammo; //ammo read from file
         this.setName("PickedPistol");
         this.picked=true;
-    }*/
+    }
     /**
      * This constructor creates a visual Pistol object on the map
      * It gets destroyed after the collision (pick up) is detected
@@ -64,7 +64,7 @@ public class Pistol extends StaticBody {
      * @param addAmmo the amount of ammo that will be added to the ammo field
      */
     public void setAmmo(int addAmmo) {
-        this.ammo+=addAmmo;
+        this.ammo=addAmmo;
     }
 
     public void setPistolImage(BodyImage pistolImage) {
@@ -75,18 +75,37 @@ public class Pistol extends StaticBody {
         Pistol.pistolShape = pistolShape;
     }
 
+
+
     /**
      * Shooting method
+     * @param bulletName specifies the name of the bullet that's being shot (Enemy Bullet, MC bullet etc)
+     * @param charHeight the height of the character so that the bullet will be placed next to the character, not in it
+     * @param db the walker object
+     * @param mouseDir position of the click, to set the direction of the buller
+     * @param w World object needed to create the bullet
      */
-    public void shoot(World w, DynamicBody db, float charHeight){
-        //System.out.println("before shoot: "+this.getAmmo());
+    public void shoot(World w, Walker db, float charHeight, Vec2 mouseDir, String bulletName){
         if (this.getAmmo()>0){
             Bullet b = new Bullet(w);
-            b.setPosition(new Vec2(db.getPosition().x+(charHeight),db.getPosition().y+(charHeight/2))); //MAKE IT DEPENDENT ON MOUSEPOSITION charHeight is for tests
-            b.setLinearVelocity(new Vec2(5f,2f)); //set angle of the shoot when mouse controller is applied
-            this.setAmmo(this.getAmmo()-1);
-            //System.out.println("after shoot: "+this.getAmmo());
+                b.setName(bulletName);
+                if (mouseDir.x>=db.getPosition().x && mouseDir.y>=db.getPosition().y){
+                    b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y + (charHeight / 2)));
+                }
+                if (mouseDir.x>=db.getPosition().x && mouseDir.y<=db.getPosition().y){
+                    b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y-(charHeight/2)));
+                }
+                if (mouseDir.x<=db.getPosition().x && mouseDir.y<=db.getPosition().y){
+                    b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y - (charHeight / 2)));
+                }
+                if (mouseDir.x<=db.getPosition().x && mouseDir.y>=db.getPosition().y){
+                    b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y + (charHeight / 2)));
+                }
+                b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
+                b.setAngleDegrees((float) Math.toDegrees(Math.atan2(mouseDir.y, mouseDir.x)) - 90); //USE THIS TO ROTATE THE BULLET OBJECT (shape and image)
+                this.setAmmo(this.getAmmo()- 1);
+            }
+        if(this.getAmmo()<=0) System.out.println("NO AMMO");
+        System.out.println("[Pistol]Ammo after shoot: "+this.getAmmo());
         }
     }
-
-}

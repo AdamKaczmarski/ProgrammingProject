@@ -1,4 +1,4 @@
-package game;
+
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
@@ -241,8 +241,8 @@ public class PolygonEditor extends JPanel
      * @param args command line arguments.
      */
     public static void main(String[] args) {
-        String fileName = "assets/images/pistol.png";
-        float boxHeight = 1.5f;
+        String fileName = "assets/images/mainCharacterPlaceholderLeft.png";
+        float boxHeight = 4f;
         int firstCoordIndex = 0;
         if (args.length > 0) {
             try {
