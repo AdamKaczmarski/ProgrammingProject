@@ -9,7 +9,7 @@ public class BulletToWall implements CollisionListener {
     public void collide(CollisionEvent e) {
         if(e.getOtherBody().getName().equals("BulletEn") || e.getOtherBody().getName().equals("BulletMC") || e.getOtherBody().getName().equals("Bullet")){
             e.getOtherBody().destroy();
-            System.out.println("[BulletToWall]Bullet hit the wall");
+            //System.out.println("[BulletToWall]Bullet hit the wall");
         }
     }
 }

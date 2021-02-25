@@ -23,11 +23,10 @@ public class MainCharacter extends Walker {
         this.setClipped(true);
         this.health=100;
         this.points=0;
-        this.pistol = null; //NULL FOR A WHILE BUT WILL BE INITIATED TO A PISTOLL OBJECT WHEN THE CHARACTER PICKS IT UP
         this.w=world;
 
         this.setName("MainCharacter");
-        this.addCollisionListener(new BulletToCharacter());
+        this.addCollisionListener(new BulletToCharacter(this));
     }
     /* ACCESSORS */
 

@@ -11,7 +11,7 @@ public class BulletToBullet implements CollisionListener {
                     && (e.getOtherBody().getName().equals("Bullet") || e.getOtherBody().getName().equals("BulletEn") || e.getOtherBody().getName().equals("BulletMC"))){
                 e.getOtherBody().destroy();
                 e.getReportingBody().destroy();
-                System.out.println("Bullet destroyed another Bullet");
+                //System.out.println("Bullet destroyed another Bullet");
             }
         }
 

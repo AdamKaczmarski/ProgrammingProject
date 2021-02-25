@@ -60,6 +60,7 @@ public class MainCharacterKeyboardController implements KeyListener {
             case KeyEvent.VK_D: movementHandler(2); break;
             case KeyEvent.VK_W: movementHandler(3); break;
             case KeyEvent.VK_S: movementHandler(4); break;
+
         }
     }
     // STOPS THE MOVEMENT

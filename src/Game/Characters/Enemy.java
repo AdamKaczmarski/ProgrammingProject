@@ -19,7 +19,7 @@ public class Enemy extends Walker {
         this.setAlwaysOutline(true);
         this.setName("Enemy");
         this.setClipped(true);
-        this.addCollisionListener(new BulletToCharacter());
+        //this.addCollisionListener(new BulletToCharacter());
         this.addCollisionListener(new EnemyToWall());
         this.setPosition(vec);
         this.Pistol= new Pistol(world, true);

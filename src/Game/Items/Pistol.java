@@ -4,11 +4,17 @@ import Game.Collisons.PistolPickup;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
+
 public class Pistol extends StaticBody {
     private static  Shape pistolShape = new PolygonShape(0.105f,-0.435f, 0.459f,-0.447f, 0.666f,-0.135f, 0.543f,0.381f, 0.123f,0.468f, -0.585f,0.468f, -0.639f,0.102f);
     private static BodyImage pistolImage = new BodyImage("assets/images/pistol.png",1.5f);
     private int ammo;
     private boolean picked=false;
+    private SoundClip shootSound;
+    private SoundClip noAmmoSound;
 
     /**
      * This constructor creates an abstract Pistol object which will allow the character to shoot.
@@ -19,15 +25,26 @@ public class Pistol extends StaticBody {
     public Pistol(World world, boolean picked){
         super(world);
         this.setName("PickedPistol");
-        this.ammo=30;
+        this.ammo=10;
         this.picked=true;
+        try {
+            shootSound= new SoundClip("assets/sounds/shoot.wav");
+            noAmmoSound =  new SoundClip("assets/sounds/no_ammo.wav");
+            shootSound.setVolume(0.5f);
+        }  catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * Constructor created for creating new Pistol when new level is loaded. the ammo stat is going to be read from file.
      */
     public Pistol(World world,int ammo){ //add World world in the constructor and in super but when the pistol is going to be created on new level
         super(world);
-        this.ammo=ammo; //ammo read from file
+        this.ammo=ammo;
         this.setName("PickedPistol");
         this.picked=true;
     }
@@ -90,22 +107,60 @@ public class Pistol extends StaticBody {
             Bullet b = new Bullet(w);
                 b.setName(bulletName);
                 if (mouseDir.x>=db.getPosition().x && mouseDir.y>=db.getPosition().y){
-                    b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y + (charHeight / 2)));
+                    if (mouseDir.y<(db.getPosition().y+charHeight/2) && mouseDir.y>(db.getPosition().y)){
+
+                        b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y));
+                        b.setLinearVelocity(new Vec2(mouseDir.x,mouseDir.y-db.getPosition().y-(charHeight/2)));
+                    } else {
+                        b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y + (charHeight / 2)));
+                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
+                    }
+
                 }
                 if (mouseDir.x>=db.getPosition().x && mouseDir.y<=db.getPosition().y){
-                    b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y-(charHeight/2)));
+                    if (mouseDir.y<(db.getPosition().y) && mouseDir.y>(db.getPosition().y-(charHeight/2))){
+                        System.out.println("the wrong one");
+                        b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y));
+                        b.setLinearVelocity(new Vec2(mouseDir.x,mouseDir.y-db.getPosition().y-(charHeight/2)));
+                    } else {
+                        b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y - (charHeight / 2)));
+                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
+                    }
                 }
                 if (mouseDir.x<=db.getPosition().x && mouseDir.y<=db.getPosition().y){
-                    b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y - (charHeight / 2)));
+                    if (mouseDir.y<(db.getPosition().y) && mouseDir.y>(db.getPosition().y-(charHeight/2))){
+                        b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y));
+                        b.setLinearVelocity(new Vec2(mouseDir.x,mouseDir.y-db.getPosition().y-(charHeight/2)));
+                    } else {
+                        b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y - (charHeight / 2)));
+                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
+                    }
+
                 }
                 if (mouseDir.x<=db.getPosition().x && mouseDir.y>=db.getPosition().y){
-                    b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y + (charHeight / 2)));
+                    System.out.println("wrong");
+                    if (mouseDir.y<(db.getPosition().y+(charHeight/2)) && mouseDir.y>(db.getPosition().y)){
+                        b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y));
+                        b.setLinearVelocity(new Vec2(mouseDir.x,mouseDir.y-db.getPosition().y-(charHeight/2)));
+                    } else {
+                        b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y + (charHeight / 2)));
+                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
+                    }
+
                 }
-                b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
+
+                //b.setLinearVelocity(new Vec2(4+mouseDir.x - db.getPosition().x, 4+mouseDir.y - db.getPosition().y));
                 b.setAngleDegrees((float) Math.toDegrees(Math.atan2(mouseDir.y, mouseDir.x)) - 90); //USE THIS TO ROTATE THE BULLET OBJECT (shape and image)
                 this.setAmmo(this.getAmmo()- 1);
+                shootSound.stop();
+                shootSound.play();
+
             }
-        if(this.getAmmo()<=0) System.out.println("NO AMMO");
-        System.out.println("[Pistol]Ammo after shoot: "+this.getAmmo());
+        if(this.getAmmo()<=0) {
+            System.out.println("NO AMMO");
+            noAmmoSound.stop();
+            noAmmoSound.play();
+        }
+        //System.out.println("[Pistol]Ammo after shoot: "+this.getAmmo());
         }
     }
