@@ -1,6 +1,7 @@
 package Game.Characters;
 
 import Game.Collisons.BulletToCharacter;
+import Game.Collisons.MedPackPickup;
 import Game.Items.Pistol;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
@@ -82,6 +83,8 @@ public class MainCharacter extends Walker {
      */
     public void setHealth(int chHealth) {
         this.health = chHealth;
+        this.healthCheck();
+
     }
     /**
      * Set Pistol
@@ -112,4 +115,10 @@ public class MainCharacter extends Walker {
         }
     }
 
+    public void healthCheck(){
+        if(this.getHealth()<=0){
+            System.out.println("You died!");
+            this.destroy();
+        }
+    }
 }

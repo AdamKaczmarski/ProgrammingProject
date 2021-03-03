@@ -1,6 +1,5 @@
 package Game.Sensors;
 
-import Game.Collisons.SaveSensorListener;
 import city.cs.engine.*;
 import city.cs.engine.PolygonShape;
 public class saveSensor extends Sensor {

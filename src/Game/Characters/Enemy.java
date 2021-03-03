@@ -19,11 +19,11 @@ public class Enemy extends Walker {
         this.setAlwaysOutline(true);
         this.setName("Enemy");
         this.setClipped(true);
-        //this.addCollisionListener(new BulletToCharacter());
         this.addCollisionListener(new EnemyToWall());
         this.setPosition(vec);
         this.Pistol= new Pistol(world, true);
         this.w=world;
+
     }
     /* ACCESSORS */
     public int getHealth() {
@@ -33,6 +33,10 @@ public class Enemy extends Walker {
     public World getW(){return w;}
 /*    public float getCharHeight{return charHeight;}*/
     /* MUTATORS */
+
+    public void setPistol(Game.Items.Pistol pistol) {
+        Pistol = pistol;
+    }
 
     public void setHealth(int health) {
         this.health = health;

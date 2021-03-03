@@ -5,8 +5,11 @@ import Game.Game;
 import Game.HOC.GameView;
 
 import Game.Sensors.saveSensor;
+import city.cs.engine.SoundClip;
 import city.cs.engine.World;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -15,6 +18,7 @@ public class GameLevel extends World {
     private GameView view;
     private String name;
     private saveSensor saveSen;
+    private SoundClip themeSong;
     public GameLevel(Game game){
         super();
         mainChar = new MainCharacter(this);
@@ -34,6 +38,8 @@ public class GameLevel extends World {
     public String getName() {
         return name;
     }
+
+    public SoundClip getThemeSong(){return themeSong;}
 
     public saveSensor getSaveSen() {
         return saveSen;
@@ -75,7 +81,17 @@ public class GameLevel extends World {
     /**
      *
      */
-    public void loadSaveFile(){
-
+    public void addThemeSong(String path){
+        try {
+            themeSong = new SoundClip(path);
+            themeSong.setVolume(0.05f);
+            themeSong.play();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
     }
 }

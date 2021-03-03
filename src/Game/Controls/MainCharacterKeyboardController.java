@@ -8,8 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class MainCharacterKeyboardController implements KeyListener {
-    private static final int WALKING_SPEED_X = 4;
-    private static final int WALKING_SPEED_Y = 4;
+    private static final int WALKING_SPEED_X = 8;
+    private static final int WALKING_SPEED_Y = 8;
     private MainCharacter mainChar;
     public MainCharacterKeyboardController(MainCharacter mC){
         this.mainChar=mC;

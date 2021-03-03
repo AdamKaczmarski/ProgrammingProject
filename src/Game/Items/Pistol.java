@@ -47,6 +47,17 @@ public class Pistol extends StaticBody {
         this.ammo=ammo;
         this.setName("PickedPistol");
         this.picked=true;
+        try {
+            shootSound= new SoundClip("assets/sounds/shoot.wav");
+            noAmmoSound =  new SoundClip("assets/sounds/no_ammo.wav");
+            shootSound.setVolume(0.5f);
+        }  catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * This constructor creates a visual Pistol object on the map
@@ -104,13 +115,15 @@ public class Pistol extends StaticBody {
      */
     public void shoot(World w, Walker db, float charHeight, Vec2 mouseDir, String bulletName){
         if (this.getAmmo()>0){
+            shootSound.stop();
+            shootSound.play();
             Bullet b = new Bullet(w);
                 b.setName(bulletName);
                 if (mouseDir.x>=db.getPosition().x && mouseDir.y>=db.getPosition().y){
                     if (mouseDir.y<(db.getPosition().y+charHeight/2) && mouseDir.y>(db.getPosition().y)){
 
                         b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y));
-                        b.setLinearVelocity(new Vec2(mouseDir.x,mouseDir.y-db.getPosition().y-(charHeight/2)));
+                        b.setLinearVelocity(new Vec2(mouseDir.x + 0.85f,mouseDir.y-db.getPosition().y));
                     } else {
                         b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y + (charHeight / 2)));
                         b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
@@ -119,9 +132,9 @@ public class Pistol extends StaticBody {
                 }
                 if (mouseDir.x>=db.getPosition().x && mouseDir.y<=db.getPosition().y){
                     if (mouseDir.y<(db.getPosition().y) && mouseDir.y>(db.getPosition().y-(charHeight/2))){
-                        System.out.println("the wrong one");
+                        System.out.println("??");
                         b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y));
-                        b.setLinearVelocity(new Vec2(mouseDir.x,mouseDir.y-db.getPosition().y-(charHeight/2)));
+                        b.setLinearVelocity(new Vec2(mouseDir.x+0.85f,mouseDir.y));
                     } else {
                         b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y - (charHeight / 2)));
                         b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
@@ -130,7 +143,7 @@ public class Pistol extends StaticBody {
                 if (mouseDir.x<=db.getPosition().x && mouseDir.y<=db.getPosition().y){
                     if (mouseDir.y<(db.getPosition().y) && mouseDir.y>(db.getPosition().y-(charHeight/2))){
                         b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y));
-                        b.setLinearVelocity(new Vec2(mouseDir.x,mouseDir.y-db.getPosition().y-(charHeight/2)));
+                        b.setLinearVelocity(new Vec2(mouseDir.x + 0.85f,mouseDir.y+db.getPosition().y));
                     } else {
                         b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y - (charHeight / 2)));
                         b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
@@ -138,10 +151,9 @@ public class Pistol extends StaticBody {
 
                 }
                 if (mouseDir.x<=db.getPosition().x && mouseDir.y>=db.getPosition().y){
-                    System.out.println("wrong");
                     if (mouseDir.y<(db.getPosition().y+(charHeight/2)) && mouseDir.y>(db.getPosition().y)){
                         b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y));
-                        b.setLinearVelocity(new Vec2(mouseDir.x,mouseDir.y-db.getPosition().y-(charHeight/2)));
+                        b.setLinearVelocity(new Vec2(mouseDir.x + 0.85f,mouseDir.y-db.getPosition().y));
                     } else {
                         b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y + (charHeight / 2)));
                         b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
@@ -152,8 +164,7 @@ public class Pistol extends StaticBody {
                 //b.setLinearVelocity(new Vec2(4+mouseDir.x - db.getPosition().x, 4+mouseDir.y - db.getPosition().y));
                 b.setAngleDegrees((float) Math.toDegrees(Math.atan2(mouseDir.y, mouseDir.x)) - 90); //USE THIS TO ROTATE THE BULLET OBJECT (shape and image)
                 this.setAmmo(this.getAmmo()- 1);
-                shootSound.stop();
-                shootSound.play();
+
 
             }
         if(this.getAmmo()<=0) {
@@ -161,6 +172,5 @@ public class Pistol extends StaticBody {
             noAmmoSound.stop();
             noAmmoSound.play();
         }
-        //System.out.println("[Pistol]Ammo after shoot: "+this.getAmmo());
         }
     }

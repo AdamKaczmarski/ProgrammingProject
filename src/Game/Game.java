@@ -1,57 +1,91 @@
 package Game;
 // Imports
 import Game.Characters.MainCharacter;
+import Game.GUI.Components.MainMenu;
 import Game.HOC.GameView;
 import Game.Levels.Level.LevelOne;
 import Game.Levels.Level.LevelThree;
 import Game.Levels.Level.LevelTwo;
-import city.cs.engine.*;
-import Game.HOC.Frame;
 import Game.Levels.GameLevel;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Game {
     private GameLevel level;
     private GameView view;
+    private JFrame frame;
     public Game(){
-        //World runs the UI.MainMenu
-        //world = new MainMenu();
-        level = new LevelOne(this);
-
-        //GameView
-        view = new GameView(level,900,800);
-        ((LevelOne)level).setGameView(view); //Adds the view to LevelOne class to make it accessible for objects
-        ((LevelOne)level).addControls(level.getMainChar()); //adds controls Mouse and Keyboard (which require view) to to control the MainCharacter,
-        //it cannot be called withing the constructor, since the view is still null then
-
-        // JFrame
-        final Frame frame = new Frame(view);
+        frame = new JFrame("The Game");
+        frame.setPreferredSize(new Dimension(900,800));
+        frame.setName("MainMenu");
         //JFrame debugView = new DebugViewer(level,1000,1000);
-        level.start();
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationByPlatform(true);
+        MainMenu menu = new MainMenu(this);
+        frame.add(menu.getMainPanel(), BorderLayout.CENTER);
+        frame.pack();
+        frame.setVisible(true);
+
 
     }
     public void changeLevel(String currentLevel, MainCharacter mainChar){
-        level.stop();
+
+        if (level!=null){
+            level.stop();
+            level.getThemeSong().stop();
+        }
         if(currentLevel.equals("LevelFour")) {
             System.out.println("GG You've finished the game");
         }
+        if (currentLevel.equals("MainMenu")){
+
+            //
+            level=new LevelOne(this);
+            view = new GameView(level,900,800,level.getMainChar());
+            //frame = new JFrame("The Game");
+            // quit the application when the game window is closed
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            //frame.setLocationByPlatform(true);
+            // display the world in the window
+            frame.add(view);
+            // don't let the game window be resized
+            frame.setResizable(false);
+            // size the game window to fit the world view
+            frame.pack();
+            // make the window visible
+            frame.setVisible(true);
+
+            // view = new GameView(level,900,800,level.getMainChar());
+            getFrame().add(view);
+            view.setWorld(level);
+            ((LevelOne)level).setGameView(view);
+            ((LevelOne)level).addControls(level.getMainChar());
+            level.start();
+        }
         if (currentLevel.equals("LevelOne")){
+
             level=new LevelTwo(this,mainChar);
+           // view = new GameView(level,900,800,level.getMainChar());
             view.setWorld(level);
             ((LevelTwo)level).setL2View(view);
-            ((LevelTwo)level).addControls(((LevelTwo)level).getMainChar());
+            ((LevelTwo) level).getL2View().setBckgr(new ImageIcon("assets/images/background2.png").getImage());
+            ((LevelTwo)level).addControls(level.getMainChar());
             level.start();
         }
         if (currentLevel.equals("LevelTwo")){
+
             System.out.println("[Game] moving to another lvl");
             level=new LevelThree(this,mainChar);
             view.setWorld(level);
             ((LevelThree)level).setL3View(view);
-            ((LevelThree)level).addControls(((LevelThree)level).getMainChar());
+
+            ((LevelThree)level).addControls(level.getMainChar());
             level.start();
         }/*
         if (currentLevel.equals("LevelThree")){
+
             level=new LevelFour();
             view.setWorld(level);
             ((LevelFour)level).setL4View(view);
@@ -60,6 +94,9 @@ public class Game {
 
     }
 
+    public JFrame getFrame() {
+        return frame;
+    }
 
     public static void main(String[] args) {
         new Game();

@@ -18,13 +18,14 @@ public class PistolPickup implements CollisionListener {
             if(mainChar.getPistol()==null){
                 e.getReportingBody().destroy();
                 mainChar.setPistol(new Pistol(mainChar.getW(),true));
+                mainChar.getPistol().setAmmo(30);
                 System.out.println("[PistolPickup]You've picked the pistol");
             } else {
                 e.getReportingBody().destroy();
-                mainChar.getPistol().setAmmo(mainChar.getPistol().getAmmo()+5);
+                mainChar.getPistol().setAmmo(mainChar.getPistol().getAmmo()+10);
                 System.out.println("[PistolPickup]You already have a pistol, have some ammo instead");
             }
-            mainChar.getPistol().setAmmo(30);
+
         }
     }
 }

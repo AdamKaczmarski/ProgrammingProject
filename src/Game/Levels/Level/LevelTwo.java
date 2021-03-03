@@ -3,7 +3,8 @@ package Game.Levels.Level;
 import Game.Characters.Enemy;
 import Game.Characters.MainCharacter;
 import Game.Collisons.BulletToCharacter;
-import Game.Collisons.SaveSensorListener;
+import Game.Items.Pistol;
+import Game.Sensors.SaveSensorListener;
 import Game.Controls.MainCharacterKeyboardController;
 import Game.Controls.MouseController;
 import Game.Game;
@@ -11,9 +12,13 @@ import Game.HOC.GameView;
 import Game.Items.MedPack;
 import Game.Levels.GameLevel;
 import Game.Levels.Walls.Wall;
+import city.cs.engine.SoundClip;
 import org.jbox2d.common.Vec2;
 
-import java.awt.*;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LevelTwo extends GameLevel {
@@ -22,11 +27,13 @@ public class LevelTwo extends GameLevel {
     private ArrayList<Enemy> enemyList= new ArrayList(15);
     private MedPack medPack;
     public LevelTwo(Game game, MainCharacter mc){
+        //or maybe change contructor from mc to just int points int ammo int health
         super(game);
         setName("LevelTwo");
         getMainChar().setPosition(new Vec2(-21f,-16f));
         getMainChar().setPoints(mc.getPoints());
-        getMainChar().setPistol(mc.getPistol());
+        getMainChar().setPistol(new Pistol(this,mc.getPistol().getAmmo()));
+        mc.setPistol(null);
         getMainChar().setHealth(mc.getHealth());
         System.out.println("YOU'RE ON LEVEL TWO");
         this.addWalls();
@@ -35,6 +42,7 @@ public class LevelTwo extends GameLevel {
         this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
         medPack = new MedPack(this);
         medPack.setPosition(new Vec2(-14f,4f));
+        addThemeSong("assets/sounds/theme2.wav");
     }
 
 
@@ -44,6 +52,7 @@ public class LevelTwo extends GameLevel {
 
     public void setL2View(GameView view) {
         this.L2View=view;
+        this.getL2View().setVMainChar(getMainChar());
     }
 
     /**
@@ -104,7 +113,8 @@ public class LevelTwo extends GameLevel {
         enemyList.add(new Enemy(this, new Vec2(-17f,16f)));
         for (int i=0;i<enemyList.size();i++){
             enemyList.get(i).setLinearVelocity(new Vec2(0,0));
-            enemyList.get(i).addCollisionListener(new BulletToCharacter(getMainChar()));
+            enemyList.get(i).addCollisionListener(new BulletToCharacter(this.getMainChar()));
         }
     }
+
 }

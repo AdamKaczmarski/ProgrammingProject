@@ -18,6 +18,7 @@ public class BulletToCharacter implements CollisionListener {
     }
     public void addPoints(){
        getColMC().setPoints(getColMC().getPoints()+10);
+       getColMC().getPistol().setAmmo(getColMC().getPistol().getAmmo()+1);
     }
     @Override
     public void collide(CollisionEvent e) {
@@ -34,6 +35,7 @@ public class BulletToCharacter implements CollisionListener {
                 //System.out.println("Enemy's health: "+enemy.getHealth());
                 //enemy.setLinearVelocity(new Vec2(0,0));
                 if(enemy.getHealth()<=0){
+                    enemy.setPistol(null);
                     enemy.destroy();
                     //System.out.println("[BulletToCharacter] Enemy killed by MC!");
                     this.addPoints();
@@ -48,6 +50,8 @@ public class BulletToCharacter implements CollisionListener {
                // mainChar.setLinearVelocity(new Vec2(0,0));
                 //System.out.println("[BulletToCharacter] You've been hit by an Enemy (HP:"+mainChar.getHealth()+")");
                 if(mainChar.getHealth()<=0){
+                    mainChar.setPistol(null);
+                    //mainChar.getPistol().destroy();
                     mainChar.destroy();
                     //System.out.println("[BulletToCharacter] gg wp");
                 }
