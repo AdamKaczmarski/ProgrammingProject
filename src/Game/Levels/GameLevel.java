@@ -24,7 +24,6 @@ public class GameLevel extends World {
         mainChar = new MainCharacter(this);
         this.setGravity(0f);
         saveSen=new saveSensor(this);
-
     }
 
     public MainCharacter getMainChar() {

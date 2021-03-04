@@ -12,6 +12,7 @@ import Game.HOC.GameView;
 import Game.Items.MedPack;
 import Game.Levels.GameLevel;
 import Game.Levels.Walls.Wall;
+import Game.StepListeners.EnemyShoot;
 import city.cs.engine.SoundClip;
 import org.jbox2d.common.Vec2;
 
@@ -27,7 +28,6 @@ public class LevelTwo extends GameLevel {
     private ArrayList<Enemy> enemyList= new ArrayList(15);
     private MedPack medPack;
     public LevelTwo(Game game, MainCharacter mc){
-        //or maybe change contructor from mc to just int points int ammo int health
         super(game);
         setName("LevelTwo");
         getMainChar().setPosition(new Vec2(-21f,-16f));
@@ -43,6 +43,22 @@ public class LevelTwo extends GameLevel {
         medPack = new MedPack(this);
         medPack.setPosition(new Vec2(-14f,4f));
         addThemeSong("assets/sounds/theme2.wav");
+        //this.addStepListener(new EnemyShoot(enemyList,getMainChar()));
+    }
+    public LevelTwo(Game game){
+        super(game);
+        setName("LevelTwo");
+        getMainChar().setPosition(new Vec2(-21f,-16f));
+        getMainChar().setPistol(new Pistol(this,30));
+        System.out.println("YOU'RE ON LEVEL TWO");
+        this.addWalls();
+        this.spawnEnemies();
+        this.getSaveSen().getBody().setPosition(new Vec2(-22.5f,17f));
+        this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
+        medPack = new MedPack(this);
+        medPack.setPosition(new Vec2(-14f,4f));
+        addThemeSong("assets/sounds/theme2.wav");
+        //this.addStepListener(new EnemyShoot(enemyList,getMainChar()));
     }
 
 

@@ -20,7 +20,7 @@ public class MainCharacter extends Walker {
         super(world,charShape);
         this.image = new BodyImage("assets/images/mainCharacterPlaceholderRight.png", height);
         this.addImage(image);
-        this.setAlwaysOutline(true);
+        //this.setAlwaysOutline(true);
         this.setClipped(true);
         this.health=100;
         this.points=0;

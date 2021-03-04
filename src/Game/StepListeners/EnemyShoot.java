@@ -23,7 +23,7 @@ public class EnemyShoot implements StepListener {
     public void postStep(StepEvent stepEvent) {
         steps=steps+stepEvent.getStep();
         //System.out.println((float)Math.round(steps*10f)/10f);
-        if (steps>0.1 &&((float)Math.round(steps*10f)/10f)%1.5==0 ) {
+        if (steps>0.1 &&((float)Math.round(steps*10f)/10f)%1.5==0.00 ) {
                 int i = (int) (Math.random() * (enemyList.size())) + 0;
             //System.out.println(i);
                 enemyList.get(i).enemyShoot(mainChar.getPosition());

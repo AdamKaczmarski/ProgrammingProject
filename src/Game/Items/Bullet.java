@@ -17,7 +17,7 @@ public class Bullet extends DynamicBody {
     public Bullet(World w){
         super(w,bulletShape);
         this.addImage(bulletImage);
-        this.setAlwaysOutline(true);
+       // this.setAlwaysOutline(true);
         this.setBullet(true);
         this.setName("Bullet");
         this.setClipped(true);

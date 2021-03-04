@@ -30,7 +30,7 @@ public class LevelOne extends GameLevel {
     public LevelOne(Game game){
         super(game);
         setName("LevelOne");
-        getMainChar().setPosition(new Vec2(-3f,0f));
+        getMainChar().setPosition(new Vec2(-6f,0f));
         pistol = new Pistol(this);
         pistol.setPosition(new Vec2(-4f,2f));
         enemyList = new ArrayList<>(5);

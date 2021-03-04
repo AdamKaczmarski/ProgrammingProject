@@ -70,7 +70,7 @@ public class Pistol extends StaticBody {
         addImage(pistolImage);
         setName("Pistol");
         addCollisionListener(new PistolPickup());
-        setAlwaysOutline(true);
+        //setAlwaysOutline(true);
     }
     /**
      * Returns the amount of ammo

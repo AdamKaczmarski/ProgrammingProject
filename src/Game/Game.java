@@ -1,9 +1,7 @@
 package Game;
 // Imports
 import Game.Characters.MainCharacter;
-import Game.GUI.Components.BgPanel;
-import Game.GUI.Components.MainMenu;
-import Game.GUI.Components.MainMenu2;
+import Game.GUI.Containers.MainMenu;
 import Game.HOC.GameView;
 import Game.Levels.Level.LevelOne;
 import Game.Levels.Level.LevelThree;
@@ -12,32 +10,48 @@ import Game.Levels.GameLevel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Game {
     private GameLevel level;
     private GameView view;
     private JFrame frame;
+    private MainMenu menu;
+    private Font font;
+    private float sfxVolume; //add it in every contructor that sets sound
+    private float musicVolume;//adjust constructor in gamelevel to change theme lvl menu
     public Game(){
+        try {
+            font=Font.createFont(Font.TRUETYPE_FONT,new File("assets/fonts/STENCIL.TTF"));
+        } catch (FontFormatException e){
+            System.out.println(e);
+        }
+        catch (IOException e){
+            System.out.println(e);
+        }
         frame = new JFrame("The Game");
         frame.setPreferredSize(new Dimension(900,800));
         frame.setName("MainMenu");
         //JFrame debugView = new DebugViewer(level,1000,1000);
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
-        //BgPanel bg = new BgPanel();
-        //MainMenu menu =  new MainMenu(this,frame);
-        MainMenu2 menu = new MainMenu2(this);
-
-        frame.add(menu.getBgPanel(), BorderLayout.CENTER);
-
+        menu = new MainMenu(this,font);
+        frame.add(menu.getPanel(), BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
 
+        this.setSfxVolume(0.69f);
+        this.setMusicVolume(0.05f);
 
     }
-    public void changeLevel(String currentLevel, MainCharacter mainChar){
 
+    /**
+     *
+     * @param currentLevel
+     * @param mainChar
+     */
+    public void changeLevel(String currentLevel, MainCharacter mainChar){
         if (level!=null){
             level.stop();
             level.getThemeSong().stop();
@@ -46,26 +60,8 @@ public class Game {
             System.out.println("GG You've finished the game");
         }
         if (currentLevel.equals("MainMenu")){
-
-            //
             level=new LevelOne(this);
-            view = new GameView(level,900,800,level.getMainChar());
-            //frame = new JFrame("The Game");
-            // quit the application when the game window is closed
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            //frame.setLocationByPlatform(true);
-            // display the world in the window
-            frame.add(view);
-            // don't let the game window be resized
-            frame.setResizable(false);
-            // size the game window to fit the world view
-            frame.pack();
-            // make the window visible
-            frame.setVisible(true);
-
-            // view = new GameView(level,900,800,level.getMainChar());
-            getFrame().add(view);
-            view.setWorld(level);
+            frameSetter(level);
             ((LevelOne)level).setGameView(view);
             ((LevelOne)level).addControls(level.getMainChar());
             level.start();
@@ -87,6 +83,21 @@ public class Game {
             ((LevelThree)level).setL3View(view);
             ((LevelThree)level).addControls(level.getMainChar());
             level.start();
+        }
+        if (currentLevel.equals("LevelOneFromMenu")){
+            level=new LevelTwo(this);
+            frameSetter(level);
+            ((LevelTwo)level).setL2View(view);
+            ((LevelTwo) level).getL2View().setBckgr(new ImageIcon("assets/images/background2.png").getImage());
+            ((LevelTwo)level).addControls(level.getMainChar());
+            level.start();
+        }
+        if (currentLevel.equals("LevelTwoFromMenu")){
+            level=new LevelThree(this);
+            frameSetter(level);
+            ((LevelThree)level).setL3View(view);
+            ((LevelThree)level).addControls(level.getMainChar());
+            level.start();
         }/*
         if (currentLevel.equals("LevelThree")){
 
@@ -100,6 +111,32 @@ public class Game {
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    public float getMusicVolume() {
+        return musicVolume;
+    }
+
+    public float getSfxVolume() {
+        return sfxVolume;
+    }
+
+    public void setMusicVolume(float musicVolume) {
+        this.musicVolume = musicVolume;
+    }
+
+    public void setSfxVolume(float sfxVolume) {
+        this.sfxVolume = sfxVolume;
+    }
+
+    public void frameSetter(GameLevel level){
+        view = new GameView(level,900,800,level.getMainChar());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.pack();
+        frame.setVisible(true);
+        frame.add(view);
+        view.setWorld(level);
     }
 
     public static void main(String[] args) {

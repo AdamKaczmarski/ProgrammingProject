@@ -15,7 +15,7 @@ public class Enemy extends Walker {
     public Enemy (World world, Vec2 vec){
         super(world,enemyShape);
         this.addImage(enemyImage);
-        this.setAlwaysOutline(true);
+        //this.setAlwaysOutline(true);
         this.setName("Enemy");
         this.setClipped(true);
         this.addCollisionListener(new EnemyToWall());
