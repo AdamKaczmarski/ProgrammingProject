@@ -32,11 +32,13 @@ public class GameView extends UserView {
             g.drawString("HP: "+this.getVMainChar().getHealth(),5,746);
             g.setColor(new Color(139,69,19));
         } else {
+            g.setColor(new Color(139,69,19));
             g.drawString("HP: "+this.getVMainChar().getHealth(),5,746);
         }
 
         if(this.getVMainChar().getPistol()!=null){
             if(this.getVMainChar().getPistol().getAmmo()>0) {
+                g.setColor(new Color(139,69,19));
                 g.drawString("AMMO: "+this.getVMainChar().getPistol().getAmmo(),736,746);
             } else {
                 g.setColor(Color.RED);
@@ -44,6 +46,7 @@ public class GameView extends UserView {
                 g.setColor(new Color(139,69,19));
             }
         }
+        g.setColor(new Color(139,69,19));
         g.drawString("SCORE: "+this.getVMainChar().getPoints(),350,746);
 
     }

@@ -1,6 +1,7 @@
 package Game.Controls;
 
 import Game.Characters.MainCharacter;
+import city.cs.engine.Body;
 import city.cs.engine.BodyImage;
 import org.jbox2d.common.Vec2;
 
@@ -44,11 +45,21 @@ public class MainCharacterKeyboardController implements KeyListener {
         }
         if(mainChar.getLinearVelocity().x>0) {
             //Right Profile
-            mainChar.addImage(new BodyImage("assets/images/mainCharacterPlaceholderRight.png", mainChar.getHeight()));
+            mainChar.addImage(new BodyImage("assets/images/mainCharacterPlaceholderRight.png",mainChar.getHeight()));
+            //mainChar.addImage(new BodyImage("assets/images/mainCharLeft.png", mainChar.getHeight()));
+            /*mainChar.addImage(new BodyImage("assets/images/placeholder.png", mainChar.getHeight()));
+            mainChar.addImage(new BodyImage("assets/images/mainCharLeft.png", mainChar.getHeight()));*/
+            //mainChar.addImage(mainChar.getImagePic());
+
 
         } else {
             //Left Profile
-            mainChar.addImage(new BodyImage("assets/images/mainCharacterPlaceholderLeft.png", mainChar.getHeight()));
+            mainChar.addImage(new BodyImage("assets/images/mainCharacterPlaceholderLeft.png",mainChar.getHeight()));
+            //mainChar.addImage("assets/images/mainCharLeft.png", mainChar.getHeight());
+            /*mainChar.addImage(new BodyImage("assets/images/placeholder.png", mainChar.getHeight()));
+            mainChar.addImage(new BodyImage("assets/images/mainCharRight.png", mainChar.getHeight()));*/
+
+
         }
     }
     // STARTS THE MOVEMENT

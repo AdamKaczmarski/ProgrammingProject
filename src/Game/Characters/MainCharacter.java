@@ -1,14 +1,13 @@
 package Game.Characters;
 
 import Game.Collisons.BulletToCharacter;
-import Game.Collisons.MedPackPickup;
 import Game.Items.Pistol;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
 
 public class MainCharacter extends Walker {
-    private BodyImage image;
+    private BodyImage imagePic;
     private static final Shape charShape = new PolygonShape(-0.71f,-1.85f, 0.44f,-1.85f, 1.57f,1.04f, 0.8f,1.66f, -0.15f,1.94f, -1.51f,1.28f, -0.89f,-1.18f);
     private final float height=4f;
     private int health;
@@ -18,8 +17,9 @@ public class MainCharacter extends Walker {
 
     public MainCharacter(World world){
         super(world,charShape);
-        this.image = new BodyImage("assets/images/mainCharacterPlaceholderRight.png", height);
-        this.addImage(image);
+        this.imagePic = new BodyImage("assets/images/mainCharacterPlaceholderRight.png", height);
+        //this.imagePic = new BodyImage("assets/images/mainCharLeft.png", height);
+        this.addImage(imagePic);
         //this.setAlwaysOutline(true);
         this.setClipped(true);
         this.health=100;
@@ -69,10 +69,9 @@ public class MainCharacter extends Walker {
      * Returns the image of the character
      * @return  BodyImage object
      */
-    public BodyImage getImage(){
-        return this.image;
+    public BodyImage getImagePic() {
+        return imagePic;
     }
-
     /* MUTATORS */
 
     /**
@@ -98,10 +97,10 @@ public class MainCharacter extends Walker {
     public void setPoints(int addPoints) {this.points = addPoints;}
     /**
      * Set image of the character
-     * @param image a new BodyImage object
+     * @param imagePic a new BodyImage object
      */
-    public void setImage(BodyImage image) {
-        this.image = image;
+    public void setImagePic(BodyImage imagePic) {
+        this.imagePic = imagePic;
     }
 
     /**
