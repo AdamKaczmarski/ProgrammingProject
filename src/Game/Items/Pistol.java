@@ -30,7 +30,7 @@ public class Pistol extends StaticBody {
         try {
             shootSound= new SoundClip("assets/sounds/shoot.wav");
             noAmmoSound =  new SoundClip("assets/sounds/no_ammo.wav");
-            shootSound.setVolume(0.5f);
+            shootSound.setVolume(0.25f);
         }  catch (LineUnavailableException e) {
             e.printStackTrace();
         } catch (IOException e) {
