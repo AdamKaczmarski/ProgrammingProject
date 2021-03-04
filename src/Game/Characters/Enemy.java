@@ -1,6 +1,5 @@
 package Game.Characters;
 
-import Game.Collisons.BulletToCharacter;
 import Game.Collisons.EnemyToWall;
 import Game.Items.Pistol;
 import city.cs.engine.*;
@@ -23,7 +22,6 @@ public class Enemy extends Walker {
         this.setPosition(vec);
         this.Pistol= new Pistol(world, true);
         this.w=world;
-
     }
     /* ACCESSORS */
     public int getHealth() {

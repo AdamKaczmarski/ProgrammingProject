@@ -1,7 +1,9 @@
 package Game;
 // Imports
 import Game.Characters.MainCharacter;
+import Game.GUI.Components.BgPanel;
 import Game.GUI.Components.MainMenu;
+import Game.GUI.Components.MainMenu2;
 import Game.HOC.GameView;
 import Game.Levels.Level.LevelOne;
 import Game.Levels.Level.LevelThree;
@@ -23,8 +25,12 @@ public class Game {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
-        MainMenu menu = new MainMenu(this);
-        frame.add(menu.getMainPanel(), BorderLayout.CENTER);
+        //BgPanel bg = new BgPanel();
+        //MainMenu menu =  new MainMenu(this,frame);
+        MainMenu2 menu = new MainMenu2(this);
+
+        frame.add(menu.getBgPanel(), BorderLayout.CENTER);
+
         frame.pack();
         frame.setVisible(true);
 
@@ -65,7 +71,6 @@ public class Game {
             level.start();
         }
         if (currentLevel.equals("LevelOne")){
-
             level=new LevelTwo(this,mainChar);
            // view = new GameView(level,900,800,level.getMainChar());
             view.setWorld(level);
@@ -80,7 +85,6 @@ public class Game {
             level=new LevelThree(this,mainChar);
             view.setWorld(level);
             ((LevelThree)level).setL3View(view);
-
             ((LevelThree)level).addControls(level.getMainChar());
             level.start();
         }/*
