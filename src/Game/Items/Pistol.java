@@ -134,16 +134,18 @@ public class Pistol extends StaticBody {
                     if (mouseDir.y<(db.getPosition().y) && mouseDir.y>(db.getPosition().y-(charHeight/2))){
                         System.out.println("??");
                         b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y));
-                        b.setLinearVelocity(new Vec2(mouseDir.x+0.85f,mouseDir.y));
+                        b.setLinearVelocity(new Vec2(mouseDir.x+0.85f,mouseDir.y-db.getPosition().y));
                     } else {
                         b.setPosition(new Vec2(db.getPosition().x + 0.85f, db.getPosition().y - (charHeight / 2)));
                         b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
                     }
                 }
                 if (mouseDir.x<=db.getPosition().x && mouseDir.y<=db.getPosition().y){
+
                     if (mouseDir.y<(db.getPosition().y) && mouseDir.y>(db.getPosition().y-(charHeight/2))){
+                        System.out.println("this");
                         b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y));
-                        b.setLinearVelocity(new Vec2(mouseDir.x + 0.85f,mouseDir.y+db.getPosition().y));
+                        b.setLinearVelocity(new Vec2(mouseDir.x + 0.85f,mouseDir.y-db.getPosition().y));
                     } else {
                         b.setPosition(new Vec2(db.getPosition().x - 0.85f, db.getPosition().y - (charHeight / 2)));
                         b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));

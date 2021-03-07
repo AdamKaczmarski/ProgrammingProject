@@ -16,7 +16,7 @@ public class SelectLevelMenu extends JPanel {
     private Button back;
     private Image menuBg;
     private JLabel title;
-    public SelectLevelMenu(Image bg,Game g, MainMenu m, Font f){
+    public SelectLevelMenu(Image bg,Game g, MainMenu m, Font f, String playPause){
         this.title = new JLabel();
         title.setText("The Game");
         title.setFont(f.deriveFont(f.getStyle() | Font.PLAIN,128));
@@ -52,7 +52,7 @@ public class SelectLevelMenu extends JPanel {
             System.out.println("LEVEL 4 DOESNT EXIT YET");
         });
         back.addActionListener(e->{
-            m.setPanel(new BgPanel(bg,g,m,f));
+            m.setPanel(new BgPanel(bg,g,m,f,playPause));
             g.getFrame().add(m.getPanel(),BorderLayout.CENTER);
             this.setVisible(false);
         });

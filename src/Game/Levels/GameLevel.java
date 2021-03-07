@@ -1,6 +1,7 @@
 package Game.Levels;
 
 import Game.Characters.MainCharacter;
+import Game.Controls.MouseController;
 import Game.Game;
 import Game.HOC.GameView;
 
@@ -10,6 +11,7 @@ import city.cs.engine.World;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.awt.event.KeyListener;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -19,6 +21,8 @@ public class GameLevel extends World {
     private String name;
     private saveSensor saveSen;
     private SoundClip themeSong;
+    private KeyListener keyboard;
+    private MouseController mouse;
     public GameLevel(Game game){
         super();
         mainChar = new MainCharacter(this);
@@ -43,6 +47,13 @@ public class GameLevel extends World {
     public saveSensor getSaveSen() {
         return saveSen;
     }
+    public MouseController getMouse() {
+        return mouse;
+    }
+
+    public KeyListener getKeyboard() {
+        return keyboard;
+    }
 
     public void setMainChar(MainCharacter mainChar) {
         this.mainChar = mainChar;
@@ -56,7 +67,13 @@ public class GameLevel extends World {
         this.name=n;
     }
 
+    public void setKeyboard(KeyListener keyboard) {
+        this.keyboard = keyboard;
+    }
 
+    public void setMouse(MouseController mouse) {
+        this.mouse = mouse;
+    }
 
     /**
      * This method creates a save file when main character enters a certain area which will move him to another level

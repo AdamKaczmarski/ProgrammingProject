@@ -43,6 +43,10 @@ public class LevelThree extends GameLevel {
         this.addWalls();
         this.addRotPills();
     }
+
+    /**
+     * This contructor is used when user wants to jump straight to Level Three using the MainMenu
+     */
     public LevelThree(Game game) {
         super(game);
         setName("LevelThree");
@@ -56,6 +60,8 @@ public class LevelThree extends GameLevel {
         pistol.setPosition(new Vec2(-20f,17f));
         this.addWalls();
         this.addRotPills();
+        this.getSaveSen().getBody().setPosition(new Vec2(-21f,-16f));
+        this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
     }
 
     public GameView getL3View() {
@@ -72,9 +78,9 @@ public class LevelThree extends GameLevel {
      *
      * @param mainChar it requires main character to control his actions - movement and shooting
      */
-    public void addControls(MainCharacter mainChar) {
+    public void addControls(MainCharacter mainChar, Game g) {
         if (this.getL3View() != null) {
-            L3View.addKeyListener(new MainCharacterKeyboardController(mainChar));
+            L3View.addKeyListener(new MainCharacterKeyboardController(mainChar,g));
             L3View.addMouseListener(new MouseController(L3View, mainChar));
         }
     }

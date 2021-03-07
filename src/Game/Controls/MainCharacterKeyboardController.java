@@ -1,19 +1,27 @@
 package Game.Controls;
 
 import Game.Characters.MainCharacter;
+import Game.GUI.Containers.BgPanel;
+import Game.Game;
 import city.cs.engine.Body;
 import city.cs.engine.BodyImage;
 import org.jbox2d.common.Vec2;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class MainCharacterKeyboardController implements KeyListener {
     private static final int WALKING_SPEED_X = 8;
     private static final int WALKING_SPEED_Y = 8;
+    private boolean gameInPlay;
     private MainCharacter mainChar;
-    public MainCharacterKeyboardController(MainCharacter mC){
+    private Game game;
+    public MainCharacterKeyboardController(MainCharacter mC, Game g){
         this.mainChar=mC;
+        this.game=g;
+        this.gameInPlay=true;
     }
 
     /**
@@ -62,6 +70,34 @@ public class MainCharacterKeyboardController implements KeyListener {
 
         }
     }
+
+    /**
+     * This method is going to pause the game everytime an Escape key has beed pressed
+     * It is also used to resume the game
+     */
+    private void pauseMenu(){
+        System.out.println(gameInPlay);
+        if (gameInPlay ==false){
+            game.getLevel().stop();
+            game.getLevel().getThemeSong().stop();
+            game.getMenu().setPanel(new BgPanel(new ImageIcon("assets/gifs/BgPanel.gif").getImage(),game,game.getMenu(),game.getFont(),"Resume"));
+            game.getFrame().add(game.getMenu().getPanel(), BorderLayout.CENTER);
+            game.getFrame().pack();
+            game.getFrame().setVisible(true);
+            game.getMenu().getPanel().requestFocus();
+            game.getMenu().getPanel().setVisible(true);
+            //game.getMenu().getPanel().setFocusable(true);
+        } else {
+            game.getMenu().getPanel().setVisible(false);
+            game.getLevel().start();
+            game.getLevel().getThemeSong().resume();
+        }
+
+        /*game.getFrame().add(new BgPanel(new ImageIcon("assets/gifs/BgPanel.gif").getImage(),game,game.getMenu(),game.getFont(),"Resume"), BorderLayout.CENTER);
+        //game.getFrame().pack();
+        game.getFrame().setVisible(true);*/
+
+    }
     // STARTS THE MOVEMENT
     @Override
     public void keyPressed(KeyEvent e) {
@@ -71,7 +107,7 @@ public class MainCharacterKeyboardController implements KeyListener {
             case KeyEvent.VK_D: movementHandler(2); break;
             case KeyEvent.VK_W: movementHandler(3); break;
             case KeyEvent.VK_S: movementHandler(4); break;
-
+            case KeyEvent.VK_ESCAPE: pauseMenu(); gameInPlay=!gameInPlay; break;
         }
     }
     // STOPS THE MOVEMENT

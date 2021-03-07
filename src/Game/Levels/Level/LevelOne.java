@@ -17,6 +17,7 @@ import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class LevelOne extends GameLevel {
     //private MainCharacter mainChar;
     private Pistol pistol;
     private ArrayList<Enemy> enemyList;
-    private SoundClip theme1;
+
     public LevelOne(Game game){
         super(game);
         setName("LevelOne");
@@ -62,10 +63,11 @@ public class LevelOne extends GameLevel {
 
         this.getSaveSen().getBody().setPosition(new Vec2(21f,17f));
         this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
-        this.addStepListener(new EnemyShoot(enemyList,getMainChar()));
+        this.addStepListener(new EnemyShoot(enemyList,getMainChar(),1.5f));
     }
     /* GETTERS */
     public GameView getL1View(){ return L1view; }
+
 
 
     /* SETTERS */
@@ -78,10 +80,12 @@ public class LevelOne extends GameLevel {
      * This method adds Controls (KeyListener and MouseController) to the view of this level
      * @param mainChar it requires main character to control his actions - movement and shooting
      */
-    public void addControls(MainCharacter mainChar){
+    public void addControls(MainCharacter mainChar, Game g){
         if (this.getL1View()!=null ) {
-            L1view.addKeyListener(new MainCharacterKeyboardController(mainChar));
-            L1view.addMouseListener(new MouseController(L1view,mainChar));
+            this.setKeyboard(new MainCharacterKeyboardController(mainChar,g));
+            this.setMouse(new MouseController(L1view,mainChar));
+            L1view.addKeyListener(this.getKeyboard());
+            L1view.addMouseListener(this.getMouse());
         }
     }
 

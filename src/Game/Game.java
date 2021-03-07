@@ -36,7 +36,7 @@ public class Game {
         //JFrame debugView = new DebugViewer(level,1000,1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
-        menu = new MainMenu(this,font);
+        menu = new MainMenu(this,font,"Play");
         frame.add(menu.getPanel(), BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
@@ -63,7 +63,7 @@ public class Game {
             level=new LevelOne(this);
             frameSetter(level);
             ((LevelOne)level).setGameView(view);
-            ((LevelOne)level).addControls(level.getMainChar());
+            ((LevelOne)level).addControls(level.getMainChar(),this);
             level.start();
         }
         if (currentLevel.equals("LevelOne")){
@@ -72,7 +72,7 @@ public class Game {
             view.setWorld(level);
             ((LevelTwo)level).setL2View(view);
             ((LevelTwo) level).getL2View().setBckgr(new ImageIcon("assets/images/background2.png").getImage());
-            ((LevelTwo)level).addControls(level.getMainChar());
+            ((LevelTwo)level).addControls(level.getMainChar(),this);
             level.start();
         }
         if (currentLevel.equals("LevelTwo")){
@@ -81,7 +81,7 @@ public class Game {
             level=new LevelThree(this,mainChar);
             view.setWorld(level);
             ((LevelThree)level).setL3View(view);
-            ((LevelThree)level).addControls(level.getMainChar());
+            ((LevelThree)level).addControls(level.getMainChar(),this);
             level.start();
         }
         if (currentLevel.equals("LevelOneFromMenu")){
@@ -89,28 +89,37 @@ public class Game {
             frameSetter(level);
             ((LevelTwo)level).setL2View(view);
             ((LevelTwo) level).getL2View().setBckgr(new ImageIcon("assets/images/background2.png").getImage());
-            ((LevelTwo)level).addControls(level.getMainChar());
+            ((LevelTwo)level).addControls(level.getMainChar(),this);
             level.start();
         }
         if (currentLevel.equals("LevelTwoFromMenu")){
             level=new LevelThree(this);
             frameSetter(level);
             ((LevelThree)level).setL3View(view);
-            ((LevelThree)level).addControls(level.getMainChar());
+            ((LevelThree)level).addControls(level.getMainChar(),this);
             level.start();
-        }/*
+        }
         if (currentLevel.equals("LevelThree")){
-
-            level=new LevelFour();
+            System.out.println("You have finished the Milestone 2 Gameplay");
+            /*level=new LevelFour();
             view.setWorld(level);
-            ((LevelFour)level).setL4View(view);
-        }*/
+            ((LevelFour)level).setL4View(view);*/
+        }
+
 
 
     }
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    public MainMenu getMenu() {
+        return menu;
+    }
+
+    public Font getFont() {
+        return font;
     }
 
     public float getMusicVolume() {
@@ -121,6 +130,10 @@ public class Game {
         return sfxVolume;
     }
 
+    public GameLevel getLevel() {
+        return level;
+    }
+
     public void setMusicVolume(float musicVolume) {
         this.musicVolume = musicVolume;
     }
@@ -129,6 +142,10 @@ public class Game {
         this.sfxVolume = sfxVolume;
     }
 
+    /**
+     * This method sets the level for view and the sets frame's view
+     * @param level the GameLevel object the frame should set to
+     */
     public void frameSetter(GameLevel level){
         view = new GameView(level,900,800,level.getMainChar());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

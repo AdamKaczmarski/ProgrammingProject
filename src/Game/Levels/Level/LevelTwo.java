@@ -43,8 +43,13 @@ public class LevelTwo extends GameLevel {
         medPack = new MedPack(this);
         medPack.setPosition(new Vec2(-14f,4f));
         addThemeSong("assets/sounds/theme2.wav");
-        //this.addStepListener(new EnemyShoot(enemyList,getMainChar()));
+        this.addStepListener(new EnemyShoot(enemyList,getMainChar(),0.7f));
     }
+
+    /**
+     * This contructor is used when user wants to jump straight to Level Two using the MainMenu
+     * @param game
+     */
     public LevelTwo(Game game){
         super(game);
         setName("LevelTwo");
@@ -58,7 +63,7 @@ public class LevelTwo extends GameLevel {
         medPack = new MedPack(this);
         medPack.setPosition(new Vec2(-14f,4f));
         addThemeSong("assets/sounds/theme2.wav");
-        //this.addStepListener(new EnemyShoot(enemyList,getMainChar()));
+        this.addStepListener(new EnemyShoot(enemyList,getMainChar(),0.7f));
     }
 
 
@@ -75,9 +80,9 @@ public class LevelTwo extends GameLevel {
      * This method adds Controls (KeyListener and MouseController) to the view of this level
      * @param mainChar it requires main character to control his actions - movement and shooting
      */
-    public void addControls(MainCharacter mainChar){
+    public void addControls(MainCharacter mainChar, Game g){
         if (this.getL2View()!=null ) {
-            L2View.addKeyListener(new MainCharacterKeyboardController(mainChar));
+            L2View.addKeyListener(new MainCharacterKeyboardController(mainChar,g));
             L2View.addMouseListener(new MouseController(L2View,mainChar));
         }
     }

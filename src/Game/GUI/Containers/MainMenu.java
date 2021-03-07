@@ -10,9 +10,9 @@ public class MainMenu {
     private SelectLevelMenu slm;*/
     private JPanel panel;
     private Font font;
-    public MainMenu(Game g, Font font){
+    public MainMenu(Game g, Font font, String playPause){
         this.font = font;
-        panel = new BgPanel(new ImageIcon("assets/gifs/BgPanel.gif").getImage(),g,this,font);
+        panel = new BgPanel(new ImageIcon("assets/gifs/BgPanel.gif").getImage(),g,this,font,playPause);
     }
 
 

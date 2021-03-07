@@ -14,7 +14,7 @@ public class SoundMenu extends JPanel {
     private JSlider sfcVol;
     private JSlider musicVol;
     private JButton back;
-    public SoundMenu(Image bg, Game g, MainMenu m, Font f){
+    public SoundMenu(Image bg, Game g, MainMenu m, Font f, String playPause){
         this.menuBg =  bg;
         this.setLayout(null);
         this.title = new JLabel();
@@ -22,6 +22,12 @@ public class SoundMenu extends JPanel {
         title.setFont(f.deriveFont(f.getStyle() | Font.PLAIN,128));
         title.setBounds(150,64,800,130);
         this.add(title);
+
+        JLabel disclaimer = new JLabel();
+        disclaimer.setText("I'm sorry for this feature still doesn't work");
+        disclaimer.setFont(f.deriveFont(f.getStyle() | Font.PLAIN,24));
+        disclaimer.setBounds(150,400,600,30);
+        this.add(disclaimer);
 
         sfx = new JLabel();
         sfx.setText("SFX Volume");
@@ -49,7 +55,7 @@ public class SoundMenu extends JPanel {
 
         this.back=new Button("<<< GO BACK",300,500,300,40);
         back.addActionListener(e->{
-            m.setPanel(new BgPanel(bg,g,m,f));
+            m.setPanel(new BgPanel(bg,g,m,f,playPause));
             g.getFrame().add(m.getPanel(),BorderLayout.CENTER);
             this.setVisible(false);
         });
