@@ -12,7 +12,7 @@ public class GameView extends UserView {
     public GameView(World w, int width, int height, MainCharacter mc){
         super(w,width,height);
         this.mainChar=mc;
-        bckgr =  new ImageIcon("assets/images/background1.png").getImage();
+        bckgr =  new ImageIcon("assets/images/background1_2.png").getImage();
     }
     public GameView(World w, int width, int height){
         super(w,width,height);

@@ -53,6 +53,19 @@ public class BgPanel extends JPanel {
             });
             this.add(play);
         }
+        if (playPause.equals("Resume")){
+            JLabel disclaimer = new JLabel();
+            disclaimer.setText("The buttons don't work, IDK why (something w/ focus)");
+            disclaimer.setFont(f.deriveFont(f.getStyle() | Font.PLAIN,30));
+            disclaimer.setBounds(10,400,890,40);
+            this.add(disclaimer);
+
+            JLabel disclaimer2 = new JLabel();
+            disclaimer2.setText("Press ESC to resume");
+            disclaimer2.setFont(f.deriveFont(f.getStyle() | Font.PLAIN,30));
+            disclaimer2.setBounds(300,500,500,40);
+            this.add(disclaimer2);
+        }
 
 
         this.selectLevel =  new Button("Select Level",300,300,300,40);
@@ -91,7 +104,7 @@ public class BgPanel extends JPanel {
      * It is used to resume the play from Pause Menu
      */
     public void resumePlay(){
-        System.out.println("Reusme");
+        System.out.println("Resume");
         this.setVisible(false);
         game.getLevel().start();
     }

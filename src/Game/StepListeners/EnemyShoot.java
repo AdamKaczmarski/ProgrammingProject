@@ -4,6 +4,8 @@ import Game.Characters.Enemy;
 import city.cs.engine.StepEvent;
 import city.cs.engine.StepListener;
 import Game.Characters.MainCharacter;
+
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class EnemyShoot implements StepListener {
@@ -15,6 +17,7 @@ public class EnemyShoot implements StepListener {
         this.enemyList=el;
         this.mainChar=mc;
         this.stepDiv=v;
+
     }
     @Override
     public void preStep(StepEvent stepEvent) {

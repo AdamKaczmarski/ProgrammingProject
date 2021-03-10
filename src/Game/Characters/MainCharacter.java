@@ -1,14 +1,20 @@
 package Game.Characters;
 
+import Game.Characters.Fixtures.mainCharFixture;
 import Game.Collisons.BulletToCharacter;
 import Game.Items.Pistol;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import java.util.ArrayList;
+
 
 public class MainCharacter extends Walker {
     private BodyImage imagePic;
-    private static final Shape charShape = new PolygonShape(-0.71f,-1.85f, 0.44f,-1.85f, 1.57f,1.04f, 0.8f,1.66f, -0.15f,1.94f, -1.51f,1.28f, -0.89f,-1.18f);
+    private static Shape charShape = new PolygonShape(-0.76f,-1.92f, 1.4f,-1.91f, 1.53f,0.02f, 1.14f,1.9f, 0.08f,1.44f, -0.79f,1.02f, -1.46f,-0.3f);
+    //private mainCharFixture fixtureRight = new mainCharFixture(this,new PolygonShape(-0.76f,-1.92f, 1.4f,-1.91f, 1.53f,0.02f, 1.14f,1.9f, 0.08f,1.44f, -0.79f,1.02f, -1.46f,-0.3f));
+    private mainCharFixture fixture;
+
     private final float height=4f;
     private int health;
     private int points;
@@ -16,11 +22,12 @@ public class MainCharacter extends Walker {
     private World w;
 
     public MainCharacter(World world){
-        super(world,charShape);
-        this.imagePic = new BodyImage("assets/images/mainCharacterPlaceholderRight.png", height);
-        //this.imagePic = new BodyImage("assets/images/mainCharLeft.png", height);
+        super(world);
+        this.fixture= new mainCharFixture(this,new PolygonShape(-0.76f,-1.92f, 1.4f,-1.91f, 1.53f,0.02f, 1.14f,1.9f, 0.08f,1.44f, -0.79f,1.02f, -1.46f,-0.3f));
+        //this.imagePic = new BodyImage("assets/images/mainCharacterPlaceholderRight.png", height);
+        this.imagePic = new BodyImage("assets/gifs/mainCharRight.gif", height);
         this.addImage(imagePic);
-        //this.setAlwaysOutline(true);
+        this.setAlwaysOutline(true);
         this.setClipped(true);
         this.health=100;
         this.points=0;
@@ -69,8 +76,8 @@ public class MainCharacter extends Walker {
      * Returns the image of the character
      * @return  BodyImage object
      */
-    public BodyImage getImagePic() {
-        return imagePic;
+    public mainCharFixture getFixture() {
+        return fixture;
     }
     /* MUTATORS */
 
@@ -85,6 +92,11 @@ public class MainCharacter extends Walker {
         this.healthCheck();
 
     }
+
+    public void setFixture(mainCharFixture fixture) {
+        this.fixture = fixture;
+    }
+
     /**
      * Set Pistol
      */
@@ -95,12 +107,9 @@ public class MainCharacter extends Walker {
      *
      */
     public void setPoints(int addPoints) {this.points = addPoints;}
-    /**
-     * Set image of the character
-     * @param imagePic a new BodyImage object
-     */
-    public void setImagePic(BodyImage imagePic) {
-        this.imagePic = imagePic;
+
+    public void setCharShape(Shape charShape) {
+        MainCharacter.charShape = charShape;
     }
 
     /**
@@ -118,6 +127,28 @@ public class MainCharacter extends Walker {
         if(this.getHealth()<=0){
             System.out.println("You died!");
             this.destroy();
+        }
+    }
+
+    /**
+     * This method sets the correct Fixtures to the MainCharacter object depending on the direction it's going.
+     * @param dir a parameter that indicates the direction the character is going 0 - going to the left (right profile) 1 - goign to the right (left profile)
+     */
+    public void swapFixtures(int dir){
+        switch (dir){
+            //right prof
+            case 0: {
+                this.getFixture().destroy();
+                this.setFixture(new mainCharFixture(this, new PolygonShape(0.61f, -1.95f, -1.43f, -1.92f, -1.56f, -0.08f, -1.1f, 1.94f, 0.73f, 1.17f, 1.48f, -0.34f)));
+                break;
+            }
+
+            //left prof
+            case 1: {
+                this.getFixture().destroy();
+                this.setFixture(new mainCharFixture(this,new PolygonShape(-0.76f, -1.92f, 1.4f, -1.91f, 1.53f, 0.02f, 1.14f, 1.9f, 0.08f, 1.44f, -0.79f, 1.02f, -1.46f, -0.3f) ));
+                break;
+            }
         }
     }
 }

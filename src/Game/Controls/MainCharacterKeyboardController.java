@@ -3,6 +3,7 @@ package Game.Controls;
 import Game.Characters.MainCharacter;
 import Game.GUI.Containers.BgPanel;
 import Game.Game;
+import Game.Levels.Level.LevelOne;
 import city.cs.engine.Body;
 import city.cs.engine.BodyImage;
 import org.jbox2d.common.Vec2;
@@ -53,19 +54,19 @@ public class MainCharacterKeyboardController implements KeyListener {
         }
         if(mainChar.getLinearVelocity().x>0) {
             //Right Profile
-            mainChar.addImage(new BodyImage("assets/images/mainCharacterPlaceholderRight.png",mainChar.getHeight()));
-            //mainChar.addImage(new BodyImage("assets/images/mainCharLeft.png", mainChar.getHeight()));
-            /*mainChar.addImage(new BodyImage("assets/images/placeholder.png", mainChar.getHeight()));
-            mainChar.addImage(new BodyImage("assets/images/mainCharLeft.png", mainChar.getHeight()));*/
-            //mainChar.addImage(mainChar.getImagePic());
+            //mainChar.addImage(new BodyImage("assets/images/mainCharacterPlaceholderRight.png",mainChar.getHeight()));
+            mainChar.removeAllImages();
+            mainChar.swapFixtures(0);
+            mainChar.addImage(new BodyImage("assets/gifs/mainCharLeft.gif", mainChar.getHeight()));
 
 
         } else {
             //Left Profile
-            mainChar.addImage(new BodyImage("assets/images/mainCharacterPlaceholderLeft.png",mainChar.getHeight()));
-            //mainChar.addImage("assets/images/mainCharLeft.png", mainChar.getHeight());
-            /*mainChar.addImage(new BodyImage("assets/images/placeholder.png", mainChar.getHeight()));
-            mainChar.addImage(new BodyImage("assets/images/mainCharRight.png", mainChar.getHeight()));*/
+            //mainChar.addImage(new BodyImage("assets/images/mainCharacterPlaceholderLeft.png",mainChar.getHeight()));
+            mainChar.removeAllImages();
+            mainChar.swapFixtures(1);
+            //mainChar.setCharShape(-0.76f,-1.92f, 1.4f,-1.91f, 1.53f,0.02f, 1.14f,1.9f, 0.08f,1.44f, -0.79f,1.02f, -1.46f,-0.3f);
+            mainChar.addImage(new BodyImage("assets/gifs/mainCharRight.gif", mainChar.getHeight()));
 
 
         }
@@ -80,12 +81,14 @@ public class MainCharacterKeyboardController implements KeyListener {
         if (gameInPlay ==false){
             game.getLevel().stop();
             game.getLevel().getThemeSong().stop();
+            ((LevelOne)game.getLevel()).getL1View().setFocusable(false);
             game.getMenu().setPanel(new BgPanel(new ImageIcon("assets/gifs/BgPanel.gif").getImage(),game,game.getMenu(),game.getFont(),"Resume"));
             game.getFrame().add(game.getMenu().getPanel(), BorderLayout.CENTER);
             game.getFrame().pack();
             game.getFrame().setVisible(true);
-            game.getMenu().getPanel().requestFocus();
-            game.getMenu().getPanel().setVisible(true);
+            //game.getMenu().getPanel().requestFocus();
+            //game.getMenu().getPanel().grabFocus();
+            //game.getMenu().getPanel().setVisible(true);
             //game.getMenu().getPanel().setFocusable(true);
         } else {
             game.getMenu().getPanel().setVisible(false);

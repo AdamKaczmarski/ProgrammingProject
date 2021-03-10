@@ -27,13 +27,14 @@ and my ammo is up to 120. [SOLVED]
 12. Spawn enemies in random positions[DONE]
 13. When mouse gets clicked on the userview grid it send the bullet in this direction. [SOLVED]
 
-14. Every 0.5 random enemy shoots at the character (USE TIMER/STEPS TO BE DONE)
+14. Every 0.5 random enemy shoots at the character (USE TIMER/STEPS TO BE DONE) [DONE]
 16. Make enemy change iots direction the main character every couple f STEPS of the game running
 17. If enemy's ammo is equal 0 make the enemy run quickily towards the maincharacter and if they collide the enemy explodes taking 45 hp from the MC
 18. If the bullet hits the pistol object it destroys it, maybe add some melee then?
-19. How to repaint foreground when something happened (eg. medpack picked)
-20. Fix the bug with shooting
-21. Add StepListener to make enemies shoot once in a while
+19. How to repaint foreground when something happened (eg. medpack picked) [DONE]
+20. Fix the bug with shooting [KINDA DONE]
+21. Add StepListener to make enemies shoot once in a while [DONE]
 22. Add enemies movement and make them change the picture
 23. Find some grunt sounds
 24. Level 4 = boss fight -  develop boss class
+25. Add some images to make displays look better (for marks)

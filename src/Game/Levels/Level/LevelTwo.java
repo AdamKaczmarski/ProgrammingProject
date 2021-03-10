@@ -13,13 +13,9 @@ import Game.Items.MedPack;
 import Game.Levels.GameLevel;
 import Game.Levels.Walls.Wall;
 import Game.StepListeners.EnemyShoot;
-import city.cs.engine.SoundClip;
+import Game.Timers.EnShoot;
 import org.jbox2d.common.Vec2;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class LevelTwo extends GameLevel {
@@ -27,6 +23,7 @@ public class LevelTwo extends GameLevel {
     private ArrayList<Wall> walls = new ArrayList(15);
     private ArrayList<Enemy> enemyList= new ArrayList(15);
     private MedPack medPack;
+    private Timer timer;
     public LevelTwo(Game game, MainCharacter mc){
         super(game);
         setName("LevelTwo");
@@ -43,7 +40,10 @@ public class LevelTwo extends GameLevel {
         medPack = new MedPack(this);
         medPack.setPosition(new Vec2(-14f,4f));
         addThemeSong("assets/sounds/theme2.wav");
-        this.addStepListener(new EnemyShoot(enemyList,getMainChar(),0.7f));
+        //this.addStepListener(new EnemyShoot(enemyList,getMainChar(),0.7f));
+
+        timer = new Timer(700,new EnShoot(enemyList,getMainChar()));
+        timer.start();
     }
 
     /**
@@ -63,7 +63,10 @@ public class LevelTwo extends GameLevel {
         medPack = new MedPack(this);
         medPack.setPosition(new Vec2(-14f,4f));
         addThemeSong("assets/sounds/theme2.wav");
-        this.addStepListener(new EnemyShoot(enemyList,getMainChar(),0.7f));
+        //this.addStepListener(new EnemyShoot(enemyList,getMainChar(),0.7f));
+
+        timer = new Timer(700,new EnShoot(enemyList,getMainChar()));
+        timer.start();
     }
 
 
