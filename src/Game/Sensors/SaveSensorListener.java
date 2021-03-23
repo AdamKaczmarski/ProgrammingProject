@@ -28,8 +28,8 @@ public class SaveSensorListener implements SensorListener {
             //System.out.println("[SaveSensorListener] MC in the safezone");
             if (this.level.getName().equals("LevelOne")) {
                 if (mc.getPoints()%50==0) {
-                    ((LevelOne)level).getL1View().removeMouseListener( level.getMouse());
-                    ((LevelOne)level).getL1View().removeKeyListener( level.getKeyboard());
+                    level.getView().removeMouseListener( level.getMouse());
+                    level.getView().removeKeyListener( level.getKeyboard());
                     this.game.changeLevel(level.getName(), mc);
                 }
                 else {
@@ -40,8 +40,8 @@ public class SaveSensorListener implements SensorListener {
             if (this.level.getName().equals("LevelTwo")){
                 if (mc.getPoints()%100==0) {
                     this.game.changeLevel(level.getName(), mc);
-                    ((LevelTwo)level).getL2View().removeMouseListener( level.getMouse());
-                    ((LevelTwo)level).getL2View().removeKeyListener( level.getKeyboard());
+                    level.getView().removeMouseListener( level.getMouse());
+                    level.getView().removeKeyListener( level.getKeyboard());
                 }
                 else {
                     System.out.println("[SaveSensorListener] You need more points");

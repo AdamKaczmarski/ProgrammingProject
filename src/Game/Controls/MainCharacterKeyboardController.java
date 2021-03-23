@@ -3,8 +3,7 @@ package Game.Controls;
 import Game.Characters.MainCharacter;
 import Game.GUI.Containers.BgPanel;
 import Game.Game;
-import Game.Levels.Level.LevelOne;
-import city.cs.engine.Body;
+import Game.Levels.GameLevel;
 import city.cs.engine.BodyImage;
 import org.jbox2d.common.Vec2;
 
@@ -19,7 +18,7 @@ public class MainCharacterKeyboardController implements KeyListener {
     private boolean gameInPlay;
     private MainCharacter mainChar;
     private Game game;
-    public MainCharacterKeyboardController(MainCharacter mC, Game g){
+    public MainCharacterKeyboardController(MainCharacter mC, Game g, GameLevel level){
         this.mainChar=mC;
         this.game=g;
         this.gameInPlay=true;
@@ -57,15 +56,11 @@ public class MainCharacterKeyboardController implements KeyListener {
             mainChar.removeAllImages();
             mainChar.swapFixtures(0);
             mainChar.addImage(new BodyImage("assets/gifs/mainCharLeft.gif", mainChar.getHeight()));
-
-
         } else {
             //Left Profile
             mainChar.removeAllImages();
             mainChar.swapFixtures(1);
             mainChar.addImage(new BodyImage("assets/gifs/mainCharRight.gif", mainChar.getHeight()));
-
-
         }
     }
 
@@ -73,29 +68,19 @@ public class MainCharacterKeyboardController implements KeyListener {
      * This method is going to pause the game everytime an Escape key has beed pressed
      * It is also used to resume the game
      */
-    private void pauseMenu(){
-        System.out.println(gameInPlay);
-        if (gameInPlay ==false){
+    public void pauseMenu(){
+        game.getLevel().setGameInPlay(!game.getLevel().isGameInPlay());
+        if (!game.getLevel().isGameInPlay()){
             game.getLevel().stop();
-
-            game.getLevel().getThemeSong().stop();
-            ((LevelOne)game.getLevel()).getL1View().setFocusable(false);
-
+            game.getLevel().getThemeSong().pause();
+            game.getLevel().getView().setVisible(false);
             game.getMenu().setPanel(new BgPanel(new ImageIcon("assets/gifs/BgPanel.gif").getImage(),game,game.getMenu(),game.getFont(),"Resume"));
             game.getFrame().add(game.getMenu().getPanel(), BorderLayout.CENTER);
             game.getFrame().pack();
             game.getFrame().setVisible(true);
-
-        } else {
-            game.getMenu().getPanel().setVisible(false);
-            game.getLevel().start();
-            game.getLevel().getThemeSong().resume();
+            //game.getFrame().toFront();
+            game.getFrame().requestFocus();
         }
-
-        /*game.getFrame().add(new BgPanel(new ImageIcon("assets/gifs/BgPanel.gif").getImage(),game,game.getMenu(),game.getFont(),"Resume"), BorderLayout.CENTER);
-        //game.getFrame().pack();
-        game.getFrame().setVisible(true);*/
-
     }
     // STARTS THE MOVEMENT
     @Override
@@ -106,7 +91,7 @@ public class MainCharacterKeyboardController implements KeyListener {
             case KeyEvent.VK_D: movementHandler(2); break;
             case KeyEvent.VK_W: movementHandler(3); break;
             case KeyEvent.VK_S: movementHandler(4); break;
-            case KeyEvent.VK_ESCAPE: pauseMenu(); gameInPlay=!gameInPlay; break;
+            case KeyEvent.VK_ESCAPE: pauseMenu(); break;
         }
     }
     // STOPS THE MOVEMENT

@@ -22,9 +22,8 @@ public class ResumePauseMenuListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        /*if (e.getKeyCode()==KeyEvent.VK_ESCAPE){
+        if (e.getKeyCode()==KeyEvent.VK_ESCAPE){
             System.out.println("Esca");
-            bg.resumePlay();
-        }*/
+        }
     }
 }

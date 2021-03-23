@@ -2,11 +2,14 @@ package Game.GUI.Containers;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
+import Game.Controls.MainCharacterKeyboardController;
 import Game.GUI.ActionListeners.QuitListener;
 import Game.GUI.ActionListeners.ResumePauseMenuListener;
 import Game.GUI.Components.Button;
 import Game.Game;
+import Game.Levels.Level.LevelOne;
 
 public class BgPanel extends JPanel {
     private Image menuBg;
@@ -47,26 +50,14 @@ public class BgPanel extends JPanel {
         } else if (playPause.equals("Resume")) {
             this.play =  new Button("Resume",300,250,300,40);
             this.play.addActionListener(e-> {
-                //g.changeLevel("MainMenu",null);
+                g.getLevel().setGameInPlay(true);
                 g.getLevel().start();
+                g.getLevel().getThemeSong().resume();
+                g.getLevel().getView().setVisible(true);
                 this.setVisible(false);
             });
             this.add(play);
         }
-        if (playPause.equals("Resume")){
-            JLabel disclaimer = new JLabel();
-            disclaimer.setText("The buttons don't work, IDK why (something w/ focus)");
-            disclaimer.setFont(f.deriveFont(f.getStyle() | Font.PLAIN,30));
-            disclaimer.setBounds(10,400,890,40);
-            this.add(disclaimer);
-
-            JLabel disclaimer2 = new JLabel();
-            disclaimer2.setText("Press ESC to resume");
-            disclaimer2.setFont(f.deriveFont(f.getStyle() | Font.PLAIN,30));
-            disclaimer2.setBounds(300,500,500,40);
-            this.add(disclaimer2);
-        }
-
 
         this.selectLevel =  new Button("Select Level",300,300,300,40);
         this.selectLevel.addActionListener(e->{
@@ -88,10 +79,6 @@ public class BgPanel extends JPanel {
         quit.addActionListener(new QuitListener());
         this.add(quit);
         this.setFocusable(true);
-        if (playPause.equals("Resume")){
-            this.addKeyListener(new ResumePauseMenuListener(this));
-        }
-
     }
     @Override
     protected void paintComponent(Graphics g) {
@@ -100,12 +87,4 @@ public class BgPanel extends JPanel {
 
     }
 
-    /**
-     * It is used to resume the play from Pause Menu
-     */
-    public void resumePlay(){
-        System.out.println("Resume");
-        this.setVisible(false);
-        game.getLevel().start();
-    }
 }

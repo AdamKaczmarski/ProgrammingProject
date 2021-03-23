@@ -27,7 +27,7 @@ public class LevelThree extends GameLevel {
     private ArrayList<RotPill> rotPillList =new ArrayList(5);
     private SoundClip theme3;
     public LevelThree(Game game, MainCharacter mc) {
-        super(game, game.getMusicVolume());
+        super(game, game.getMusicVolume(), game.getSfxVolume());
         setName("LevelThree");
         addThemeSong("assets/sounds/theme3.wav");
         getMainChar().setPosition(new Vec2(21f, 17f));
@@ -35,7 +35,6 @@ public class LevelThree extends GameLevel {
         getMainChar().setPistol(mc.getPistol());
         getMainChar().setHealth(mc.getHealth());
         mc.setPistol(null);
-        System.out.println("YOU'RE ON LEVEL THREE");
         this.getSaveSen().getBody().setPosition(new Vec2(-21f, -16f));
         this.getSaveSen().addSensorListener(new SaveSensorListener(this, game));
         Pistol pistol = new Pistol(this);
@@ -48,12 +47,11 @@ public class LevelThree extends GameLevel {
      * This contructor is used when user wants to jump straight to Level Three using the MainMenu
      */
     public LevelThree(Game game) {
-        super(game,game.getMusicVolume());
+        super(game,game.getMusicVolume(), game.getSfxVolume());
         setName("LevelThree");
         addThemeSong("assets/sounds/theme3.wav");
         getMainChar().setPosition(new Vec2(21f, 17f));
         getMainChar().setPistol(new Pistol(this,20));
-        System.out.println("YOU'RE ON LEVEL THREE");
         this.getSaveSen().getBody().setPosition(new Vec2(-21f, -16f));
         this.getSaveSen().addSensorListener(new SaveSensorListener(this, game));
         Pistol pistol = new Pistol(this);
@@ -64,25 +62,17 @@ public class LevelThree extends GameLevel {
         this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
     }
 
-    public GameView getL3View() {
-        return L3View;
-    }
-
-    public void setL3View(GameView view) {
-        this.L3View = view;
-        this.getL3View().setVMainChar(getMainChar());
-    }
-
     /**
      * This method adds Controls (KeyListener and MouseController) to the view of this level
      *
-     * @param mainChar it requires main character to control his actions - movement and shooting
+     * @param g the Game object that the controls are going to be added in, it is needed to have full functionality in the game's world
      */
-    public void addControls(MainCharacter mainChar, Game g) {
-        if (this.getL3View() != null) {
-            L3View.addKeyListener(new MainCharacterKeyboardController(mainChar,g));
-            L3View.addMouseListener(new MouseController(L3View, mainChar));
-        }
+    public void addControls(Game g){
+
+        this.setKeyboard(new MainCharacterKeyboardController(getMainChar(),g,this));
+        this.setMouse(new MouseController(getView(),getMainChar()));
+        this.getView().addMouseListener(this.getMouse());
+        this.getView().addKeyListener(this.getKeyboard());
     }
 
     public void addWalls() {
@@ -101,12 +91,10 @@ public class LevelThree extends GameLevel {
 
     }
     public void addRotPills(){
-        System.out.println(rotPillList.size());
         for (int i=0;i<5;i++){
             rotPillList.add(new RotPill(this));
             rotPillList.get(i).setAngularVelocity(rotPillList.get(i).getAngularVelocity()+(i/5));
         }
-        System.out.println(rotPillList.size());
         //rotPillList.get(1).setPosition(new Vec2(0,0));
 
     }

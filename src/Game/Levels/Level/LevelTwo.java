@@ -25,11 +25,14 @@ public class LevelTwo extends GameLevel {
     private MedPack medPack;
     private Timer timer;
     public LevelTwo(Game game, MainCharacter mc){
-        super(game, game.getMusicVolume());
+        super(game, game.getMusicVolume(), game.getSfxVolume());
         setName("LevelTwo");
         getMainChar().setPosition(new Vec2(-21f,-16f));
         getMainChar().setPoints(mc.getPoints());
-        getMainChar().setPistol(new Pistol(this,mc.getPistol().getAmmo()));
+        if (mc.getPistol()!=null){
+            getMainChar().setPistol(new Pistol(this,mc.getPistol().getAmmo()));
+        }
+
         mc.setPistol(null);
         getMainChar().setHealth(mc.getHealth());
         System.out.println("YOU'RE ON LEVEL TWO");
@@ -51,7 +54,7 @@ public class LevelTwo extends GameLevel {
      * @param game
      */
     public LevelTwo(Game game){
-        super(game,game.getMusicVolume());
+        super(game,game.getMusicVolume(), game.getSfxVolume());
         setName("LevelTwo");
         getMainChar().setPosition(new Vec2(-21f,-16f));
         getMainChar().setPistol(new Pistol(this,30));
@@ -70,24 +73,18 @@ public class LevelTwo extends GameLevel {
     }
 
 
-    public GameView getL2View() {
-        return L2View;
-    }
 
-    public void setL2View(GameView view) {
-        this.L2View=view;
-        this.getL2View().setVMainChar(getMainChar());
-    }
 
     /**
      * This method adds Controls (KeyListener and MouseController) to the view of this level
-     * @param mainChar it requires main character to control his actions - movement and shooting
+     * @param g the Game object that the controls are going to be added in, it is needed to have full functionality in the game's world
      */
-    public void addControls(MainCharacter mainChar, Game g){
-        if (this.getL2View()!=null ) {
-            L2View.addKeyListener(new MainCharacterKeyboardController(mainChar,g));
-            L2View.addMouseListener(new MouseController(L2View,mainChar));
-        }
+    public void addControls(Game g){
+
+        this.setKeyboard(new MainCharacterKeyboardController(getMainChar(),g,this));
+        this.setMouse(new MouseController(getView(),getMainChar()));
+        this.getView().addMouseListener(this.getMouse());
+        this.getView().addKeyListener(this.getKeyboard());
     }
     public void addWalls(){
         //Bottom Wall

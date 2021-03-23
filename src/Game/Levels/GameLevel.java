@@ -25,12 +25,15 @@ public class GameLevel extends World {
     private MouseController mouse;
     private float musicVolume;
     private float sfxVolume;
-    public GameLevel(Game game, float musicVol){
+    private boolean gameInPlay;
+    public GameLevel(Game game, float musicVol,float sfxVol){
         super();
         mainChar = new MainCharacter(this);
+        this.gameInPlay=true;
         this.setGravity(0f);
         this.saveSen=new saveSensor(this);
         this.musicVolume=musicVol;
+        this.sfxVolume=sfxVol;
     }
 
     public MainCharacter getMainChar() {
@@ -66,6 +69,10 @@ public class GameLevel extends World {
         return sfxVolume;
     }
 
+    public boolean isGameInPlay() {
+        return gameInPlay;
+    }
+
     public void setMainChar(MainCharacter mainChar) {
         this.mainChar = mainChar;
     }
@@ -88,11 +95,16 @@ public class GameLevel extends World {
 
     public void setSfxVolume(float sfxVolume) {
         this.sfxVolume = sfxVolume;
+        if(getMainChar().getPistol() != null) getMainChar().getPistol().updateVolume(sfxVolume);
     }
 
     public void setMusicVolume(float musicVolume) {
-        System.out.println("level setmusicvol"+musicVolume);
         this.musicVolume = musicVolume;
+        this.getThemeSong().setVolume(musicVolume);
+    }
+
+    public void setGameInPlay(boolean gameInPlay) {
+        this.gameInPlay = gameInPlay;
     }
 
     /**
@@ -118,7 +130,6 @@ public class GameLevel extends World {
      *
      */
     public void addThemeSong(String path){
-        System.out.println("addthemesong"+this.getMusicVolume());
         try {
             themeSong = new SoundClip(path);
             themeSong.setVolume(this.getMusicVolume());

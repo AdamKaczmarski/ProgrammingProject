@@ -8,11 +8,13 @@ import java.awt.*;
 
 public class GameView extends UserView {
     private Image bckgr;
+    private Image hpImage;
     private MainCharacter mainChar;
     public GameView(World w, int width, int height, MainCharacter mc){
         super(w,width,height);
         this.mainChar=mc;
         bckgr =  new ImageIcon("assets/images/background1_2.png").getImage();
+        hpImage = new ImageIcon("assets/images/hp74.png").getImage();
     }
     public GameView(World w, int width, int height){
         super(w,width,height);
@@ -29,11 +31,17 @@ public class GameView extends UserView {
         g.setFont(new Font("Stencil",Font.PLAIN,32));
         if (this.getVMainChar().getHealth()<=30){
             g.setColor(Color.RED);
-            g.drawString("HP: "+this.getVMainChar().getHealth(),5,746);
+            g.drawImage(hpImage,5,680,this);
+            g.drawString(""+this.getVMainChar().getHealth(),15,730);
             g.setColor(new Color(139,69,19));
         } else {
             g.setColor(new Color(139,69,19));
-            g.drawString("HP: "+this.getVMainChar().getHealth(),5,746);
+            g.drawImage(hpImage,5,680,this);
+            if(this.getVMainChar().getHealth()==100) {
+                g.drawString("" + this.getVMainChar().getHealth(), 15, 728);
+            } else {
+                g.drawString("" + this.getVMainChar().getHealth(), 25, 728);
+            }
         }
 
         if(this.getVMainChar().getPistol()!=null){

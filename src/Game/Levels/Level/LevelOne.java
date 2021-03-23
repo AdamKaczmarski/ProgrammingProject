@@ -32,7 +32,7 @@ public class LevelOne extends GameLevel {
     private ArrayList<Wall> walls = new ArrayList(4);
     private Timer timer;
     public LevelOne(Game game){
-        super(game,game.getMusicVolume());
+        super(game,game.getMusicVolume(), game.getSfxVolume());
         setName("LevelOne");
         getMainChar().setPosition(new Vec2(-6f,0f));
         pistol = new Pistol(this);
@@ -55,15 +55,17 @@ public class LevelOne extends GameLevel {
 
     }
     /* GETTERS */
-    public GameView getL1View(){ return L1view; }
+    //public GameView getL1View(){ return L1view; }
 
 
 
     /* SETTERS */
-    public void setGameView(GameView v){
-        this.L1view=v;
-        this.getL1View().setVMainChar(getMainChar());
-    }
+    /*public void setGameView(GameView v){
+        //this.L1view=v;
+        //this.getL1View().setVMainChar(getMainChar());
+        super.setView(v);
+        super.getView().setVMainChar(getMainChar());
+    }*/
     public void spawnEnemies(){
         for (int i=0;i<5;i++){
             float y=getMainChar().getPosition().y+((float)Math.random()*12+8);
@@ -86,15 +88,13 @@ public class LevelOne extends GameLevel {
     }
     /**
      * This method adds Controls (KeyListener and MouseController) to the view of this level
-     * @param mainChar it requires main character to control his actions - movement and shooting
+     * @param g the Game object that the controls are going to be added in, it is needed to have full functionality in the game's world
      */
-    public void addControls(MainCharacter mainChar, Game g){
-        if (this.getL1View()!=null ) {
-            this.setKeyboard(new MainCharacterKeyboardController(mainChar,g));
-            this.setMouse(new MouseController(L1view,mainChar));
-            L1view.addKeyListener(this.getKeyboard());
-            L1view.addMouseListener(this.getMouse());
-        }
+    public void addControls(Game g){
+        this.setKeyboard(new MainCharacterKeyboardController(getMainChar(),g,this));
+        this.setMouse(new MouseController(getView(),getMainChar()));
+        this.getView().addMouseListener(this.getMouse());
+        this.getView().addKeyListener(this.getKeyboard());
     }
 
 }

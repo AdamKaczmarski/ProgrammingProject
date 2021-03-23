@@ -3,6 +3,7 @@ package Game.Characters;
 import Game.Characters.Fixtures.mainCharFixture;
 import Game.Collisons.BulletToCharacter;
 import Game.Items.Pistol;
+import Game.Levels.GameLevel;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
@@ -18,20 +19,20 @@ public class MainCharacter extends Walker {
     private final float height=4f;
     private int health;
     private int points;
-    private Pistol pistol; //add pistol on pickup
-    private World w;
+    private Pistol pistol;
+    private GameLevel gameLevel;
 
-    public MainCharacter(World world){
-        super(world);
+    public MainCharacter(GameLevel gameLevel){
+        super(gameLevel);
+
         this.fixture= new mainCharFixture(this,new PolygonShape(-0.76f,-1.92f, 1.4f,-1.91f, 1.53f,0.02f, 1.14f,1.9f, 0.08f,1.44f, -0.79f,1.02f, -1.46f,-0.3f));
         //this.imagePic = new BodyImage("assets/images/mainCharacterPlaceholderRight.png", height);
         this.imagePic = new BodyImage("assets/gifs/mainCharRight.gif", height);
         this.addImage(imagePic);
-        this.setAlwaysOutline(true);
         this.setClipped(true);
         this.health=100;
         this.points=0;
-        this.w=world;
+        this.gameLevel=gameLevel;
 
         this.setName("MainCharacter");
         this.addCollisionListener(new BulletToCharacter(this));
@@ -61,8 +62,8 @@ public class MainCharacter extends Walker {
      * Returns the World that the character is created in
      * @return World object
      */
-    public World getW() {
-        return w;
+    public GameLevel getW() {
+        return gameLevel;
     }
 
     /**

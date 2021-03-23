@@ -4,6 +4,8 @@ import Game.GUI.Components.Button;
 import Game.Game;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class SoundMenu extends JPanel {
@@ -11,7 +13,7 @@ public class SoundMenu extends JPanel {
     private JLabel title;
     private JLabel sfx;
     private JLabel music;
-    private JSlider sfcVol;
+    private JSlider sfxVol;
     private JSlider musicVol;
     private JButton back;
     public SoundMenu(Image bg, Game g, MainMenu m, Font f, String playPause){
@@ -23,23 +25,23 @@ public class SoundMenu extends JPanel {
         title.setBounds(150,64,800,130);
         this.add(title);
 
-        JLabel disclaimer = new JLabel();
-        disclaimer.setText("I'm sorry for this feature still doesn't work");
-        disclaimer.setFont(f.deriveFont(f.getStyle() | Font.PLAIN,24));
-        disclaimer.setBounds(150,400,600,30);
-        this.add(disclaimer);
-
         sfx = new JLabel();
         sfx.setText("SFX Volume");
         sfx.setFont(f.deriveFont(f.getStyle() | Font.PLAIN,32));
         sfx.setBounds(360,200,300,40);
         this.add(sfx);
 
-        sfcVol =  new JSlider();
-        sfcVol.setBounds(300,250,300,40);
-        sfcVol.setOpaque(false);
-        sfcVol.setValue((int)(g.getSfxVolume()*100));
-        this.add(sfcVol);
+        sfxVol =  new JSlider();
+        sfxVol.setBounds(300,250,300,40);
+        sfxVol.setOpaque(false);
+        sfxVol.setValue((int)(g.getSfxVolume()*100));
+        sfxVol.addChangeListener(
+        e->{
+            if(!((JSlider)e.getSource()).getValueIsAdjusting()) {
+                g.setSfxVolume((float)(((JSlider)e.getSource()).getValue())/100);
+            }
+        });
+        this.add(sfxVol);
 
         music = new JLabel();
         music.setText("Music Volume");
@@ -51,6 +53,11 @@ public class SoundMenu extends JPanel {
         musicVol.setBounds(300,350,300,40);
         musicVol.setOpaque(false);
         musicVol.setValue((int)(g.getMusicVolume()*100));
+        musicVol.addChangeListener(e->{
+            if(!((JSlider)e.getSource()).getValueIsAdjusting()) {
+                g.setMusicVolume((float)(((JSlider)e.getSource()).getValue())/100);
+            }
+        });
         this.add(musicVol);
 
         this.back=new Button("<<< GO BACK",300,500,300,40);

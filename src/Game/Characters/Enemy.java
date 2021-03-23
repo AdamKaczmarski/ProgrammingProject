@@ -1,7 +1,9 @@
 package Game.Characters;
 
 import Game.Collisons.EnemyToWall;
+import Game.Game;
 import Game.Items.Pistol;
+import Game.Levels.GameLevel;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
@@ -11,28 +13,28 @@ public class Enemy extends Walker {
     private static BodyImage enemyImage = new BodyImage("assets/images/badGuy.jpg", charHeight);
     private int health = 20;
     Pistol Pistol;
-    World w;
-    public Enemy (World world, Vec2 vec){
-        super(world,enemyShape);
+    GameLevel gameLevel;
+    public Enemy (GameLevel gameLevel, Vec2 vec){
+        super(gameLevel,enemyShape);
         this.addImage(enemyImage);
         //this.setAlwaysOutline(true);
         this.setName("Enemy");
         this.setClipped(true);
         this.addCollisionListener(new EnemyToWall());
         this.setPosition(vec);
-        this.Pistol= new Pistol(world, true);
-        this.w=world;
+        this.Pistol= new Pistol(gameLevel, true);
+        this.gameLevel=gameLevel;
     }
     /* ACCESSORS */
     public int getHealth() {
         return health;
     }
     public Pistol getPistol(){return Pistol;}
-    public World getW(){return w;}
+    public GameLevel getW(){return gameLevel;}
 /*    public float getCharHeight{return charHeight;}*/
     /* MUTATORS */
 
-    public void setPistol(Game.Items.Pistol pistol) {
+    public void setPistol(Pistol pistol) {
         Pistol = pistol;
     }
 

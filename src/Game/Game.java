@@ -1,6 +1,8 @@
 package Game;
 // Imports
 import Game.Characters.MainCharacter;
+import Game.Controls.MainCharacterKeyboardController;
+import Game.Controls.MouseController;
 import Game.GUI.Containers.MainMenu;
 import Game.HOC.GameView;
 import Game.Levels.Level.LevelOne;
@@ -21,29 +23,27 @@ public class Game {
     private Font font;
     private float sfxVolume=1; //add it in every contructor that sets sound
     private float musicVolume=1;//adjust constructor in gamelevel to change theme lvl menu
-    public Game(){
+    public Game() {
         try {
-            font=Font.createFont(Font.TRUETYPE_FONT,new File("assets/fonts/STENCIL.TTF"));
-        } catch (FontFormatException e){
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/STENCIL.TTF"));
+        } catch (FontFormatException e) {
             System.out.println(e);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e);
         }
         frame = new JFrame("The Game");
-        frame.setPreferredSize(new Dimension(900,800));
+        frame.setPreferredSize(new Dimension(900, 800));
         frame.setName("MainMenu");
         //JFrame debugView = new DebugViewer(level,1000,1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
-        menu = new MainMenu(this,font,"Play");
+        menu = new MainMenu(this, font, "Play");
         frame.add(menu.getPanel(), BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
 
         this.setMusicVolume(0.05f);
-
-
+        this.setSfxVolume(0.1f);
     }
 
     /**
@@ -61,45 +61,51 @@ public class Game {
         }
         if (currentLevel.equals("MainMenu")){
             level=new LevelOne(this);
-            //soundSetter(level);
-            //level.setMusicVolume(0.05f);
             frameSetter(level);
-            ((LevelOne)level).setGameView(view);
-            ((LevelOne)level).addControls(level.getMainChar(),this);
+            soundSetter(level);
+            //((LevelOne)level).setGameView(view);
+            level.setView(view);
+            level.getView().setVMainChar(level.getMainChar());
+            ((LevelOne)level).addControls(this);
+            //((LevelOne)level).addControls(level.getMainChar(),this);
             level.start();
         }
         if (currentLevel.equals("LevelOne")){
             level=new LevelTwo(this,mainChar);
             view.setWorld(level);
             soundSetter(level);
-            ((LevelTwo)level).setL2View(view);
-            ((LevelTwo) level).getL2View().setBckgr(new ImageIcon("assets/images/background2.png").getImage());
-            ((LevelTwo)level).addControls(level.getMainChar(),this);
+            level.setView(view);
+            level.getView().setVMainChar(level.getMainChar());
+            level.getView().setBckgr(new ImageIcon("assets/images/background2.png").getImage());
+            ((LevelTwo)level).addControls(this);
             level.start();
         }
         if (currentLevel.equals("LevelTwo")){
             level=new LevelThree(this,mainChar);
             view.setWorld(level);
             soundSetter(level);
-            ((LevelThree)level).setL3View(view);
-            ((LevelThree)level).addControls(level.getMainChar(),this);
+            level.setView(view);
+            level.getView().setVMainChar(level.getMainChar());
+            ((LevelThree)level).addControls(this);
             level.start();
         }
         if (currentLevel.equals("LevelOneFromMenu")){
-            level=new LevelTwo(this);
+            level= new LevelTwo(this);
             frameSetter(level);
             soundSetter(level);
-            ((LevelTwo)level).setL2View(view);
-            ((LevelTwo) level).getL2View().setBckgr(new ImageIcon("assets/images/background2.png").getImage());
-            ((LevelTwo)level).addControls(level.getMainChar(),this);
+            level.setView(view);
+            level.getView().setVMainChar(level.getMainChar());
+            level.getView().setBckgr(new ImageIcon("assets/images/background2.png").getImage());
+            ((LevelTwo)level).addControls(this);
             level.start();
         }
         if (currentLevel.equals("LevelTwoFromMenu")){
-            level=new LevelThree(this);
+            level= new LevelThree(this);
             frameSetter(level);
             soundSetter(level);
-            ((LevelThree)level).setL3View(view);
-            ((LevelThree)level).addControls(level.getMainChar(),this);
+            level.setView(view);
+            level.getView().setVMainChar(level.getMainChar());
+            ((LevelThree)level).addControls(this);
             level.start();
         }
         if (currentLevel.equals("LevelThree")){
@@ -108,9 +114,6 @@ public class Game {
             view.setWorld(level);
             ((LevelFour)level).setL4View(view);*/
         }
-
-
-
     }
 
     public JFrame getFrame() {
@@ -139,10 +142,12 @@ public class Game {
 
     public void setMusicVolume(float musicVolume) {
         this.musicVolume = musicVolume;
+       if(this.getLevel()!=null) this.getLevel().setMusicVolume(musicVolume);
     }
 
     public void setSfxVolume(float sfxVolume) {
         this.sfxVolume = sfxVolume;
+        if(this.getLevel()!=null) this.getLevel().setSfxVolume(sfxVolume);
     }
 
     /**
@@ -164,9 +169,7 @@ public class Game {
      * @param level level object that user is going to play in
      */
     public void soundSetter(GameLevel level){
-        System.out.println("SOUND SETTER");
-        level.setMusicVolume(0.05f);
-       // level.setMusicVolume(this.getMusicVolume());
+        level.setMusicVolume(this.getMusicVolume());
         level.setSfxVolume(this.getSfxVolume());
     }
 
