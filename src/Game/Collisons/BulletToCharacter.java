@@ -8,13 +8,8 @@ import city.cs.engine.CollisionListener;
 
 public class BulletToCharacter implements CollisionListener {
     private MainCharacter mainChar;
-    public BulletToCharacter(){
-
-    }
     public BulletToCharacter(MainCharacter mc){
-        //System.out.println(mc);
         this.mainChar=mc;
-       // System.out.println(this.mainChar);
     }
     public void addPoints(){
        getColMC().setPoints(getColMC().getPoints()+10);
@@ -26,18 +21,11 @@ public class BulletToCharacter implements CollisionListener {
             if (e.getReportingBody().getName().equals("Enemy") && e.getOtherBody().getName().equals("BulletMC")) {
                 Bullet b = (Bullet) e.getOtherBody();
                 Enemy enemy= (Enemy) e.getReportingBody();
-                //System.out.println(enemy.getLinearVelocity());
-                /*System.out.println(e.getOtherBody().getLinearVelocity());
-                enemy.applyImpulse(e.getOtherBody().getLinearVelocity());*/
                 enemy.setHealth(enemy.getHealth()-b.getDamage());
                 e.getOtherBody().destroy();
-                //System.out.println("[BulletToCharacter] Enemy hit by MC (HP:"+enemy.getHealth()+")");
-                //System.out.println("Enemy's health: "+enemy.getHealth());
-                //enemy.setLinearVelocity(new Vec2(0,0));
                 if(enemy.getHealth()<=0){
                     enemy.setPistol(null);
                     enemy.destroy();
-                    //System.out.println("[BulletToCharacter] Enemy killed by MC!");
                     this.addPoints();
                 }
 
@@ -47,13 +35,9 @@ public class BulletToCharacter implements CollisionListener {
                 MainCharacter mainChar = (MainCharacter) e.getReportingBody();
                 mainChar.setHealth(mainChar.getHealth()-b.getDamage());
                 e.getOtherBody().destroy();
-               // mainChar.setLinearVelocity(new Vec2(0,0));
-                //System.out.println("[BulletToCharacter] You've been hit by an Enemy (HP:"+mainChar.getHealth()+")");
                 if(mainChar.getHealth()<=0){
                     mainChar.setPistol(null);
-                    //mainChar.getPistol().destroy();
                     mainChar.destroy();
-                    //System.out.println("[BulletToCharacter] gg wp");
                 }
 
             }

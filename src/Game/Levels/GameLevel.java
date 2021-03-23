@@ -23,11 +23,14 @@ public class GameLevel extends World {
     private SoundClip themeSong;
     private KeyListener keyboard;
     private MouseController mouse;
-    public GameLevel(Game game){
+    private float musicVolume;
+    private float sfxVolume;
+    public GameLevel(Game game, float musicVol){
         super();
         mainChar = new MainCharacter(this);
         this.setGravity(0f);
-        saveSen=new saveSensor(this);
+        this.saveSen=new saveSensor(this);
+        this.musicVolume=musicVol;
     }
 
     public MainCharacter getMainChar() {
@@ -55,6 +58,14 @@ public class GameLevel extends World {
         return keyboard;
     }
 
+    public float getMusicVolume() {
+        return musicVolume;
+    }
+
+    public float getSfxVolume() {
+        return sfxVolume;
+    }
+
     public void setMainChar(MainCharacter mainChar) {
         this.mainChar = mainChar;
     }
@@ -73,6 +84,15 @@ public class GameLevel extends World {
 
     public void setMouse(MouseController mouse) {
         this.mouse = mouse;
+    }
+
+    public void setSfxVolume(float sfxVolume) {
+        this.sfxVolume = sfxVolume;
+    }
+
+    public void setMusicVolume(float musicVolume) {
+        System.out.println("level setmusicvol"+musicVolume);
+        this.musicVolume = musicVolume;
     }
 
     /**
@@ -98,9 +118,10 @@ public class GameLevel extends World {
      *
      */
     public void addThemeSong(String path){
+        System.out.println("addthemesong"+this.getMusicVolume());
         try {
             themeSong = new SoundClip(path);
-            themeSong.setVolume(0.05f);
+            themeSong.setVolume(this.getMusicVolume());
             themeSong.play();
         } catch (LineUnavailableException e) {
             e.printStackTrace();

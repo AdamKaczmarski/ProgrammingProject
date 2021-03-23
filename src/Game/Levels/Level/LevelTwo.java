@@ -25,7 +25,7 @@ public class LevelTwo extends GameLevel {
     private MedPack medPack;
     private Timer timer;
     public LevelTwo(Game game, MainCharacter mc){
-        super(game);
+        super(game, game.getMusicVolume());
         setName("LevelTwo");
         getMainChar().setPosition(new Vec2(-21f,-16f));
         getMainChar().setPoints(mc.getPoints());
@@ -51,7 +51,7 @@ public class LevelTwo extends GameLevel {
      * @param game
      */
     public LevelTwo(Game game){
-        super(game);
+        super(game,game.getMusicVolume());
         setName("LevelTwo");
         getMainChar().setPosition(new Vec2(-21f,-16f));
         getMainChar().setPistol(new Pistol(this,30));

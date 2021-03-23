@@ -27,7 +27,7 @@ public class LevelThree extends GameLevel {
     private ArrayList<RotPill> rotPillList =new ArrayList(5);
     private SoundClip theme3;
     public LevelThree(Game game, MainCharacter mc) {
-        super(game);
+        super(game, game.getMusicVolume());
         setName("LevelThree");
         addThemeSong("assets/sounds/theme3.wav");
         getMainChar().setPosition(new Vec2(21f, 17f));
@@ -48,7 +48,7 @@ public class LevelThree extends GameLevel {
      * This contructor is used when user wants to jump straight to Level Three using the MainMenu
      */
     public LevelThree(Game game) {
-        super(game);
+        super(game,game.getMusicVolume());
         setName("LevelThree");
         addThemeSong("assets/sounds/theme3.wav");
         getMainChar().setPosition(new Vec2(21f, 17f));

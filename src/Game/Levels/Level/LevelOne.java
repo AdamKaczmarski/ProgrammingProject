@@ -32,7 +32,7 @@ public class LevelOne extends GameLevel {
     private ArrayList<Wall> walls = new ArrayList(4);
     private Timer timer;
     public LevelOne(Game game){
-        super(game);
+        super(game,game.getMusicVolume());
         setName("LevelOne");
         getMainChar().setPosition(new Vec2(-6f,0f));
         pistol = new Pistol(this);

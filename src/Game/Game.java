@@ -19,8 +19,8 @@ public class Game {
     private JFrame frame;
     private MainMenu menu;
     private Font font;
-    private float sfxVolume; //add it in every contructor that sets sound
-    private float musicVolume;//adjust constructor in gamelevel to change theme lvl menu
+    private float sfxVolume=1; //add it in every contructor that sets sound
+    private float musicVolume=1;//adjust constructor in gamelevel to change theme lvl menu
     public Game(){
         try {
             font=Font.createFont(Font.TRUETYPE_FONT,new File("assets/fonts/STENCIL.TTF"));
@@ -41,8 +41,8 @@ public class Game {
         frame.pack();
         frame.setVisible(true);
 
-        this.setSfxVolume(0.69f);
         this.setMusicVolume(0.05f);
+
 
     }
 
@@ -61,6 +61,8 @@ public class Game {
         }
         if (currentLevel.equals("MainMenu")){
             level=new LevelOne(this);
+            //soundSetter(level);
+            //level.setMusicVolume(0.05f);
             frameSetter(level);
             ((LevelOne)level).setGameView(view);
             ((LevelOne)level).addControls(level.getMainChar(),this);
@@ -68,18 +70,17 @@ public class Game {
         }
         if (currentLevel.equals("LevelOne")){
             level=new LevelTwo(this,mainChar);
-           // view = new GameView(level,900,800,level.getMainChar());
             view.setWorld(level);
+            soundSetter(level);
             ((LevelTwo)level).setL2View(view);
             ((LevelTwo) level).getL2View().setBckgr(new ImageIcon("assets/images/background2.png").getImage());
             ((LevelTwo)level).addControls(level.getMainChar(),this);
             level.start();
         }
         if (currentLevel.equals("LevelTwo")){
-
-            System.out.println("[Game] moving to another lvl");
             level=new LevelThree(this,mainChar);
             view.setWorld(level);
+            soundSetter(level);
             ((LevelThree)level).setL3View(view);
             ((LevelThree)level).addControls(level.getMainChar(),this);
             level.start();
@@ -87,6 +88,7 @@ public class Game {
         if (currentLevel.equals("LevelOneFromMenu")){
             level=new LevelTwo(this);
             frameSetter(level);
+            soundSetter(level);
             ((LevelTwo)level).setL2View(view);
             ((LevelTwo) level).getL2View().setBckgr(new ImageIcon("assets/images/background2.png").getImage());
             ((LevelTwo)level).addControls(level.getMainChar(),this);
@@ -95,6 +97,7 @@ public class Game {
         if (currentLevel.equals("LevelTwoFromMenu")){
             level=new LevelThree(this);
             frameSetter(level);
+            soundSetter(level);
             ((LevelThree)level).setL3View(view);
             ((LevelThree)level).addControls(level.getMainChar(),this);
             level.start();
@@ -154,6 +157,17 @@ public class Game {
         frame.setVisible(true);
         frame.add(view);
         view.setWorld(level);
+    }
+
+    /**
+     * This method sets the sounds volumes for the generic class GameLevel and then every level can access them to adjust volumes in the classes they use
+     * @param level level object that user is going to play in
+     */
+    public void soundSetter(GameLevel level){
+        System.out.println("SOUND SETTER");
+        level.setMusicVolume(0.05f);
+       // level.setMusicVolume(this.getMusicVolume());
+        level.setSfxVolume(this.getSfxVolume());
     }
 
     public static void main(String[] args) {
