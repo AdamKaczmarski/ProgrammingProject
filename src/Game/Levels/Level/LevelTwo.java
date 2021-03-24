@@ -19,7 +19,6 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class LevelTwo extends GameLevel {
-    private GameView L2View;
     private ArrayList<Wall> walls = new ArrayList(15);
     private ArrayList<Enemy> enemyList= new ArrayList(15);
     private MedPack medPack;
@@ -43,10 +42,13 @@ public class LevelTwo extends GameLevel {
         medPack = new MedPack(this);
         medPack.setPosition(new Vec2(-14f,4f));
         addThemeSong("assets/sounds/theme2.wav");
-        //this.addStepListener(new EnemyShoot(enemyList,getMainChar(),0.7f));
-
         timer = new Timer(700,new EnShoot(enemyList,getMainChar()));
         timer.start();
+        System.out.println(getEnemyList());
+    }
+
+    public ArrayList<Enemy> getEnemyList() {
+        return enemyList;
     }
 
     /**
@@ -58,7 +60,6 @@ public class LevelTwo extends GameLevel {
         setName("LevelTwo");
         getMainChar().setPosition(new Vec2(-21f,-16f));
         getMainChar().setPistol(new Pistol(this,30));
-        System.out.println("YOU'RE ON LEVEL TWO");
         this.addWalls();
         this.spawnEnemies();
         this.getSaveSen().getBody().setPosition(new Vec2(-22.5f,17f));
@@ -66,8 +67,6 @@ public class LevelTwo extends GameLevel {
         medPack = new MedPack(this);
         medPack.setPosition(new Vec2(-14f,4f));
         addThemeSong("assets/sounds/theme2.wav");
-        //this.addStepListener(new EnemyShoot(enemyList,getMainChar(),0.7f));
-
         timer = new Timer(700,new EnShoot(enemyList,getMainChar()));
         timer.start();
     }

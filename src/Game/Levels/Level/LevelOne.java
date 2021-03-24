@@ -25,8 +25,6 @@ import java.util.ArrayList;
 
 
 public class LevelOne extends GameLevel {
-    private GameView L1view;
-    //private MainCharacter mainChar;
     private Pistol pistol;
     private ArrayList<Enemy> enemyList;
     private ArrayList<Wall> walls = new ArrayList(4);
@@ -54,18 +52,7 @@ public class LevelOne extends GameLevel {
         timer.start();
 
     }
-    /* GETTERS */
-    //public GameView getL1View(){ return L1view; }
 
-
-
-    /* SETTERS */
-    /*public void setGameView(GameView v){
-        //this.L1view=v;
-        //this.getL1View().setVMainChar(getMainChar());
-        super.setView(v);
-        super.getView().setVMainChar(getMainChar());
-    }*/
     public void spawnEnemies(){
         for (int i=0;i<5;i++){
             float y=getMainChar().getPosition().y+((float)Math.random()*12+8);

@@ -15,6 +15,8 @@ public class BgPanel extends JPanel {
     private Image menuBg;
     private JLabel title;
     private Button play;
+    private Button save;
+    private Button load;
     private Button selectLevel;
     private Button soundMenu;
     private Button quit;
@@ -58,8 +60,22 @@ public class BgPanel extends JPanel {
             });
             this.add(play);
         }
+        if(playPause.equals("Resume")){
+            this.save = new Button("Save",300,300,300,40);
+            this.save.addActionListener(e->{
+                game.getLevel().createSaveFile();
+            });
+            this.add(save);
+        }
 
-        this.selectLevel =  new Button("Select Level",300,300,300,40);
+
+        this.load = new Button("Load",300,350,300,40);
+        this.load.addActionListener(e->{
+
+        });
+        this.add(load);
+
+        this.selectLevel =  new Button("Select Level",300,400,300,40);
         this.selectLevel.addActionListener(e->{
             m.setPanel(new SelectLevelMenu(bg,g,m,f,playPause));
             g.getFrame().add(m.getPanel(),BorderLayout.CENTER);
@@ -67,7 +83,7 @@ public class BgPanel extends JPanel {
         });
         this.add(selectLevel);
 
-        this.soundMenu =  new Button("Adjust Sound",300,350,300,40);
+        this.soundMenu =  new Button("Adjust Sound",300,450,300,40);
         this.soundMenu.addActionListener(e->{
             m.setPanel(new SoundMenu(bg,g,m,f, playPause));
             g.getFrame().add(m.getPanel(),BorderLayout.CENTER);
@@ -75,7 +91,7 @@ public class BgPanel extends JPanel {
         });
         this.add(soundMenu);
 
-        this.quit = new Button("Quit",300,450,300,40);
+        this.quit = new Button("Quit",300,500,300,40);
         quit.addActionListener(new QuitListener());
         this.add(quit);
         this.setFocusable(true);

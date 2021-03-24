@@ -21,11 +21,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class LevelThree extends GameLevel {
-    private GameView L3View;
     private ArrayList<Wall> walls = new ArrayList(15);
     private ArrayList<Enemy> enemyList = new ArrayList(15);
     private ArrayList<RotPill> rotPillList =new ArrayList(5);
-    private SoundClip theme3;
     public LevelThree(Game game, MainCharacter mc) {
         super(game, game.getMusicVolume(), game.getSfxVolume());
         setName("LevelThree");
@@ -87,9 +85,6 @@ public class LevelThree extends GameLevel {
         walls.add(new Wall(this,1f,5f,-24,17f));
     }
 
-    public void spawnEnemies() {
-
-    }
     public void addRotPills(){
         for (int i=0;i<5;i++){
             rotPillList.add(new RotPill(this));

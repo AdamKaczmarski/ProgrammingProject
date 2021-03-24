@@ -1,2 +1,0 @@
-mainChar health: 100
-mainChar points: 0

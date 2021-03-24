@@ -3,6 +3,7 @@ package Game.Levels;
 import Game.Characters.MainCharacter;
 import Game.Controls.MouseController;
 import Game.Game;
+import Game.GameSaverLoader.GameSaverLoader;
 import Game.HOC.GameView;
 
 import Game.Sensors.saveSensor;
@@ -26,6 +27,7 @@ public class GameLevel extends World {
     private float musicVolume;
     private float sfxVolume;
     private boolean gameInPlay;
+
     public GameLevel(Game game, float musicVol,float sfxVol){
         super();
         mainChar = new MainCharacter(this);
@@ -73,6 +75,7 @@ public class GameLevel extends World {
         return gameInPlay;
     }
 
+
     public void setMainChar(MainCharacter mainChar) {
         this.mainChar = mainChar;
     }
@@ -107,23 +110,18 @@ public class GameLevel extends World {
         this.gameInPlay = gameInPlay;
     }
 
+
     /**
      * This method creates a save file when main character enters a certain area which will move him to another level
      * Save file will contain every attribute that counts in the game
-     * @param mainChar requires MainCharacter to access his attributes
      */
-    public void createSaveFile(MainCharacter mainChar){
-        try {
-            //IT CREATES NEW FILE AND DOES OVERWRITE ALREADY CREATED FILE
-            FileWriter writer = new FileWriter("save.txt");
-            writer.write("mainChar health: "+ mainChar.getHealth());
-            writer.write("\nmainChar points: "+mainChar.getPoints());
-            //System.out.println(mainChar.getPistol());
-            if(mainChar.getPistol()!=null) writer.write("\nmainCharPistol ammo: "+mainChar.getPistol().getAmmo());
-            writer.close();
+    public void createSaveFile() {
+        try{
+            GameSaverLoader.save(this);
         } catch (IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
+
     }
 
     /**
