@@ -42,14 +42,12 @@ public class LevelTwo extends GameLevel {
         medPack = new MedPack(this);
         medPack.setPosition(new Vec2(-14f,4f));
         addThemeSong("assets/sounds/theme2.wav");
-        timer = new Timer(700,new EnShoot(enemyList,getMainChar()));
+        timer = new Timer(700,new EnShoot(this.getDynamicBodies(),getMainChar()));
         timer.start();
-        System.out.println(getEnemyList());
+
     }
 
-    public ArrayList<Enemy> getEnemyList() {
-        return enemyList;
-    }
+
 
     /**
      * This contructor is used when user wants to jump straight to Level Two using the MainMenu
@@ -67,12 +65,27 @@ public class LevelTwo extends GameLevel {
         medPack = new MedPack(this);
         medPack.setPosition(new Vec2(-14f,4f));
         addThemeSong("assets/sounds/theme2.wav");
-        timer = new Timer(700,new EnShoot(enemyList,getMainChar()));
+        timer = new Timer(700,new EnShoot(this.getDynamicBodies(),getMainChar()));
         timer.start();
     }
 
+    public LevelTwo(Game game,int health,int points,int ammo,Vec2 pos){
+        super(game,game.getMusicVolume(), game.getSfxVolume());
+        this.addWalls();
+        this.setName("LevelTwo");
+        addThemeSong("assets/sounds/theme2.wav");
+        getMainChar().setHealth(health);
+        getMainChar().setPoints(points);
+        if(ammo>0){
+            getMainChar().setPistol(new Pistol(this,ammo));
+        }
+        getMainChar().setPosition(pos);
 
-
+        this.getSaveSen().getBody().setPosition(new Vec2(-22.5f,17f));
+        this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
+        timer = new Timer(1200,new EnShoot(this.getDynamicBodies(),getMainChar()));
+        timer.start();
+    }
 
     /**
      * This method adds Controls (KeyListener and MouseController) to the view of this level

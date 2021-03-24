@@ -108,14 +108,6 @@ public class Pistol extends StaticBody {
         this.ammo=addAmmo;
     }
 
-    public void setPistolImage(BodyImage pistolImage) {
-        Pistol.pistolImage = pistolImage;
-    }
-
-    public void setPistolShape(Shape pistolShape) {
-        Pistol.pistolShape = pistolShape;
-    }
-
     public void updateVolume(float sfcVol){
         this.getNoAmmoSound().setVolume(sfcVol);
         this.getShootSound().setVolume(sfcVol);

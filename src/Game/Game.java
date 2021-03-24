@@ -4,11 +4,13 @@ import Game.Characters.MainCharacter;
 import Game.Controls.MainCharacterKeyboardController;
 import Game.Controls.MouseController;
 import Game.GUI.Containers.MainMenu;
+import Game.GameSaverLoader.GameSaverLoader;
 import Game.HOC.GameView;
 import Game.Levels.Level.LevelOne;
 import Game.Levels.Level.LevelThree;
 import Game.Levels.Level.LevelTwo;
 import Game.Levels.GameLevel;
+import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -116,6 +118,26 @@ public class Game {
         }
     }
 
+    /**
+     *
+     * @return
+     */
+    public void changeLevel(String levelToLoad, int health, int points, int ammo, Vec2 pos){
+        if (levelToLoad.equals("LevelOne")){
+            level=new LevelOne(this,health,points,ammo,pos);
+            soundSetter(level);
+
+        }
+        if (levelToLoad.equals("LevelTwo")){
+            level = new LevelTwo(this,health,points,ammo,pos);
+            soundSetter(level);
+        }
+        if (levelToLoad.equals("LevelThree")){
+            level = new LevelThree(this,health,points,ammo,pos);
+            soundSetter(level);
+        }
+    }
+
     public JFrame getFrame() {
         return frame;
     }
@@ -138,6 +160,10 @@ public class Game {
 
     public GameLevel getLevel() {
         return level;
+    }
+
+    public GameView getView() {
+        return view;
     }
 
     public void setMusicVolume(float musicVolume) {
@@ -171,6 +197,14 @@ public class Game {
     public void soundSetter(GameLevel level){
         level.setMusicVolume(this.getMusicVolume());
         level.setSfxVolume(this.getSfxVolume());
+    }
+
+    /**
+     *
+     * @param fileName
+     */
+    public void loadSaveFile(String fileName){
+        GameSaverLoader.load("saves/"+fileName, this);
     }
 
     public static void main(String[] args) {

@@ -3,6 +3,7 @@ package Game.Levels.Level;
 import Game.Characters.Enemy;
 import Game.Characters.MainCharacter;
 import Game.Collisons.BulletToCharacter;
+import Game.Items.MedPack;
 import Game.Sensors.SaveSensorListener;
 import Game.Controls.MainCharacterKeyboardController;
 import Game.Controls.MouseController;
@@ -27,17 +28,16 @@ import java.util.ArrayList;
 public class LevelOne extends GameLevel {
     private Pistol pistol;
     private ArrayList<Enemy> enemyList;
-    private ArrayList<Wall> walls = new ArrayList(4);
+    private ArrayList<Wall> walls = new ArrayList(7);
     private Timer timer;
     public LevelOne(Game game){
         super(game,game.getMusicVolume(), game.getSfxVolume());
         setName("LevelOne");
-        getMainChar().setPosition(new Vec2(-6f,0f));
+        getMainChar().setPosition(new Vec2(0f,-8f));
         pistol = new Pistol(this);
-        pistol.setPosition(new Vec2(-4f,2f));
+        pistol.setPosition(new Vec2(0f,0f));
         enemyList = new ArrayList<>(5);
         addThemeSong("assets/sounds/theme1.wav");
-
         /* WALLS */
         this.addWalls();
         /* ENEMIES */
@@ -45,20 +45,47 @@ public class LevelOne extends GameLevel {
 
         this.getSaveSen().getBody().setPosition(new Vec2(21f,17f));
         this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
-
-        //this.addStepListener(new EnemyShoot(enemyList,getMainChar(),1.5f)); OLD USAGE OF STEP LISTENER TO MAKE ENEMY SHOOT
-
-        timer = new Timer(1200,new EnShoot(enemyList,getMainChar()));
+        timer = new Timer(1200,new EnShoot(this.getDynamicBodies(),getMainChar()));
         timer.start();
-
     }
 
+    /**
+     * Constructor used to load a game world from save file
+     * @param game
+     * @param health
+     * @param points
+     * @param ammo
+     * @param pos
+     */
+    public LevelOne(Game game,int health,int points,int ammo,Vec2 pos){
+        super(game,game.getMusicVolume(), game.getSfxVolume());
+        this.addWalls();
+        this.setName("LevelOne");
+        addThemeSong("assets/sounds/theme1.wav");
+        getMainChar().setHealth(health);
+        getMainChar().setPoints(points);
+        if(ammo>0){
+            getMainChar().setPistol(new Pistol(this,ammo));
+        }
+        getMainChar().setPosition(pos);
+
+        this.getSaveSen().getBody().setPosition(new Vec2(21f,17f));
+        this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
+        timer = new Timer(1200,new EnShoot(this.getDynamicBodies(),getMainChar()));
+        timer.start();
+    }
+
+    /**
+     *
+     */
     public void spawnEnemies(){
-        for (int i=0;i<5;i++){
-            float y=getMainChar().getPosition().y+((float)Math.random()*12+8);
-            float x= (float)Math.random()*37+-18;
-            enemyList.add(new Enemy(this,new Vec2(x,y)));
-            enemyList.get(i).setLinearVelocity(new Vec2((getMainChar().getPosition().x-x)/9,(getMainChar().getPosition().y-y)/9));
+        enemyList.add(new Enemy(this,new Vec2(-11f,3f)));
+        enemyList.add(new Enemy(this,new Vec2(7f,3f)));
+        enemyList.add(new Enemy(this,new Vec2(0f,14f)));
+        enemyList.add(new Enemy(this,new Vec2(-6f,14f)));
+        enemyList.add(new Enemy(this,new Vec2(5f,14f)));
+        for (int i=0;i<enemyList.size();i++){
+
             enemyList.get(i).addCollisionListener(new BulletToCharacter(getMainChar()));
         }
     }
@@ -72,6 +99,9 @@ public class LevelOne extends GameLevel {
         /*Top Wall This wall is invisible (it's outside the user view) to make top boundary for characters
         to not walk out and bullet to be destroyed when they exit the screen */
         walls.add(new Wall(this,22.5f,4.5f,0,24.5f));
+        walls.add(new Wall(this,6f,1f,-11f,0f));
+        walls.add(new Wall(this,6f,1f,11f,0f));
+        walls.add(new Wall(this,8f,1.5f,0f,10f));
     }
     /**
      * This method adds Controls (KeyListener and MouseController) to the view of this level

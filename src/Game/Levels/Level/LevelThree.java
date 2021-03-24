@@ -11,6 +11,7 @@ import Game.Levels.GameLevel;
 import Game.Levels.RotPills.RotPill;
 import Game.Levels.Walls.Wall;
 import Game.Sensors.SaveSensorListener;
+import Game.Timers.EnShoot;
 import city.cs.engine.SoundClip;
 import org.jbox2d.common.Vec2;
 
@@ -58,6 +59,31 @@ public class LevelThree extends GameLevel {
         this.addRotPills();
         this.getSaveSen().getBody().setPosition(new Vec2(-21f,-16f));
         this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
+
+    }
+
+    /**
+     *
+     * @param game
+     * @param health
+     * @param points
+     * @param ammo
+     * @param pos
+     */
+    public LevelThree(Game game,int health,int points,int ammo,Vec2 pos){
+        super(game,game.getMusicVolume(), game.getSfxVolume());
+        this.addWalls();
+        this.setName("LevelThree");
+        addThemeSong("assets/sounds/theme3.wav");
+        getMainChar().setHealth(health);
+        getMainChar().setPoints(points);
+        if(ammo>0){
+            getMainChar().setPistol(new Pistol(this,ammo));
+        }
+        getMainChar().setPosition(pos);
+
+        this.getSaveSen().getBody().setPosition(new Vec2(-21f,-16f));
+        this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
     }
 
     /**
@@ -90,7 +116,6 @@ public class LevelThree extends GameLevel {
             rotPillList.add(new RotPill(this));
             rotPillList.get(i).setAngularVelocity(rotPillList.get(i).getAngularVelocity()+(i/5));
         }
-        //rotPillList.get(1).setPosition(new Vec2(0,0));
-
     }
+
 }

@@ -1,8 +1,10 @@
 package Game.GUI.Containers;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import Game.Controls.MainCharacterKeyboardController;
 import Game.GUI.ActionListeners.QuitListener;
@@ -71,7 +73,18 @@ public class BgPanel extends JPanel {
 
         this.load = new Button("Load",300,350,300,40);
         this.load.addActionListener(e->{
-
+            JFileChooser chooser = new JFileChooser();
+            String dir = System.getProperty("user.dir")+"/saves";
+            System.out.println(dir);
+            File dirFile = new File(dir);
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "Only txt files", "txt");
+            chooser.setFileFilter(filter);
+            chooser.setCurrentDirectory(dirFile);
+            int returnVal = chooser.showOpenDialog(this);
+            if(returnVal == JFileChooser.APPROVE_OPTION) {
+                game.loadSaveFile(chooser.getSelectedFile().getName());
+            }
         });
         this.add(load);
 

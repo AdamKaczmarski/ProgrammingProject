@@ -1,14 +1,20 @@
 package Game.Levels;
 
+import Game.Characters.Enemy;
 import Game.Characters.MainCharacter;
+import Game.Collisons.BulletToCharacter;
 import Game.Controls.MouseController;
 import Game.Game;
 import Game.GameSaverLoader.GameSaverLoader;
 import Game.HOC.GameView;
 
+import Game.Items.MedPack;
+import Game.Items.Pistol;
+import Game.Levels.RotPills.RotPill;
 import Game.Sensors.saveSensor;
 import city.cs.engine.SoundClip;
 import city.cs.engine.World;
+import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -123,7 +129,34 @@ public class GameLevel extends World {
         }
 
     }
-
+    /**
+     * Method used to spawn a single enemy.
+     */
+    public void spawnEnemy(int health, int ammo, Vec2 position){
+        Enemy E = new Enemy(this,position);
+        float y=getMainChar().getPosition().y+((float)Math.random()*12+8);
+        float x= (float)Math.random()*37+-18;
+        E.setLinearVelocity(new Vec2((getMainChar().getPosition().x-x)/9,(getMainChar().getPosition().y-y)/9));
+        E.addCollisionListener(new BulletToCharacter(getMainChar()));
+        E.setHealth(health);
+        if (ammo>0) E.setPistol(new Pistol(this,ammo));
+    }
+    public void spawnItem(String item,Vec2 itemPos){
+        if(item.equals("MedPack")){
+            MedPack m = new MedPack(this);
+            m.setPosition(itemPos);
+        } else if (item.equals("Pistol")){
+            Pistol p = new Pistol(this);
+            p.setPosition(itemPos);
+        }
+    }
+    public void addRotPill(int health,float aV, Vec2 pos, Vec2 lSpeed){
+        RotPill rp =  new RotPill(this);
+        rp.setHealth(health);
+        rp.setPosition(pos);
+        rp.setAngularVelocity(aV);
+        rp.setLinearVelocity(lSpeed);
+    }
     /**
      *
      */
