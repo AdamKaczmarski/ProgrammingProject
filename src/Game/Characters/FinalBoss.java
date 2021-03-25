@@ -1,8 +1,9 @@
 package Game.Characters;
 
 import Game.Collisons.BulletToFinalBoss;
-import Game.Items.Pistol;
+
 import Game.Levels.GameLevel;
+import Game.Items.Pistol;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
@@ -47,7 +48,7 @@ public class FinalBoss extends Walker {
              ((GameLevel)this.getWorld()).getThemeSong().stop();
              this.destroy();
              try {
-                 SoundClip victoryMusic = new SoundClip("assets/sounds/victory.mp3");
+                 SoundClip victoryMusic = new SoundClip("assets/sounds/victory.wav");
                  victoryMusic.setVolume(((GameLevel)this.getWorld()).getMusicVolume());
                  victoryMusic.play();
              } catch (LineUnavailableException e) {
