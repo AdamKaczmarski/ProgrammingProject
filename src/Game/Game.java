@@ -1,8 +1,6 @@
 package Game;
 // Imports
 import Game.Characters.MainCharacter;
-import Game.Controls.MainCharacterKeyboardController;
-import Game.Controls.MouseController;
 import Game.GUI.Containers.MainMenu;
 import Game.GameSaverLoader.GameSaverLoader;
 import Game.HOC.GameView;
