@@ -51,11 +51,11 @@ public class LevelOne extends GameLevel {
 
     /**
      * Constructor used to load a game world from save file
-     * @param game
-     * @param health
-     * @param points
-     * @param ammo
-     * @param pos
+     * @param game Object the level is going to be set in
+     * @param health health of the MainCharacter
+     * @param points the score of the MainCharacter
+     * @param ammo ammo to be set for the pistol of the Main Character
+     * @param pos position to spawn MainCharacter in
      */
     public LevelOne(Game game,int health,int points,int ammo,Vec2 pos){
         super(game,game.getMusicVolume(), game.getSfxVolume());
@@ -76,9 +76,9 @@ public class LevelOne extends GameLevel {
     }
 
     /**
-     *
+     *  This function spawns enemies in the world
      */
-    public void spawnEnemies(){
+    private void spawnEnemies(){
         enemyList.add(new Enemy(this,new Vec2(-11f,3f)));
         enemyList.add(new Enemy(this,new Vec2(7f,3f)));
         enemyList.add(new Enemy(this,new Vec2(0f,14f)));
@@ -89,7 +89,11 @@ public class LevelOne extends GameLevel {
             enemyList.get(i).addCollisionListener(new BulletToCharacter(getMainChar()));
         }
     }
-    public void addWalls(){
+
+    /**
+     * This function puts walls in the world
+     */
+    private void addWalls(){
         //Bottom Wall
         walls.add(new Wall(this,22.5f,4.5f,0,-15.5f));
         //Left Wall

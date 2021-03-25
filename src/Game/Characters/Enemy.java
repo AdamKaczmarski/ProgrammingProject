@@ -13,25 +13,20 @@ public class Enemy extends Walker {
     private static BodyImage enemyImage = new BodyImage("assets/images/badGuy.jpg", charHeight);
     private int health = 20;
     Pistol Pistol;
-    GameLevel gameLevel;
     public Enemy (GameLevel gameLevel, Vec2 vec){
         super(gameLevel,enemyShape);
         this.addImage(enemyImage);
-        //this.setAlwaysOutline(true);
         this.setName("Enemy");
         this.setClipped(true);
         this.addCollisionListener(new EnemyToWall());
         this.setPosition(vec);
         this.Pistol= new Pistol(gameLevel, true);
-        this.gameLevel=gameLevel;
     }
     /* ACCESSORS */
     public int getHealth() {
         return health;
     }
     public Pistol getPistol(){return Pistol;}
-    public GameLevel getW(){return gameLevel;}
-/*    public float getCharHeight{return charHeight;}*/
     /* MUTATORS */
 
     public void setPistol(Pistol pistol) {
@@ -49,9 +44,8 @@ public class Enemy extends Walker {
     public void enemyShoot(Vec2 mainCharPos){
         if (this.getPistol()!=null && this.getPistol().getAmmo()>0){
             //mouseDir here is the position of the maincharacter
-            this.getPistol().shoot(this.getW(),this, charHeight,mainCharPos,"BulletEn");
+            this.getPistol().shoot(((GameLevel)this.getWorld()),this, charHeight,mainCharPos,"BulletEn");
         }
-        //IF AMMO IS 0 MAKE ENEMY RUN QUICKLY TOWARDS THE MAIN CHARACTER AND EXPLODE(ADD NEW COLLISION)
     }
 
 }

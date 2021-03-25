@@ -1,10 +1,12 @@
 package Game.GameSaverLoader;
 
 import Game.Characters.Enemy;
+import Game.Characters.FinalBoss;
 import Game.Game;
 import Game.Items.MedPack;
 import Game.Items.Pistol;
 import Game.Levels.GameLevel;
+import Game.Levels.Level.LevelFour;
 import Game.Levels.Level.LevelOne;
 import Game.Levels.Level.LevelThree;
 import Game.Levels.Level.LevelTwo;
@@ -23,7 +25,7 @@ import java.util.List;
 
 public class GameSaverLoader {
     public static void save(GameLevel level) throws IOException {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("date:dd-MM-yyyy-time:HH-mm-ss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmmss");
             String fileName = "saves/"+dtf.format(LocalDateTime.now())+".txt";
             FileWriter writer = null;
             try {
@@ -43,6 +45,8 @@ public class GameSaverLoader {
                         writer.write(bodies.get(i).getName()+","+((Enemy)bodies.get(i)).getHealth()+","+((Enemy)bodies.get(i)).getPistol().getAmmo()+","+bodies.get(i).getPosition().x+","+bodies.get(i).getPosition().y+"\n");
                     } else if (bodies.get(i) instanceof RotPill){
                         writer.write(bodies.get(i).getName()+","+((RotPill) bodies.get(i)).getHealth()+","+bodies.get(i).getAngularVelocity()+","+bodies.get(i).getPosition().x+","+bodies.get(i).getPosition().y+","+bodies.get(i).getLinearVelocity().x+","+bodies.get(i).getLinearVelocity().y+"\n");
+                    } else if (bodies.get(i) instanceof FinalBoss){
+                        writer.write(bodies.get(i).getName()+","+((FinalBoss) bodies.get(i)).getHealth()+","+((FinalBoss)bodies.get(i)).getPistol().getAmmo());
                     }
                 }
                 List<StaticBody> staticBodies = level.getStaticBodies();
@@ -76,7 +80,7 @@ public class GameSaverLoader {
 
             line = reader.readLine();
 
-            if(lvlName.equals("LevelOne") || lvlName.equals("LevelTwo")){
+            if(lvlName.equals("LevelOne") || lvlName.equals("LevelTwo") || lvlName.equals("LevelThree") || lvlName.equals("LevelFour")){
                 game.changeLevel(lvlName,hp,score,ammo,new Vec2(x,y));
                 while (line!=null){
                     tokens = line.split(",");
@@ -84,13 +88,6 @@ public class GameSaverLoader {
                     line=reader.readLine();
                 }
 
-            }  else if (lvlName.equals("LevelThree")){
-                game.changeLevel(lvlName,hp,score,ammo,new Vec2(x,y));
-                while (line!=null){
-                    tokens = line.split(",");
-                    spawnThing(tokens,game.getLevel());
-                    line=reader.readLine();
-                }
             }
             finishLoading(game,lvlName);
         } catch (IOException e){
@@ -142,6 +139,8 @@ public class GameSaverLoader {
             ((LevelTwo)game.getLevel()).addControls(game);
         } else if (lvl.equals("LevelThree")) {
             ((LevelThree) game.getLevel()).addControls(game);
+        } else if (lvl.equals("LevelFour")) {
+            ((LevelFour) game.getLevel()).addControls(game);
         }
         game.getLevel().start();
         game.getMenu().getPanel().setVisible(false);

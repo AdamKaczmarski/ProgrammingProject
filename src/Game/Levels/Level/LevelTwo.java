@@ -34,7 +34,6 @@ public class LevelTwo extends GameLevel {
 
         mc.setPistol(null);
         getMainChar().setHealth(mc.getHealth());
-        System.out.println("YOU'RE ON LEVEL TWO");
         this.addWalls();
         this.spawnEnemies();
         this.getSaveSen().getBody().setPosition(new Vec2(-22.5f,17f));
@@ -69,6 +68,14 @@ public class LevelTwo extends GameLevel {
         timer.start();
     }
 
+    /**
+     * Constructor used to load a game world from save file
+     * @param game Object the level is going to be set in
+     * @param health health of the MainCharacter
+     * @param points the score of the MainCharacter
+     * @param ammo ammo to be set for the pistol of the Main Character
+     * @param pos position to spawn MainCharacter in
+     */
     public LevelTwo(Game game,int health,int points,int ammo,Vec2 pos){
         super(game,game.getMusicVolume(), game.getSfxVolume());
         this.addWalls();
@@ -98,7 +105,10 @@ public class LevelTwo extends GameLevel {
         this.getView().addMouseListener(this.getMouse());
         this.getView().addKeyListener(this.getKeyboard());
     }
-    public void addWalls(){
+    /**
+     * This function puts walls in the world
+     */
+    private void addWalls(){
         //Bottom Wall
         walls.add(new Wall(this,22.5f,4.5f,8f,-20.5f));
         //Right Wall
@@ -131,7 +141,10 @@ public class LevelTwo extends GameLevel {
         //10th
         walls.add(new Wall (this,2f,2f,-14f,9f));
     }
-    public void spawnEnemies(){
+    /**
+     * This function spawns enemies in the world
+     */
+    private void spawnEnemies(){
         enemyList.add(new Enemy(this,new Vec2(-14f,-5f)));
         enemyList.add(new Enemy(this,new Vec2(-12f,-5f)));
         enemyList.add(new Enemy(this, new Vec2(-4f,-12f)));

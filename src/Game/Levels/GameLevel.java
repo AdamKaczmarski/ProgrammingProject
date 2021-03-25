@@ -18,6 +18,7 @@ import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,12 +37,13 @@ public class GameLevel extends World {
 
     public GameLevel(Game game, float musicVol,float sfxVol){
         super();
+        this.musicVolume=musicVol;
+        this.sfxVolume=sfxVol;
         mainChar = new MainCharacter(this);
         this.gameInPlay=true;
         this.setGravity(0f);
         this.saveSen=new saveSensor(this);
-        this.musicVolume=musicVol;
-        this.sfxVolume=sfxVol;
+
     }
 
     public MainCharacter getMainChar() {
@@ -173,4 +175,5 @@ public class GameLevel extends World {
             e.printStackTrace();
         }
     }
+
 }

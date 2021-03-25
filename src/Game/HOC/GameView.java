@@ -1,8 +1,11 @@
 package Game.HOC;
 
+import Game.Characters.FinalBoss;
 import Game.Characters.MainCharacter;
 import city.cs.engine.UserView;
 import city.cs.engine.World;
+import org.jbox2d.common.Vec2;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,6 +13,7 @@ public class GameView extends UserView {
     private Image bckgr;
     private Image hpImage;
     private MainCharacter mainChar;
+    private FinalBoss finalBoss;
     public GameView(World w, int width, int height, MainCharacter mc){
         super(w,width,height);
         this.mainChar=mc;
@@ -28,6 +32,7 @@ public class GameView extends UserView {
     @Override
     protected void paintForeground(Graphics2D g) {
         super.paintForeground(g);
+        mainChar.setGraphics(g);
         g.setFont(new Font("Stencil",Font.PLAIN,32));
         if (this.getVMainChar().getHealth()<=30){
             g.setColor(Color.RED);
@@ -39,7 +44,7 @@ public class GameView extends UserView {
             g.drawImage(hpImage,5,680,this);
             if(this.getVMainChar().getHealth()==100) {
                 g.drawString("" + this.getVMainChar().getHealth(), 15, 728);
-            } else {
+            } else if(this.getVMainChar().getHealth()>0) {
                 g.drawString("" + this.getVMainChar().getHealth(), 25, 728);
             }
         }
@@ -57,6 +62,14 @@ public class GameView extends UserView {
         g.setColor(new Color(139,69,19));
         g.drawString("SCORE: "+this.getVMainChar().getPoints(),350,746);
 
+        if(this.getVFinalBoss()!=null){
+            g.drawString("FinalBoss HP: "+this.getVFinalBoss().getHealth(),400,50);
+        }
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
     }
 
     public void setBckgr(Image bckgr) {
@@ -66,8 +79,16 @@ public class GameView extends UserView {
     public MainCharacter getVMainChar() {
         return mainChar;
     }
+    public FinalBoss getVFinalBoss(){
+        return finalBoss;
+    }
 
     public void setVMainChar(MainCharacter mainChar) {
         this.mainChar = mainChar;
     }
+    public void setVFinalBoss(FinalBoss finalBoss){
+        this.finalBoss=finalBoss;
+    }
+
+
 }

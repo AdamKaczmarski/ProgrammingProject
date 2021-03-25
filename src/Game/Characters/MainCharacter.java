@@ -5,9 +5,16 @@ import Game.Collisons.BulletToCharacter;
 import Game.Items.Pistol;
 import Game.Levels.GameLevel;
 import city.cs.engine.*;
+import city.cs.engine.Shape;
 import org.jbox2d.common.Vec2;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainCharacter extends Walker {
@@ -20,8 +27,8 @@ public class MainCharacter extends Walker {
     private int health;
     private int points;
     private Pistol pistol;
-    private GameLevel gameLevel;
-
+    private Graphics2D graphics;
+    private SoundClip gameOver;
     public MainCharacter(GameLevel gameLevel){
         super(gameLevel);
 
@@ -32,10 +39,18 @@ public class MainCharacter extends Walker {
         this.setClipped(true);
         this.health=100;
         this.points=0;
-        this.gameLevel=gameLevel;
-
         this.setName("MainCharacter");
         this.addCollisionListener(new BulletToCharacter(this));
+        try {
+            gameOver = new SoundClip("assets/sounds/game_over.wav");
+            gameOver.setVolume(gameLevel.getMusicVolume());
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
     }
     /* ACCESSORS */
 
@@ -59,14 +74,6 @@ public class MainCharacter extends Walker {
     public int getPoints(){return this.points;}
 
     /**
-     * Returns the World that the character is created in
-     * @return World object
-     */
-    public GameLevel getW() {
-        return gameLevel;
-    }
-
-    /**
      * Returns the height of the character
      * @return float height
      */
@@ -80,6 +87,12 @@ public class MainCharacter extends Walker {
     public mainCharFixture getFixture() {
         return fixture;
     }
+    /**
+     *
+     */
+    public Graphics2D getGraphics() {
+        return graphics;
+    }
     /* MUTATORS */
 
     /**
@@ -91,9 +104,12 @@ public class MainCharacter extends Walker {
     public void setHealth(int chHealth) {
         this.health = chHealth;
         this.healthCheck();
-
     }
 
+    /**
+     * Changes the fixture of the character depending on his movement direction (left/right)
+     * @param fixture
+     */
     public void setFixture(mainCharFixture fixture) {
         this.fixture = fixture;
     }
@@ -108,9 +124,11 @@ public class MainCharacter extends Walker {
      *
      */
     public void setPoints(int addPoints) {this.points = addPoints;}
-
-    public void setCharShape(Shape charShape) {
-        MainCharacter.charShape = charShape;
+    /**
+     *
+     */
+    public void setGraphics(Graphics2D graphics) {
+        this.graphics = graphics;
     }
 
     /**
@@ -120,14 +138,50 @@ public class MainCharacter extends Walker {
      */
     public void charShoot(Vec2 mouseDir){
         if (this.getPistol()!=null && this.getPistol().getPicked()){
-            this.pistol.shoot(getW(),this,getHeight(),mouseDir,"BulletMC");
+            this.pistol.shoot(((GameLevel)this.getWorld()),this,getHeight(),mouseDir,"BulletMC");
         }
     }
 
+    public void meleeAttack(){
+        List<DynamicBody> bodies = this.getWorld().getDynamicBodies();
+        for(int i=0;i<bodies.size();i++){
+           if(bodies.get(i) instanceof Enemy){
+               if (Math.abs(this.getPosition().x-bodies.get(i).getPosition().x)<4 && Math.abs(this.getPosition().y-bodies.get(i).getPosition().y)<4){
+                  /* Image ex = new ImageIcon("assets/gifs/explosion.gif").getImage();
+                   this.getGraphics().
+                   this.getGraphics().drawImage(ex,200,200,((GameLevel)this.getWorld()).getView());*/
+                   ((Enemy) bodies.get(i)).setHealth(((Enemy) bodies.get(i)).getHealth()-10);
+                   if(((Enemy) bodies.get(i)).getHealth()<=0){
+                       ((Enemy) bodies.get(i)).setPistol(null);
+                       bodies.get(i).destroy();
+                       this.setPoints(this.getPoints()+10);
+                       this.getPistol().setAmmo(this.getPistol().getAmmo()+2);
+                   }
+
+               }
+           } else if (bodies.get(i) instanceof FinalBoss){
+               if (Math.abs(this.getPosition().x-bodies.get(i).getPosition().x)<4 && Math.abs(this.getPosition().y-bodies.get(i).getPosition().y)<4){
+                    ((FinalBoss) bodies.get(i)).setHealth(((FinalBoss) bodies.get(i)).getHealth()-10);
+                   if(((FinalBoss) bodies.get(i)).getHealth()<=0){
+                       ((FinalBoss) bodies.get(i)).setPistol(null);
+                       bodies.get(i).destroy();
+                       this.setPoints(this.getPoints()+100);
+                   }
+               }
+        }
+    }}
+
+    /**
+     *
+     */
     public void healthCheck(){
         if(this.getHealth()<=0){
             System.out.println("You died!");
+            ((GameLevel)this.getWorld()).getThemeSong().stop();
+
+            gameOver.play();
             this.destroy();
+            this.getWorld().stop();
         }
     }
 

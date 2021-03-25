@@ -75,7 +75,6 @@ public class BgPanel extends JPanel {
         this.load.addActionListener(e->{
             JFileChooser chooser = new JFileChooser();
             String dir = System.getProperty("user.dir")+"/saves";
-            System.out.println(dir);
             File dirFile = new File(dir);
             FileNameExtensionFilter filter = new FileNameExtensionFilter(
                     "Only txt files", "txt");

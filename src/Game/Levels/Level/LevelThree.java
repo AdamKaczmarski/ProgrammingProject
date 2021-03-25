@@ -51,8 +51,6 @@ public class LevelThree extends GameLevel {
         addThemeSong("assets/sounds/theme3.wav");
         getMainChar().setPosition(new Vec2(21f, 17f));
         getMainChar().setPistol(new Pistol(this,20));
-        this.getSaveSen().getBody().setPosition(new Vec2(-21f, -16f));
-        this.getSaveSen().addSensorListener(new SaveSensorListener(this, game));
         Pistol pistol = new Pistol(this);
         pistol.setPosition(new Vec2(-20f,17f));
         this.addWalls();
@@ -63,12 +61,12 @@ public class LevelThree extends GameLevel {
     }
 
     /**
-     *
-     * @param game
-     * @param health
-     * @param points
-     * @param ammo
-     * @param pos
+     * Constructor used to load a game world from save file
+     * @param game Object the level is going to be set in
+     * @param health health of the MainCharacter
+     * @param points the score of the MainCharacter
+     * @param ammo ammo to be set for the pistol of the Main Character
+     * @param pos position to spawn MainCharacter in
      */
     public LevelThree(Game game,int health,int points,int ammo,Vec2 pos){
         super(game,game.getMusicVolume(), game.getSfxVolume());
@@ -98,8 +96,10 @@ public class LevelThree extends GameLevel {
         this.getView().addMouseListener(this.getMouse());
         this.getView().addKeyListener(this.getKeyboard());
     }
-
-    public void addWalls() {
+    /**
+     * This function puts walls in the world
+     */
+    private void addWalls() {
         walls.add(new Wall(this, 22.5f, 4.5f, 8f, -20.5f));
         //Right Wall
         walls.add(new Wall(this, 3f, 15f, 21.5f, -2f));
@@ -110,8 +110,10 @@ public class LevelThree extends GameLevel {
         walls.add(new Wall(this, 22.5f, 4.5f, 0, 24.5f));
         walls.add(new Wall(this,1f,5f,-24,17f));
     }
-
-    public void addRotPills(){
+    /**
+     * This function puts RotPills in the world
+     */
+    private void addRotPills(){
         for (int i=0;i<5;i++){
             rotPillList.add(new RotPill(this));
             rotPillList.get(i).setAngularVelocity(rotPillList.get(i).getAngularVelocity()+(i/5));

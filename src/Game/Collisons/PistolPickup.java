@@ -18,7 +18,7 @@ public class PistolPickup implements CollisionListener {
             MainCharacter mainChar = (MainCharacter) e.getOtherBody();
             if(mainChar.getPistol()==null){
                 e.getReportingBody().destroy();
-                mainChar.setPistol(new Pistol(mainChar.getW(),true));
+                mainChar.setPistol(new Pistol((GameLevel) mainChar.getWorld(),true));
                 mainChar.getPistol().setAmmo(30);
             } else {
                 e.getReportingBody().destroy();

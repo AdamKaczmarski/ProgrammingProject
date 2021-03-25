@@ -67,10 +67,10 @@ public class Pistol extends StaticBody {
      * This constructor creates a visual Pistol object on the map
      * It gets destroyed after the collision (pick up) is detected
      * This constructs pistol object on the map, after picked it gets destroyed and abstract pistol gets created
-     * @param world The world that the pistol object is created in
+     * @param level The world that the pistol object is created in
      */
-    public Pistol (World world){
-        super(world,pistolShape);
+    public Pistol (GameLevel level){
+        super(level,pistolShape);
         addImage(pistolImage);
         setName("Pistol");
         addCollisionListener(new PistolPickup());
@@ -119,14 +119,14 @@ public class Pistol extends StaticBody {
      * @param charHeight the height of the character so that the bullet will be placed next to the character, not in it
      * @param db the walker object
      * @param mouseDir position of the click, to set the direction of the buller
-     * @param w World object needed to create the bullet
+     * @param level World object needed to create the bullet
      */
-    public void shoot(World w, Walker db, float charHeight, Vec2 mouseDir, String bulletName){
-        if (w.isRunning()) {
+    public void shoot(GameLevel level, Walker db, float charHeight, Vec2 mouseDir, String bulletName){
+        if (level.isRunning()) {
             if (this.getAmmo() > 0) {
                 shootSound.stop();
                 shootSound.play();
-                Bullet b = new Bullet(w);
+                Bullet b = new Bullet(level);
                 b.setName(bulletName);
                 if (mouseDir.x >= db.getPosition().x && mouseDir.y >= db.getPosition().y) {
                     if (mouseDir.y < (db.getPosition().y + charHeight / 2) && mouseDir.y > (db.getPosition().y)) {

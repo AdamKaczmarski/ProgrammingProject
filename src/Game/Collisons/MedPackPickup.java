@@ -15,8 +15,12 @@ public class MedPackPickup implements CollisionListener {
         }
         if (e.getOtherBody().getName().equals("MainCharacter")){
             MainCharacter mainChar = (MainCharacter) e.getOtherBody();
-            if (mainChar.getHealth()+25>100) mainChar.setHealth(100);
-            mainChar.setHealth(mainChar.getHealth()+((MedPack)e.getReportingBody()).getAmount());
+            if (mainChar.getHealth()+25>=100) {
+                mainChar.setHealth(100);
+            } else {
+                mainChar.setHealth(mainChar.getHealth()+((MedPack)e.getReportingBody()).getAmount());
+            }
+
             e.getReportingBody().destroy();
         }
     }

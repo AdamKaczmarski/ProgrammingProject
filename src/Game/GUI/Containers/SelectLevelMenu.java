@@ -27,7 +27,7 @@ public class SelectLevelMenu extends JPanel {
         this.level1=new Button("Level One",300,200,300,40);
         this.level2=new Button("Level Two",300,250,300,40);
         this.level3=new Button("Level Three",300,300,300,40);
-        this.level4=new Button("Level Four [TBD]",300,350,300,40);
+        this.level4=new Button("Level Four",300,350,300,40);
         this.back=new Button("<<< GO BACK",300,450,300,40);
         this.add(level1);
         this.add(level2);
@@ -47,9 +47,8 @@ public class SelectLevelMenu extends JPanel {
             this.setVisible(false);
         });
         level4.addActionListener(e->{
-            /*g.changeLevel("LevelThreeFromMenu",null);
-            this.setVisible(false);*/
-            System.out.println("LEVEL 4 DOESNT EXIT YET");
+            g.changeLevel("LevelThreeFromMenu",null);
+            this.setVisible(false);
         });
         back.addActionListener(e->{
             m.setPanel(new BgPanel(bg,g,m,f,playPause));

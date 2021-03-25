@@ -6,6 +6,7 @@ import Game.Controls.MouseController;
 import Game.GUI.Containers.MainMenu;
 import Game.GameSaverLoader.GameSaverLoader;
 import Game.HOC.GameView;
+import Game.Levels.Level.LevelFour;
 import Game.Levels.Level.LevelOne;
 import Game.Levels.Level.LevelThree;
 import Game.Levels.Level.LevelTwo;
@@ -111,22 +112,35 @@ public class Game {
             level.start();
         }
         if (currentLevel.equals("LevelThree")){
-            System.out.println("You have finished the Milestone 2 Gameplay");
-            /*level=new LevelFour();
+            level=new LevelFour(this,mainChar);
             view.setWorld(level);
-            ((LevelFour)level).setL4View(view);*/
+            soundSetter(level);
+            level.setView(view);
+            level.getView().setVMainChar(level.getMainChar());
+            level.getView().setVFinalBoss(((LevelFour)level).getFinalBoss());
+            ((LevelFour)level).addControls(this);
+            level.start();
+        }
+        if(currentLevel.equals("LevelThreeFromMenu")){
+            level=new LevelFour(this);
+            frameSetter(level);
+            soundSetter(level);
+            level.setView(view);
+            level.getView().setVMainChar(level.getMainChar());
+            level.getView().setVFinalBoss(((LevelFour)level).getFinalBoss());
+            ((LevelFour)level).addControls(this);
+            level.start();
         }
     }
 
     /**
      *
-     * @return
+     *
      */
     public void changeLevel(String levelToLoad, int health, int points, int ammo, Vec2 pos){
         if (levelToLoad.equals("LevelOne")){
             level=new LevelOne(this,health,points,ammo,pos);
             soundSetter(level);
-
         }
         if (levelToLoad.equals("LevelTwo")){
             level = new LevelTwo(this,health,points,ammo,pos);
@@ -134,6 +148,10 @@ public class Game {
         }
         if (levelToLoad.equals("LevelThree")){
             level = new LevelThree(this,health,points,ammo,pos);
+            soundSetter(level);
+        }
+        if (levelToLoad.equals("LevelFour")){
+            level=new LevelFour(this,health,points,ammo,pos);
             soundSetter(level);
         }
     }

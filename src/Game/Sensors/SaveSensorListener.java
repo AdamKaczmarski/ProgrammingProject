@@ -25,7 +25,6 @@ public class SaveSensorListener implements SensorListener {
     public void beginContact(SensorEvent e) {
         if(e.getContactBody().getName().equals("MainCharacter")){
             MainCharacter mc = (MainCharacter) e.getContactBody();
-            //System.out.println("[SaveSensorListener] MC in the safezone");
             if (this.level.getName().equals("LevelOne")) {
                 if (mc.getPoints()%50==0) {
                     level.getView().removeMouseListener( level.getMouse());
@@ -48,11 +47,9 @@ public class SaveSensorListener implements SensorListener {
                     this.game.changeLevel("LevelTwo",mc);
                 }
             }
-            if (this.level.getName().equals("LevelThree")){
-                this.game.changeLevel(this.level.getName(),null);
+            if (this.level.getName().equals("LevelThree")) {
+                this.game.changeLevel(this.level.getName(), mc);
             }
-
-            //this.game.changeLevel("LevelTwo",mc);
 
 
         }
