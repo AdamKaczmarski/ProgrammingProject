@@ -35,13 +35,13 @@ public class BulletToCharacter implements CollisionListener {
                 MainCharacter mainChar = (MainCharacter) e.getReportingBody();
                 mainChar.setHealth(mainChar.getHealth()-b.getDamage());
                 e.getOtherBody().destroy();
-                if(mainChar.getHealth()<=0){
-                    mainChar.setPistol(null);
-                    mainChar.destroy();
-                }
 
             }
-            if (e.getReportingBody().getName().equals("Enemy") && e.getOtherBody().getName().equals("BulletEn")){
+            if (e.getReportingBody() instanceof Enemy && e.getOtherBody().getName().equals("BulletEn")){
+                e.getOtherBody().destroy();
+            }
+            if (e.getReportingBody() instanceof MainCharacter && e.getOtherBody().getName().equals("BulletBoss")){
+                ((MainCharacter) e.getReportingBody()).setHealth(((MainCharacter) e.getReportingBody()).getHealth()-20);
                 e.getOtherBody().destroy();
             }
         }

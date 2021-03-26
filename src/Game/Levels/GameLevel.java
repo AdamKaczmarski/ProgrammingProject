@@ -1,6 +1,7 @@
 package Game.Levels;
 
 import Game.Characters.Enemy;
+import Game.Characters.FinalBoss;
 import Game.Characters.MainCharacter;
 import Game.Collisons.BulletToCharacter;
 import Game.Controls.MouseController;
@@ -141,6 +142,7 @@ public class GameLevel extends World {
         E.setHealth(health);
         if (ammo>0) E.setPistol(new Pistol(this,ammo));
     }
+
     public void spawnItem(String item,Vec2 itemPos){
         if(item.equals("MedPack")){
             MedPack m = new MedPack(this);

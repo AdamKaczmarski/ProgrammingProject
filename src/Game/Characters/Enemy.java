@@ -44,7 +44,7 @@ public class Enemy extends Walker {
     public void enemyShoot(Vec2 mainCharPos){
         if (this.getPistol()!=null && this.getPistol().getAmmo()>0){
             //mouseDir here is the position of the maincharacter
-            this.getPistol().shoot(((GameLevel)this.getWorld()),this, charHeight,mainCharPos,"BulletEn");
+            this.getPistol().shoot(((GameLevel)this.getWorld()),this, charHeight,0.85f,mainCharPos,"BulletEn");
         }
     }
 

@@ -138,7 +138,7 @@ public class MainCharacter extends Walker {
      */
     public void charShoot(Vec2 mouseDir){
         if (this.getPistol()!=null && this.getPistol().getPicked()){
-            this.pistol.shoot(((GameLevel)this.getWorld()),this,getHeight(),mouseDir,"BulletMC");
+            this.pistol.shoot(((GameLevel)this.getWorld()),this,getHeight(),0.85f,mouseDir,"BulletMC");
         }
     }
 
@@ -178,7 +178,7 @@ public class MainCharacter extends Walker {
         if(this.getHealth()<=0){
             System.out.println("You died!");
             ((GameLevel)this.getWorld()).getThemeSong().stop();
-
+            this.setPistol(null);
             gameOver.play();
             this.destroy();
             this.getWorld().stop();

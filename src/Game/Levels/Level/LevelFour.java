@@ -12,6 +12,7 @@ import Game.Levels.GameLevel;
 import Game.Levels.Walls.Wall;
 import Game.Sensors.SaveSensorListener;
 import Game.Timers.EnShoot;
+import Game.Timers.FinalBossShoot;
 import city.cs.engine.SoundClip;
 import org.jbox2d.common.Vec2;
 
@@ -47,6 +48,11 @@ public class LevelFour extends GameLevel {
         this.addWalls();
         finalBoss = new FinalBoss(this);
         finalBoss.setPosition(new Vec2(0, 16f));
+        finalBoss.setLinearVelocity(new Vec2(-3,0));
+        timer = new Timer(1000, new FinalBossShoot(finalBoss,getMainChar()));
+        timer.start();
+        this.spawnItem("MedPack", new Vec2(10,-6));
+        this.spawnItem("Pistol", new Vec2(-10,-6));
 
     }
 
@@ -64,6 +70,11 @@ public class LevelFour extends GameLevel {
         this.addWalls();
         finalBoss = new FinalBoss(this);
         finalBoss.setPosition(new Vec2(0, 16f));
+        finalBoss.setLinearVelocity(new Vec2(-3,0));
+        timer = new Timer(1000, new FinalBossShoot(finalBoss,getMainChar()));
+        timer.start();
+        this.spawnItem("MedPack", new Vec2(10,-6));
+        this.spawnItem("Pistol", new Vec2(-10,-6));
 
     }
 
@@ -87,8 +98,8 @@ public class LevelFour extends GameLevel {
             getMainChar().setPistol(new Pistol(this, ammo));
         }
         getMainChar().setPosition(pos);
-        finalBoss = new FinalBoss(this);
-        finalBoss.setPosition(new Vec2(0, 16f));
+        timer = new Timer(1000, new FinalBossShoot(finalBoss,getMainChar()));
+        timer.start();
 
     }
 
@@ -99,6 +110,10 @@ public class LevelFour extends GameLevel {
      */
     public FinalBoss getFinalBoss() {
         return finalBoss;
+    }
+
+    public void setFinalBoss(FinalBoss finalBoss) {
+        this.finalBoss = finalBoss;
     }
 
     /**
@@ -130,5 +145,6 @@ public class LevelFour extends GameLevel {
         this.getView().addMouseListener(this.getMouse());
         this.getView().addKeyListener(this.getKeyboard());
     }
+
 }
 

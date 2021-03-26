@@ -46,7 +46,7 @@ public class GameSaverLoader {
                     } else if (bodies.get(i) instanceof RotPill){
                         writer.write(bodies.get(i).getName()+","+((RotPill) bodies.get(i)).getHealth()+","+bodies.get(i).getAngularVelocity()+","+bodies.get(i).getPosition().x+","+bodies.get(i).getPosition().y+","+bodies.get(i).getLinearVelocity().x+","+bodies.get(i).getLinearVelocity().y+"\n");
                     } else if (bodies.get(i) instanceof FinalBoss){
-                        writer.write(bodies.get(i).getName()+","+((FinalBoss) bodies.get(i)).getHealth()+","+((FinalBoss)bodies.get(i)).getPistol().getAmmo());
+                        writer.write(bodies.get(i).getName()+","+((FinalBoss) bodies.get(i)).getHealth()+","+((FinalBoss)bodies.get(i)).getPistol().getAmmo()+","+bodies.get(i).getPosition().x+","+bodies.get(i).getPosition().y+","+bodies.get(i).getLinearVelocity().x+"\n");
                     }
                 }
                 List<StaticBody> staticBodies = level.getStaticBodies();
@@ -127,6 +127,17 @@ public class GameSaverLoader {
             float lx = Float.parseFloat(tokens[5]);
             float ly = Float.parseFloat(tokens[6]);
             level.addRotPill(hp,ang,new Vec2(x,y), new Vec2(lx,ly));
+        } else if (tokens[0].equals("FinalBoss")){
+            hp = Integer.parseInt(tokens[1]);
+            ammo = Integer.parseInt(tokens[2]);
+            x = Float.parseFloat(tokens[3]);
+            y = Float.parseFloat(tokens[4]);
+            float lx = Float.parseFloat(tokens[5]);
+            ((LevelFour)level).setFinalBoss(new FinalBoss(level));
+            ((LevelFour) level).getFinalBoss().setHealth(hp);
+            ((LevelFour) level).getFinalBoss().getPistol().setAmmo(ammo);
+            ((LevelFour) level).getFinalBoss().setPosition(new Vec2(x,y));
+            ((LevelFour) level).getFinalBoss().setLinearVelocity(new Vec2(lx,0));
         }
     }
     public static void finishLoading(Game game, String lvl){
@@ -141,6 +152,7 @@ public class GameSaverLoader {
             ((LevelThree) game.getLevel()).addControls(game);
         } else if (lvl.equals("LevelFour")) {
             ((LevelFour) game.getLevel()).addControls(game);
+            game.getLevel().getView().setVFinalBoss(((LevelFour) game.getLevel()).getFinalBoss());
         }
         game.getLevel().start();
         game.getMenu().getPanel().setVisible(false);
