@@ -3,15 +3,11 @@ package Game.GUI.Containers;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.File;
 
-import Game.Controls.MainCharacterKeyboardController;
 import Game.GUI.ActionListeners.QuitListener;
-import Game.GUI.ActionListeners.ResumePauseMenuListener;
 import Game.GUI.Components.Button;
 import Game.Game;
-import Game.Levels.Level.LevelOne;
 
 public class BgPanel extends JPanel {
     private Image menuBg;

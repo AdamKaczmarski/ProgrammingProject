@@ -10,30 +10,26 @@ import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainCharacter extends Walker {
     private BodyImage imagePic;
     private static Shape charShape = new PolygonShape(-0.76f,-1.92f, 1.4f,-1.91f, 1.53f,0.02f, 1.14f,1.9f, 0.08f,1.44f, -0.79f,1.02f, -1.46f,-0.3f);
-    //private mainCharFixture fixtureRight = new mainCharFixture(this,new PolygonShape(-0.76f,-1.92f, 1.4f,-1.91f, 1.53f,0.02f, 1.14f,1.9f, 0.08f,1.44f, -0.79f,1.02f, -1.46f,-0.3f));
     private mainCharFixture fixture;
-
     private final float height=4f;
     private int health;
     private int points;
     private Pistol pistol;
-    private Graphics2D graphics;
     private SoundClip gameOver;
+    /**
+     *
+     * @param gameLevel The world the MainCharacter is going to be set in
+     */
     public MainCharacter(GameLevel gameLevel){
         super(gameLevel);
-
         this.fixture= new mainCharFixture(this,new PolygonShape(-0.76f,-1.92f, 1.4f,-1.91f, 1.53f,0.02f, 1.14f,1.9f, 0.08f,1.44f, -0.79f,1.02f, -1.46f,-0.3f));
-        //this.imagePic = new BodyImage("assets/images/mainCharacterPlaceholderRight.png", height);
         this.imagePic = new BodyImage("assets/gifs/mainCharRight.gif", height);
         this.addImage(imagePic);
         this.setClipped(true);
@@ -87,12 +83,7 @@ public class MainCharacter extends Walker {
     public mainCharFixture getFixture() {
         return fixture;
     }
-    /**
-     *
-     */
-    public Graphics2D getGraphics() {
-        return graphics;
-    }
+
     /* MUTATORS */
 
     /**
@@ -121,15 +112,10 @@ public class MainCharacter extends Walker {
         this.pistol = pistol;
     }
     /**
-     *
+     * The new amount of points
      */
     public void setPoints(int addPoints) {this.points = addPoints;}
-    /**
-     *
-     */
-    public void setGraphics(Graphics2D graphics) {
-        this.graphics = graphics;
-    }
+
 
     /**
      * This method calls for shoot method of the Pistol object.
@@ -142,14 +128,25 @@ public class MainCharacter extends Walker {
         }
     }
 
+    /**
+     * This method is an alternative attack to gather ammunition
+     * It can be used when the MainCharacter is close to the Enemy or FinalBoss
+     */
     public void meleeAttack(){
         List<DynamicBody> bodies = this.getWorld().getDynamicBodies();
+        this.removeAllImages();
+        if (this.getLinearVelocity().x>0){
+            this.removeAllImages();
+            this.addImage(new BodyImage("assets/gifs/boomCharRight.png", this.getHeight()));
+        } else {
+            this.removeAllImages();
+            this.addImage(new BodyImage("assets/gifs/boomCharLeft.png", this.getHeight()));
+
+        }
+
         for(int i=0;i<bodies.size();i++){
            if(bodies.get(i) instanceof Enemy){
                if (Math.abs(this.getPosition().x-bodies.get(i).getPosition().x)<4 && Math.abs(this.getPosition().y-bodies.get(i).getPosition().y)<4){
-                  /* Image ex = new ImageIcon("assets/gifs/explosion.gif").getImage();
-                   this.getGraphics().
-                   this.getGraphics().drawImage(ex,200,200,((GameLevel)this.getWorld()).getView());*/
                    ((Enemy) bodies.get(i)).setHealth(((Enemy) bodies.get(i)).getHealth()-10);
                    if(((Enemy) bodies.get(i)).getHealth()<=0){
                        ((Enemy) bodies.get(i)).setPistol(null);
@@ -172,7 +169,8 @@ public class MainCharacter extends Walker {
     }}
 
     /**
-     *
+     * This performs the healthCheck
+     * If the Health reaches 0 the object is destroyed and a game over song is played
      */
     public void healthCheck(){
         if(this.getHealth()<=0){
@@ -190,19 +188,18 @@ public class MainCharacter extends Walker {
      * @param dir a parameter that indicates the direction the character is going 0 - going to the left (right profile) 1 - goign to the right (left profile)
      */
     public void swapFixtures(int dir){
-        switch (dir){
+        switch (dir) {
             //right prof
-            case 0: {
+            case 0 -> {
                 this.getFixture().destroy();
                 this.setFixture(new mainCharFixture(this, new PolygonShape(0.61f, -1.95f, -1.43f, -1.92f, -1.56f, -0.08f, -1.1f, 1.94f, 0.73f, 1.17f, 1.48f, -0.34f)));
-                break;
-            }
 
+            }
             //left prof
-            case 1: {
+            case 1 -> {
                 this.getFixture().destroy();
-                this.setFixture(new mainCharFixture(this,new PolygonShape(-0.76f, -1.92f, 1.4f, -1.91f, 1.53f, 0.02f, 1.14f, 1.9f, 0.08f, 1.44f, -0.79f, 1.02f, -1.46f, -0.3f) ));
-                break;
+                this.setFixture(new mainCharFixture(this, new PolygonShape(-0.76f, -1.92f, 1.4f, -1.91f, 1.53f, 0.02f, 1.14f, 1.9f, 0.08f, 1.44f, -0.79f, 1.02f, -1.46f, -0.3f)));
+
             }
         }
     }

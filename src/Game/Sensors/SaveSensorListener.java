@@ -33,25 +33,21 @@ public class SaveSensorListener implements SensorListener {
                 }
                 else {
                     System.out.println("[SaveSensorListener] You need more points");
-                    this.game.changeLevel("LevelOne", mc);
                 }
             }
             if (this.level.getName().equals("LevelTwo")){
-                if (mc.getPoints()%100==0) {
+                if (mc.getPoints()%120==0) {
                     this.game.changeLevel(level.getName(), mc);
                     level.getView().removeMouseListener( level.getMouse());
                     level.getView().removeKeyListener( level.getKeyboard());
                 }
                 else {
                     System.out.println("[SaveSensorListener] You need more points");
-                    this.game.changeLevel("LevelTwo",mc);
                 }
             }
             if (this.level.getName().equals("LevelThree")) {
                 this.game.changeLevel(this.level.getName(), mc);
             }
-
-
         }
     }
 

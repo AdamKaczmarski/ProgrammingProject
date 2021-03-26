@@ -1,39 +1,29 @@
 package Game.Levels.Level;
 
-import Game.Characters.Enemy;
 import Game.Characters.FinalBoss;
 import Game.Characters.MainCharacter;
-import Game.Collisons.BulletToCharacter;
 import Game.Controls.MainCharacterKeyboardController;
 import Game.Controls.MouseController;
 import Game.Game;
 import Game.Items.Pistol;
 import Game.Levels.GameLevel;
 import Game.Levels.Walls.Wall;
-import Game.Sensors.SaveSensorListener;
-import Game.Timers.EnShoot;
 import Game.Timers.FinalBossShoot;
-import city.cs.engine.SoundClip;
 import org.jbox2d.common.Vec2;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class LevelFour extends GameLevel {
-    private ArrayList<Enemy> enemyList;
     private ArrayList<Wall> walls = new ArrayList(7);
     private Timer timer;
     private FinalBoss finalBoss;
-    private SoundClip victoryMusic;
 
     /**
      * This construcor is used when user passes from Level Three to this one
      *
-     * @param game
-     * @param mc
+     * @param game Game object
+     * @param mc MainCharacter (from the previous level) that's used to pass the stats to the new MainCharacter
      */
     public LevelFour(Game game, MainCharacter mc) {
         super(game, game.getMusicVolume(), game.getSfxVolume());
@@ -59,7 +49,7 @@ public class LevelFour extends GameLevel {
     /**
      * This constructor is used when user loads level from Main Menu
      *
-     * @param game
+     * @param game Game object
      */
     public LevelFour(Game game) {
         super(game, game.getMusicVolume(), game.getSfxVolume());
@@ -123,9 +113,9 @@ public class LevelFour extends GameLevel {
         //Bottom Wall
         walls.add(new Wall(this, 22.5f, 4.5f, 0, -15.5f));
         //Left Wall
-        walls.add(new Wall(this, 3f, 15.5f, -19.5f, 4.5f));
+        walls.add(new Wall(this, 3f, 15.5f, -19.5f, 4.5f,"LeftWall"));
         //Right Wall
-        walls.add(new Wall(this, 3f, 18f, 20f, 2f));
+        walls.add(new Wall(this, 3f, 18f, 20f, 2f,"RightWall"));
         /*Top Wall This wall is invisible (it's outside the user view) to make top boundary for characters
         to not walk out and bullet to be destroyed when they exit the screen */
         walls.add(new Wall(this, 22.5f, 4.5f, 0, 24.5f));

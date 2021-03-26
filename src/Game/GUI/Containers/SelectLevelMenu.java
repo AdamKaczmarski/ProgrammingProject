@@ -1,9 +1,7 @@
 package Game.GUI.Containers;
 
-import Game.Characters.MainCharacter;
 import Game.GUI.Components.Button;
 import Game.Game;
-import Game.Levels.Level.LevelThree;
 
 import javax.swing.*;
 import java.awt.*;

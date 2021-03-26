@@ -1,7 +1,6 @@
 package Game.Items;
 
 import Game.Collisons.PistolPickup;
-import Game.Game;
 import Game.Levels.GameLevel;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
@@ -74,7 +73,6 @@ public class Pistol extends StaticBody {
         addImage(pistolImage);
         setName("Pistol");
         addCollisionListener(new PistolPickup());
-        //setAlwaysOutline(true);
     }
     /**
      * Returns the amount of ammo
@@ -92,10 +90,18 @@ public class Pistol extends StaticBody {
         return picked;
     }
 
+    /**
+     *
+     * @return The SoundClip that represents no ammo
+     */
     public SoundClip getNoAmmoSound() {
         return noAmmoSound;
     }
 
+    /**
+     *
+     * @return The SoundClip that represents shooting
+     */
     public SoundClip getShootSound() {
         return shootSound;
     }
@@ -130,7 +136,6 @@ public class Pistol extends StaticBody {
                 b.setName(bulletName);
                 if (mouseDir.x >= db.getPosition().x && mouseDir.y >= db.getPosition().y) {
                     if (mouseDir.y < (db.getPosition().y + charHeight / 2) && mouseDir.y > (db.getPosition().y)) {
-
                         b.setPosition(new Vec2(db.getPosition().x + gap, db.getPosition().y));
                         b.setLinearVelocity(new Vec2(mouseDir.x + gap, mouseDir.y - db.getPosition().y).mul(1.5f));
                     } else {
@@ -141,7 +146,7 @@ public class Pistol extends StaticBody {
                 if (mouseDir.x >= db.getPosition().x && mouseDir.y <= db.getPosition().y) {
                     if (mouseDir.y < (db.getPosition().y) && mouseDir.y > (db.getPosition().y - (charHeight / 2))) {
                         b.setPosition(new Vec2(db.getPosition().x + gap, db.getPosition().y));
-                        b.setLinearVelocity(new Vec2(mouseDir.x + gap, mouseDir.y - db.getPosition().y).mul(1.5f));
+                        b.setLinearVelocity(new Vec2(Math.abs(mouseDir.x), 0).mul(4f));
                     } else {
                         b.setPosition(new Vec2(db.getPosition().x + gap, db.getPosition().y - (charHeight / 2)));
                         b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));

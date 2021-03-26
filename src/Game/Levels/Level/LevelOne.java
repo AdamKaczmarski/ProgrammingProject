@@ -1,27 +1,17 @@
 package Game.Levels.Level;
 
 import Game.Characters.Enemy;
-import Game.Characters.MainCharacter;
 import Game.Collisons.BulletToCharacter;
-import Game.Items.MedPack;
 import Game.Sensors.SaveSensorListener;
 import Game.Controls.MainCharacterKeyboardController;
 import Game.Controls.MouseController;
 import Game.Game;
-import Game.HOC.GameView;
 import Game.Items.Pistol;
 import Game.Levels.GameLevel;
 import Game.Levels.Walls.Wall;
-import Game.StepListeners.EnemyShoot;
 import Game.Timers.EnShoot;
-import city.cs.engine.SoundClip;
 import org.jbox2d.common.Vec2;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import java.awt.event.KeyListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -38,12 +28,9 @@ public class LevelOne extends GameLevel {
         pistol.setPosition(new Vec2(0f,0f));
         enemyList = new ArrayList<>(5);
         addThemeSong("assets/sounds/theme1.wav");
-        /* WALLS */
         this.addWalls();
-        /* ENEMIES */
         this.spawnEnemies();
-
-        this.getSaveSen().getBody().setPosition(new Vec2(21f,17f));
+        this.getSaveSen().getBody().setPosition(new Vec2(23f,17f));
         this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
         timer = new Timer(1200,new EnShoot(this.getDynamicBodies(),getMainChar()));
         timer.start();
@@ -69,7 +56,7 @@ public class LevelOne extends GameLevel {
         }
         getMainChar().setPosition(pos);
 
-        this.getSaveSen().getBody().setPosition(new Vec2(21f,17f));
+        this.getSaveSen().getBody().setPosition(new Vec2(23f,17f));
         this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
         timer = new Timer(1200,new EnShoot(this.getDynamicBodies(),getMainChar()));
         timer.start();

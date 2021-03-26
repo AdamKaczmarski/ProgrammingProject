@@ -9,6 +9,15 @@ public class Button extends JButton {
     private int y;
     private int width;
     private int height;
+
+    /**
+     * This constructor is created to reduce the lines in BgPanel
+     * @param title the title of the button
+     * @param x the x position of the button
+     * @param y the x position of the button
+     * @param width the width of the button
+     * @param height the height of the button
+     */
     public Button(String title, int x, int y, int width, int height){
         this.title=title;
         this.x=x;

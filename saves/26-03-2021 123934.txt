@@ -1,5 +1,0 @@
-LevelFour
-MainCharacter,80,0,7,-4.088819,-9.0650015
-FinalBoss,130,90
-MedPack,10.0,-6.0
-Pistol,-10.0,-6.0

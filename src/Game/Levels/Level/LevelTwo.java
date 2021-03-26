@@ -8,11 +8,9 @@ import Game.Sensors.SaveSensorListener;
 import Game.Controls.MainCharacterKeyboardController;
 import Game.Controls.MouseController;
 import Game.Game;
-import Game.HOC.GameView;
 import Game.Items.MedPack;
 import Game.Levels.GameLevel;
 import Game.Levels.Walls.Wall;
-import Game.StepListeners.EnemyShoot;
 import Game.Timers.EnShoot;
 import org.jbox2d.common.Vec2;
 import javax.swing.*;
@@ -45,9 +43,6 @@ public class LevelTwo extends GameLevel {
         timer.start();
 
     }
-
-
-
     /**
      * This contructor is used when user wants to jump straight to Level Two using the MainMenu
      * @param game

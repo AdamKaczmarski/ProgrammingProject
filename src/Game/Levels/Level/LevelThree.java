@@ -1,29 +1,19 @@
 package Game.Levels.Level;
 
-import Game.Characters.Enemy;
 import Game.Characters.MainCharacter;
 import Game.Controls.MainCharacterKeyboardController;
 import Game.Controls.MouseController;
 import Game.Game;
-import Game.HOC.GameView;
 import Game.Items.Pistol;
 import Game.Levels.GameLevel;
 import Game.Levels.RotPills.RotPill;
 import Game.Levels.Walls.Wall;
 import Game.Sensors.SaveSensorListener;
-import Game.Timers.EnShoot;
-import city.cs.engine.SoundClip;
 import org.jbox2d.common.Vec2;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class LevelThree extends GameLevel {
     private ArrayList<Wall> walls = new ArrayList(15);
-    private ArrayList<Enemy> enemyList = new ArrayList(15);
     private ArrayList<RotPill> rotPillList =new ArrayList(5);
     public LevelThree(Game game, MainCharacter mc) {
         super(game, game.getMusicVolume(), game.getSfxVolume());
@@ -43,7 +33,7 @@ public class LevelThree extends GameLevel {
     }
 
     /**
-     * This contructor is used when user wants to jump straight to Level Three using the MainMenu
+     * This constructor is used when user wants to jump straight to Level Three using the MainMenu
      */
     public LevelThree(Game game) {
         super(game,game.getMusicVolume(), game.getSfxVolume());
@@ -57,7 +47,6 @@ public class LevelThree extends GameLevel {
         this.addRotPills();
         this.getSaveSen().getBody().setPosition(new Vec2(-21f,-16f));
         this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
-
     }
 
     /**

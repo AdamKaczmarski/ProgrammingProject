@@ -15,20 +15,27 @@ import city.cs.engine.DynamicBody;
 import city.cs.engine.StaticBody;
 import org.jbox2d.common.Vec2;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class GameSaverLoader {
+    /**
+     * This method saves the progress of the player on a level he's actually in
+     * @param level the GameLevel object the player saves his progress
+     */
     public static void save(GameLevel level) throws IOException {
+            String directoryName = "saves/";
+            File directory = new File(directoryName);
+            if (! directory.exists()){
+                directory.mkdir();
+            }
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmmss");
-            String fileName = "saves/"+dtf.format(LocalDateTime.now())+".txt";
+            String fileName = directoryName.concat(dtf.format(LocalDateTime.now())+".txt");
             FileWriter writer = null;
             try {
+
                 writer = new FileWriter(fileName, true);
                 if(level.getMainChar().getPistol()==null){
                     writer.write(level.getName()+"\n"+level.getMainChar().getName()+","+level.getMainChar().getHealth()+","+level.getMainChar().getPoints()+",0,"+
@@ -63,6 +70,12 @@ public class GameSaverLoader {
             }
 
     }
+
+    /**
+     * This method loads the Level and the objects from a save file
+     * @param fileName File path of the save
+     * @param game Game object that is used to create the level
+     */
     public static void load(String fileName, Game game){
         FileReader fr = null;
         BufferedReader reader = null;
@@ -102,6 +115,12 @@ public class GameSaverLoader {
         }
 
     }
+
+    /**
+     * This method is used for spawning items or enemies on the level
+     * @param tokens a line from save.txt
+     * @param level level the item is going to be spawn in
+     */
     public static void spawnThing(String[] tokens, GameLevel level){
         int hp, ammo;
         float x,y;
@@ -140,6 +159,12 @@ public class GameSaverLoader {
             ((LevelFour) level).getFinalBoss().setLinearVelocity(new Vec2(lx,0));
         }
     }
+
+    /**
+     * This is used to finish the loading and addControls on certain levels
+     * @param game game object the level is created in
+     * @param lvl The level name we should add controls to
+     */
     public static void finishLoading(Game game, String lvl){
         game.frameSetter(game.getLevel());
         game.getLevel().setView(game.getView());

@@ -45,74 +45,146 @@ public class GameLevel extends World {
 
     }
 
+    /**
+     *
+     * @return MainCharacter object
+     */
     public MainCharacter getMainChar() {
         return mainChar;
     }
 
+    /**
+     *
+     * @return GameView object
+     */
     public GameView getView() {
         return view;
     }
 
+    /**
+     *
+     * @return name of the level
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @return SoundClip object, which is the theme song
+     */
     public SoundClip getThemeSong(){return themeSong;}
 
+    /**
+     *
+     * @return saveSensor object
+     */
     public saveSensor getSaveSen() {
         return saveSen;
     }
+
+    /**
+     *
+     * @return MouseController
+     */
     public MouseController getMouse() {
         return mouse;
     }
 
+    /**
+     *
+     * @return KeyListener
+     */
     public KeyListener getKeyboard() {
         return keyboard;
     }
 
+    /**
+     *
+     * @return float from 0.0  to 1.0
+     */
     public float getMusicVolume() {
         return musicVolume;
     }
 
+    /**
+     *
+     * @return float from 0.0  to 1.0
+     */
     public float getSfxVolume() {
         return sfxVolume;
     }
 
+    /**
+     *
+     * @return true if the game's simulation is running, false if it's stopeed
+     */
     public boolean isGameInPlay() {
         return gameInPlay;
     }
 
-
+    /**
+     * Sets MainCharacter object
+     * @param mainChar MainCharacter object
+     */
     public void setMainChar(MainCharacter mainChar) {
         this.mainChar = mainChar;
     }
 
+    /**
+     *
+     * @param view GameView Object
+     */
     public void setView(GameView view) {
         this.view = view;
     }
 
+    /**
+     * Name of the level
+     * @param n level's name
+     */
     public void setName(String n){
         this.name=n;
     }
 
+    /**
+     *
+     * @param keyboard KeyListener
+     */
     public void setKeyboard(KeyListener keyboard) {
         this.keyboard = keyboard;
     }
 
+    /**
+     *
+     * @param mouse MouseController
+     */
     public void setMouse(MouseController mouse) {
         this.mouse = mouse;
     }
-
+    /**
+     * Music volume
+     * @param sfxVolume float from 0.0 to 1.0
+     */
     public void setSfxVolume(float sfxVolume) {
         this.sfxVolume = sfxVolume;
         if(getMainChar().getPistol() != null) getMainChar().getPistol().updateVolume(sfxVolume);
     }
 
+    /**
+     * Music volume
+     * @param musicVolume float from 0.0 to 1.0
+     */
     public void setMusicVolume(float musicVolume) {
         this.musicVolume = musicVolume;
         this.getThemeSong().setVolume(musicVolume);
     }
 
+    /**
+     *
+     * @param gameInPlay boolean true if the game is started, false if stopped
+     *
+     */
     public void setGameInPlay(boolean gameInPlay) {
         this.gameInPlay = gameInPlay;
     }

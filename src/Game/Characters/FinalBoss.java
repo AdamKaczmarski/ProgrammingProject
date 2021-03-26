@@ -10,6 +10,8 @@ import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 
 public class FinalBoss extends Walker {
@@ -19,6 +21,10 @@ public class FinalBoss extends Walker {
     private int health = 200;
     private Pistol pistol;
 
+    /**
+     *
+     * @param gameLevel The World that the FinalBoss is going to be set in
+     */
     public FinalBoss(GameLevel gameLevel) {
         super(gameLevel, bossShape);
         this.addImage(bossImage);
@@ -30,25 +36,42 @@ public class FinalBoss extends Walker {
         this.addCollisionListener(new FinalBossXMovement());
     }
 
+    /**
+     *
+     * @return The amount of health
+     */
     public int getHealth() {
         return health;
     }
 
+    /**
+     *
+     * @return Pistol object
+     */
     public Pistol getPistol() {
         return pistol;
     }
 
+    /**
+     * This method sets the health and calls for healthCheck()
+     * @param health new amount of health
+     */
     public void setHealth(int health) {
         this.health = health;
         bossHealthCheck();
     }
 
+    /**
+     *
+     * @param pistol Pistol Object
+     */
     public void setPistol(Pistol pistol) {
         this.pistol = pistol;
     }
 
     /**
-     *
+     *  This method performs a health check
+     *  Play a victorious song when the health is below or equal 0 and destroys the object
      */
     private void bossHealthCheck() {
         if (this.getHealth() <= 0) {
@@ -68,6 +91,10 @@ public class FinalBoss extends Walker {
         }
     }
 
+    /**
+     * Boss shoots towarads the MainCharacter
+     * @param mainCharPos the position of the MainCharacter
+     */
     public void bossShoot(Vec2 mainCharPos) {
         if (this.getPistol() != null && this.getPistol().getAmmo() > 0) {
             this.getPistol().shoot(((GameLevel) this.getWorld()), this, 6f,2f, mainCharPos, "BulletBoss");
