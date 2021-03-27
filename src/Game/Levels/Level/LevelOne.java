@@ -10,6 +10,7 @@ import Game.Items.Pistol;
 import Game.Levels.GameLevel;
 import Game.Levels.Walls.Wall;
 import Game.Timers.EnShoot;
+import Game.Timers.L1EnemyMovements;
 import org.jbox2d.common.Vec2;
 import javax.swing.*;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class LevelOne extends GameLevel {
     private ArrayList<Enemy> enemyList;
     private ArrayList<Wall> walls = new ArrayList(7);
     private Timer timer;
+    private Timer timerMovement;
     public LevelOne(Game game){
         super(game,game.getMusicVolume(), game.getSfxVolume());
         setName("LevelOne");
@@ -32,8 +34,11 @@ public class LevelOne extends GameLevel {
         this.spawnEnemies();
         this.getSaveSen().getBody().setPosition(new Vec2(23f,17f));
         this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
-        timer = new Timer(1200,new EnShoot(this.getDynamicBodies(),getMainChar()));
+        timer = new Timer(1000,new EnShoot(this.getDynamicBodies(),getMainChar()));
         timer.start();
+        timerMovement = new Timer (2500,new L1EnemyMovements(this.getDynamicBodies()));
+        timerMovement.start();
+
     }
 
     /**
@@ -58,19 +63,21 @@ public class LevelOne extends GameLevel {
 
         this.getSaveSen().getBody().setPosition(new Vec2(23f,17f));
         this.getSaveSen().addSensorListener(new SaveSensorListener(this,game));
-        timer = new Timer(1200,new EnShoot(this.getDynamicBodies(),getMainChar()));
+        timer = new Timer(1000,new EnShoot(this.getDynamicBodies(),getMainChar()));
         timer.start();
+        timerMovement = new Timer (2500,new L1EnemyMovements(this.getDynamicBodies()));
+        timerMovement.start();
     }
 
     /**
      *  This function spawns enemies in the world
      */
     private void spawnEnemies(){
-        enemyList.add(new Enemy(this,new Vec2(-11f,3f)));
-        enemyList.add(new Enemy(this,new Vec2(7f,3f)));
+        enemyList.add(new Enemy(this,new Vec2(-13f,8f)));
+        enemyList.add(new Enemy(this,new Vec2(12f,8f)));
         enemyList.add(new Enemy(this,new Vec2(0f,14f)));
-        enemyList.add(new Enemy(this,new Vec2(-6f,14f)));
-        enemyList.add(new Enemy(this,new Vec2(5f,14f)));
+        enemyList.add(new Enemy(this,new Vec2(-12f,16f)));
+        enemyList.add(new Enemy(this,new Vec2(10f,16f)));
         for (int i=0;i<enemyList.size();i++){
 
             enemyList.get(i).addCollisionListener(new BulletToCharacter(getMainChar()));

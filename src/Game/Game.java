@@ -16,6 +16,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @author Adam Kaczmarski
+ */
 public class Game {
     private GameLevel level;
     private GameView view;

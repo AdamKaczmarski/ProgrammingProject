@@ -32,7 +32,7 @@ public class GameSaverLoader {
                 directory.mkdir();
             }
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmmss");
-            String fileName = directoryName.concat(dtf.format(LocalDateTime.now())+".txt");
+            String fileName = directoryName.concat(level.getName().concat(" "+dtf.format(LocalDateTime.now())+".txt"));
             FileWriter writer = null;
             try {
 

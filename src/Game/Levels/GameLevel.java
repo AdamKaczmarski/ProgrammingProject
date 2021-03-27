@@ -215,6 +215,11 @@ public class GameLevel extends World {
         if (ammo>0) E.setPistol(new Pistol(this,ammo));
     }
 
+    /**
+     * Spawns the item in the level
+     * @param item String that represents the name of an item it's either "MedPack" or "Pistol"
+     * @param itemPos Vec2 position of an item
+     */
     public void spawnItem(String item,Vec2 itemPos){
         if(item.equals("MedPack")){
             MedPack m = new MedPack(this);
@@ -224,6 +229,14 @@ public class GameLevel extends World {
             p.setPosition(itemPos);
         }
     }
+
+    /**
+     * This function adds rotating Pillars to the level
+     * @param health health of the pillar
+     * @param aV angular velocity the pillar should have
+     * @param pos Vec2 position of the pillar
+     * @param lSpeed Linear Speed of the pillar
+     */
     public void addRotPill(int health,float aV, Vec2 pos, Vec2 lSpeed){
         RotPill rp =  new RotPill(this);
         rp.setHealth(health);
@@ -232,7 +245,7 @@ public class GameLevel extends World {
         rp.setLinearVelocity(lSpeed);
     }
     /**
-     *
+     * Adds theme song to the level, it's used in the contructor of every level
      */
     public void addThemeSong(String path){
         try {
