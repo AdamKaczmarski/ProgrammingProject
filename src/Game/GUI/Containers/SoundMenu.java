@@ -38,7 +38,12 @@ public class SoundMenu extends JPanel {
         sfxVol.addChangeListener(
         e->{
             if(!((JSlider)e.getSource()).getValueIsAdjusting()) {
-                g.setSfxVolume((float)(((JSlider)e.getSource()).getValue())/100);
+                if((float)(((JSlider)e.getSource()).getValue())!=0.00f){
+                    g.setSfxVolume((float)(((JSlider)e.getSource()).getValue())/100);
+
+                } else {
+                    g.setSfxVolume(0.00f);
+                }
             }
         });
         this.add(sfxVol);
@@ -55,7 +60,12 @@ public class SoundMenu extends JPanel {
         musicVol.setValue((int)(g.getMusicVolume()*100));
         musicVol.addChangeListener(e->{
             if(!((JSlider)e.getSource()).getValueIsAdjusting()) {
-                g.setMusicVolume((float)(((JSlider)e.getSource()).getValue())/100);
+                if((float)(((JSlider)e.getSource()).getValue())!=0.00f){
+                    g.setMusicVolume((float)(((JSlider)e.getSource()).getValue())/100);
+                } else {
+                    g.setMusicVolume(0.00f);
+                }
+
             }
         });
         this.add(musicVol);

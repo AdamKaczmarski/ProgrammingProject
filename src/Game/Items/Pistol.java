@@ -16,7 +16,7 @@ public class Pistol extends StaticBody {
     private boolean picked=false;
     private SoundClip shootSound;
     private SoundClip noAmmoSound;
-
+    private float sfxVolumePistol=0.0f;
     /**
      * This constructor creates an abstract Pistol object which will allow the character to shoot.
      * It's created because when picked up (collided) the CollisionDetector calls for destroy().
@@ -28,11 +28,14 @@ public class Pistol extends StaticBody {
         this.setName("PickedPistol");
         this.ammo=10;
         this.picked=true;
+        this.sfxVolumePistol=gameLevel.getSfxVolume();
         try {
             shootSound= new SoundClip("assets/sounds/shoot.wav");
             noAmmoSound =  new SoundClip("assets/sounds/no_ammo.wav");
-            shootSound.setVolume(gameLevel.getSfxVolume());
-            noAmmoSound.setVolume(gameLevel.getSfxVolume());
+            if(gameLevel.getSfxVolume()>0.0) {
+                shootSound.setVolume(gameLevel.getSfxVolume());
+                noAmmoSound.setVolume(gameLevel.getSfxVolume());
+            }
         }  catch (LineUnavailableException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -49,11 +52,14 @@ public class Pistol extends StaticBody {
         this.ammo=ammo;
         this.setName("PickedPistol");
         this.picked=true;
+        this.sfxVolumePistol=gameLevel.getSfxVolume();
         try {
             shootSound= new SoundClip("assets/sounds/shoot.wav");
             noAmmoSound =  new SoundClip("assets/sounds/no_ammo.wav");
-            shootSound.setVolume(gameLevel.getSfxVolume());
-            noAmmoSound.setVolume(gameLevel.getSfxVolume());
+            if(gameLevel.getSfxVolume()>0){
+                shootSound.setVolume(gameLevel.getSfxVolume());
+                noAmmoSound.setVolume(gameLevel.getSfxVolume());
+            }
         }  catch (LineUnavailableException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -92,6 +98,14 @@ public class Pistol extends StaticBody {
 
     /**
      *
+     * @return float from 0. to 1.0
+     */
+    public float getSfxVolumePistol() {
+        return sfxVolumePistol;
+    }
+
+    /**
+     *
      * @return The SoundClip that represents no ammo
      */
     public SoundClip getNoAmmoSound() {
@@ -115,8 +129,11 @@ public class Pistol extends StaticBody {
     }
 
     public void updateVolume(float sfcVol){
-        this.getNoAmmoSound().setVolume(sfcVol);
-        this.getShootSound().setVolume(sfcVol);
+        if(sfcVol>0){
+            this.getNoAmmoSound().setVolume(sfcVol);
+            this.getShootSound().setVolume(sfcVol);
+
+        }
     }
 
     /**
@@ -130,8 +147,11 @@ public class Pistol extends StaticBody {
     public void shoot(GameLevel level, Walker db, float charHeight,float gap, Vec2 mouseDir, String bulletName){
         if (level.isRunning()) {
             if (this.getAmmo() > 0) {
-                shootSound.stop();
-                shootSound.play();
+                if(this.getSfxVolumePistol()>0.0) {
+                    shootSound.stop();
+                    shootSound.play();
+                }
+
                 Bullet b = new Bullet(level);
                 b.setName(bulletName);
                 if (mouseDir.x >= db.getPosition().x && mouseDir.y >= db.getPosition().y) {
@@ -180,8 +200,13 @@ public class Pistol extends StaticBody {
             }
         }
         if(this.getAmmo()<=0) {
-            noAmmoSound.stop();
-            noAmmoSound.play();
+            if(this.getSfxVolumePistol()>0){
+                noAmmoSound.stop();
+                noAmmoSound.play();
+            }
+
         }
         }
-    }
+
+
+}

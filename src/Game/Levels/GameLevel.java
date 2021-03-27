@@ -177,7 +177,11 @@ public class GameLevel extends World {
      */
     public void setMusicVolume(float musicVolume) {
         this.musicVolume = musicVolume;
-        this.getThemeSong().setVolume(musicVolume);
+        if(musicVolume>0.0){
+            this.getThemeSong().setVolume(musicVolume);
+        } else {
+            this.getThemeSong().stop();
+        }
     }
 
     /**
@@ -250,8 +254,10 @@ public class GameLevel extends World {
     public void addThemeSong(String path){
         try {
             themeSong = new SoundClip(path);
-            themeSong.setVolume(this.getMusicVolume());
-            themeSong.play();
+            if(this.getMusicVolume()>0.0){
+                themeSong.setVolume(this.getMusicVolume());
+                themeSong.play();
+            }
         } catch (LineUnavailableException e) {
             e.printStackTrace();
         } catch (IOException e) {

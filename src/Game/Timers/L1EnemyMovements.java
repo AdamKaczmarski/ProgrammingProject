@@ -34,7 +34,6 @@ public class L1EnemyMovements implements ActionListener {
             int i = (int) (Math.random() * (enemyList.size())) + 0;
             int r = (int) (Math.random() * (2) + 0);
             float x = (float)(Math.random()*3+0);
-            System.out.println(r);
             if (r==0) enemyList.get(i).setLinearVelocity(new Vec2(x,-3));
             if (r==1) enemyList.get(i).setLinearVelocity(new Vec2(x,3));
         }

@@ -39,7 +39,10 @@ public class MainCharacter extends Walker {
         this.addCollisionListener(new BulletToCharacter(this));
         try {
             gameOver = new SoundClip("assets/sounds/game_over.wav");
-            gameOver.setVolume(gameLevel.getMusicVolume());
+            if(gameLevel.getMusicVolume()>0){
+                gameOver.setVolume(gameLevel.getMusicVolume());
+            }
+
         } catch (LineUnavailableException e) {
             e.printStackTrace();
         } catch (IOException e) {
