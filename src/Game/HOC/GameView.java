@@ -108,16 +108,15 @@ public class GameView extends UserView {
             } else {
                 Font f = g.getFont();
                 g.setFont(f.deriveFont(f.getStyle() | Font.PLAIN,50)); //This is used to change the font's size
-
                 g.drawImage(ammoImage,736,680,this);
                 g.setColor(Color.RED);
                 g.drawString(""+this.mainChar.getPistol().getAmmo(),756,734);
                 g.setColor(t);
                 g.setFont(f);
-
             }
         }
         g.setColor(t);
+        g.setFont(new Font("Stencil", Font.PLAIN, 32));
         if (((GameLevel)mainChar.getWorld()).getName().equals("LevelOne")) {
             if (mainChar.getPoints()>=50) g.setColor(new Color(19, 110, 31));
         } else if (((GameLevel)mainChar.getWorld()).getName().equals("LevelTwo")){
@@ -125,6 +124,7 @@ public class GameView extends UserView {
         } else {
             g.setColor(t);
         }
+        g.setFont(new Font("Stencil", Font.PLAIN, 32));
         g.drawString("SCORE: "+this.mainChar.getPoints(),350,746);
 
         if(this.finalBoss!=null){

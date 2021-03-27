@@ -22,7 +22,7 @@ public class PistolPickup implements CollisionListener {
                 mainChar.getPistol().setAmmo(30);
             } else {
                 e.getReportingBody().destroy();
-                mainChar.getPistol().setAmmo(mainChar.getPistol().getAmmo()+10);
+                mainChar.getPistol().setAmmo(mainChar.getPistol().getAmmo()+15);
             }
 
         }

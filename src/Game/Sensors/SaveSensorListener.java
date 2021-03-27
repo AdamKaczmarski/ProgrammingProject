@@ -26,7 +26,7 @@ public class SaveSensorListener implements SensorListener {
         if(e.getContactBody().getName().equals("MainCharacter")){
             MainCharacter mc = (MainCharacter) e.getContactBody();
             if (this.level.getName().equals("LevelOne")) {
-                if (mc.getPoints()%50==0) {
+                if (mc.getPoints()>=50) {
                     level.getView().removeMouseListener( level.getMouse());
                     level.getView().removeKeyListener( level.getKeyboard());
                     this.game.changeLevel(level.getName(), mc);
@@ -36,7 +36,7 @@ public class SaveSensorListener implements SensorListener {
                 }
             }
             if (this.level.getName().equals("LevelTwo")){
-                if (mc.getPoints()%120==0) {
+                if (mc.getPoints()>=120) {
                     this.game.changeLevel(level.getName(), mc);
                     level.getView().removeMouseListener( level.getMouse());
                     level.getView().removeKeyListener( level.getKeyboard());

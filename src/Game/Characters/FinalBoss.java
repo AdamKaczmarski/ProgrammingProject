@@ -77,10 +77,13 @@ public class FinalBoss extends Walker {
         if (this.getHealth() <= 0) {
             ((GameLevel) this.getWorld()).getThemeSong().stop();
             this.destroy();
+            this.setPistol(null);
             try {
                 SoundClip victoryMusic = new SoundClip("assets/sounds/victory.wav");
-                victoryMusic.setVolume(((GameLevel) this.getWorld()).getMusicVolume());
-                victoryMusic.play();
+                if(((GameLevel) this.getWorld()).getMusicVolume()>0) {
+                    victoryMusic.setVolume(((GameLevel) this.getWorld()).getMusicVolume());
+                    victoryMusic.play();
+                }
             } catch (LineUnavailableException e) {
                 e.printStackTrace();
             } catch (IOException e) {

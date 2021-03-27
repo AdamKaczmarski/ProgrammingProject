@@ -160,7 +160,7 @@ public class Pistol extends StaticBody {
                         b.setLinearVelocity(new Vec2(mouseDir.x + gap, mouseDir.y - db.getPosition().y).mul(1.5f));
                     } else {
                         b.setPosition(new Vec2(db.getPosition().x + gap, db.getPosition().y + (charHeight / 2)));
-                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
+                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y).mul(1.5f));
                     }
                 }
                 if (mouseDir.x >= db.getPosition().x && mouseDir.y <= db.getPosition().y) {
@@ -169,26 +169,26 @@ public class Pistol extends StaticBody {
                         b.setLinearVelocity(new Vec2(Math.abs(mouseDir.x), 0).mul(4f));
                     } else {
                         b.setPosition(new Vec2(db.getPosition().x + gap, db.getPosition().y - (charHeight / 2)));
-                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
+                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y).mul(1.5f));
                     }
                 }
                 if (mouseDir.x <= db.getPosition().x && mouseDir.y <= db.getPosition().y) {
                     if (mouseDir.y < (db.getPosition().y) && mouseDir.y > (db.getPosition().y - (charHeight / 2))) {
                         b.setPosition(new Vec2(db.getPosition().x - gap, db.getPosition().y));
-                        b.setLinearVelocity(new Vec2(mouseDir.x-gap,mouseDir.y-db.getPosition().y));
+                        b.setLinearVelocity(new Vec2(mouseDir.x-gap,mouseDir.y-db.getPosition().y).mul(1.5f));
                     } else {
                         b.setPosition(new Vec2(db.getPosition().x - gap, db.getPosition().y - (charHeight / 2)));
-                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
+                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y).mul(1.5f));
                     }
 
                 }
                 if (mouseDir.x <= db.getPosition().x && mouseDir.y >= db.getPosition().y) {
                     if (mouseDir.y < (db.getPosition().y + (charHeight / 2)) && mouseDir.y > (db.getPosition().y)) {
                         b.setPosition(new Vec2(db.getPosition().x - gap, db.getPosition().y));
-                        b.setLinearVelocity(new Vec2(mouseDir.x + gap, mouseDir.y - db.getPosition().y).mul(1.5f));
+                        b.setLinearVelocity(new Vec2(mouseDir.x + gap, 0).mul(1.5f));
                     } else {
                         b.setPosition(new Vec2(db.getPosition().x - gap, db.getPosition().y + (charHeight / 2)));
-                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y));
+                        b.setLinearVelocity(new Vec2(mouseDir.x - db.getPosition().x, mouseDir.y - db.getPosition().y).mul(1.5f));
                     }
 
                 }
