@@ -1,2 +1,0 @@
-LevelOne
-MainCharacter,100,50,22,13.8254595,15.299939
